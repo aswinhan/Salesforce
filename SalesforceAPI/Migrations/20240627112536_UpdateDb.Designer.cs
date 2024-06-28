@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SalesforceAPI.Data;
 
@@ -11,9 +12,11 @@ using SalesforceAPI.Data;
 namespace SalesforceAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240627112536_UpdateDb")]
+    partial class UpdateDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -465,8 +468,8 @@ namespace SalesforceAPI.Migrations
                     b.Property<string>("MedicalTrainingHospitalName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("MedicalTrainingType")
-                        .HasColumnType("int");
+                    b.Property<string>("MedicalTrainingType")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ProviderId")
                         .HasColumnType("int");
@@ -656,14 +659,14 @@ namespace SalesforceAPI.Migrations
                     b.Property<bool?>("FileUploaded")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("LicenseCertificationStatus")
-                        .HasColumnType("int");
+                    b.Property<string>("LicenseCertificationStatus")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LicenseCertificationType")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("LicenseTypesLARA")
-                        .HasColumnType("int");
+                    b.Property<string>("LicenseTypesLARA")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ProviderId")
                         .HasColumnType("int");
@@ -705,8 +708,8 @@ namespace SalesforceAPI.Migrations
                     b.Property<bool?>("IchatBackgroundheck")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("LARALicense")
-                        .HasColumnType("int");
+                    b.Property<string>("LARALicense")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool?>("LARAUploaded")
                         .HasColumnType("bit");
@@ -747,8 +750,8 @@ namespace SalesforceAPI.Migrations
                     b.Property<bool?>("SAMgovheck")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("VerifiersredentialingOrganization")
-                        .HasColumnType("int");
+                    b.Property<string>("VerifiersredentialingOrganization")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool?>("WorkforceBackgroundheck")
                         .HasColumnType("bit");

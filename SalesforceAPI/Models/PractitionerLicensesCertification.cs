@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization;
+using static SalesforceAPI.Dtos.PractitionerLicensesCertificationDto;
 
 namespace SalesforceAPI.Models
 {
@@ -11,8 +13,9 @@ namespace SalesforceAPI.Models
         public string? CredentialingProfileId { get; set; }
         public DateTime? ExpirationDate { get; set; }
         public bool? FileUploaded { get; set; }
-        public string? LicenseCertificationStatus { get; set; }
+        public LicenseCertificationStatusEnum? LicenseCertificationStatus { get; set; }
         public string? LicenseCertificationType { get; set; }
-        public string? LicenseTypesLARA { get; set; }
+        public LicenseTypesLARAEnum? LicenseTypesLARA { get; set; }
+        
     }
 }

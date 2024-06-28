@@ -1,8 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using static SalesforceAPI.Dtos.OrganizationalPrimarySourceVerificationDto;
+using static SalesforceAPI.Dtos.PractitionerPrimarySourceVerificationDto;
 
 namespace SalesforceAPI.Models
 {
-    public class PrimarySourceVerification
+    public class PractitionerPrimarySourceVerification
     {
         [Key]
         public int Id { get; set; }
@@ -11,12 +13,12 @@ namespace SalesforceAPI.Models
         public string? PrimarySourceVerifier { get; set; }
         public bool? CVO { get; set; }
         public string? OtherAccred { get; set; }
-        public string? VerifiersredentialingOrganization { get; set; }
+        public VerifiersCredentialingOrganizationEnum? VerifiersredentialingOrganization { get; set; }
         public bool? IchatBackgroundheck { get; set; }
         public bool? WorkforceBackgroundheck { get; set; }
         public bool? MedicareBaseEnrollment { get; set; }
         public bool? MedicareOptOut { get; set; }
-        public string? LARALicense { get; set; }
+        public LARALicenseCEnum? LARALicense { get; set; }
         public bool? LARAUploaded { get; set; }
         public bool? OfficialTranscriptfromAccreditedScho { get; set; }
         public bool? DegreeVerification { get; set; }
