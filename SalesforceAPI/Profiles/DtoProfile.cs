@@ -8,6 +8,13 @@ namespace SalesforceAPI.Profiles
     {
         public DtoProfile()
         {
+            CreateMap<PractitionerFull, PractitionerFullDto>();
+            CreateMap<PractitionerFullDto, PractitionerFull>();
+
+            CreateMap<OrganizationFull, OrganizationFullDto>();
+            CreateMap<OrganizationFullDto, OrganizationFull>();
+
+
             CreateMap<CredentialingContact, CredentialingContactDto>()
                 .ForMember(dest => dest.Contact_First_Name__c, opt => opt.MapFrom(src => src.ContactFirstName))
                 .ForMember(dest => dest.Contact_Last_Name__c, opt => opt.MapFrom(src => src.ContactLastName))
@@ -43,7 +50,7 @@ namespace SalesforceAPI.Profiles
                 .ForMember(dest => dest.Service__c, opt => opt.MapFrom(src => src.Service))
                 .ForMember(dest => dest.is_Certification__c, opt => opt.MapFrom(src => src.IsCertification));        
 
-            CreateMap<OrganizationalPrimarySourceVerification, OrganizationalPrimarySourceVerificationDto>()
+            CreateMap<OrganizationalPSV, OrganizationalPSVDto>()
                 .ForMember(dest => dest.Credentialing_Profile__c, opt => opt.MapFrom(src => src.CredentialingProfile))
                 .ForMember(dest => dest.Primary_Source_Verifier__c, opt => opt.MapFrom(src => src.PrimarySourceVerifier))
                 .ForMember(dest => dest.CVO__c, opt => opt.MapFrom(src => src.CVO))
@@ -59,7 +66,7 @@ namespace SalesforceAPI.Profiles
                 .ForMember(dest => dest.Office_of_Inspector_General_Check__c, opt => opt.MapFrom(src => src.OfficeofInspectorGeneralCheck))
                 .ForMember(dest => dest.SAM_gov_Check__c, opt => opt.MapFrom(src => src.SAMgovCheck));
 
-            CreateMap<OrganizationalCredentialingProfile, OrganizationalCredentialingProfileDto>()
+            CreateMap<OrganizationalCP, OrganizationalCPDto>()
                 .ForMember(dest => dest.Accreditation_End__c, opt => opt.MapFrom(src => src.AccreditationEnd))
                 .ForMember(dest => dest.Accreditation_Start__c, opt => opt.MapFrom(src => src.AccreditationStart))
                 .ForMember(dest => dest.Accrediting_Body__c, opt => opt.MapFrom(src => src.AccreditingBody))
@@ -150,7 +157,7 @@ namespace SalesforceAPI.Profiles
                 .ForMember(dest => dest.Start_Date_of_Affiliation__c, opt => opt.MapFrom(src => src.StartDateofAffiliation))
                 .ForMember(dest => dest.End_Date_of_Affiliation__c, opt => opt.MapFrom(src => src.EndDateofAffiliation));
 
-            CreateMap<PostGraduateMedicalTraining, PostGraduateMedicalTrainingDto>()
+            CreateMap<PGMedicalTraining, PGMedicalTrainingDto>()
                 .ForMember(dest => dest.Credentialing_Profile_Id__c, opt => opt.MapFrom(src => src.CredentialingProfileId))
                 .ForMember(dest => dest.Medical_Training_Hospital_Address__c, opt => opt.MapFrom(src => src.MedicalTrainingHospitalAddress))
                 .ForMember(dest => dest.Medical_Training_Hospital_Name__c, opt => opt.MapFrom(src => src.MedicalTrainingHospitalName))
@@ -159,7 +166,7 @@ namespace SalesforceAPI.Profiles
                 .ForMember(dest => dest.Training_End_Date__c, opt => opt.MapFrom(src => src.TrainingEndDate))
                 .ForMember(dest => dest.Training_Start_Date__c, opt => opt.MapFrom(src => src.TrainingStartDate));
 
-            CreateMap<PractitionerLicensesCertification, PractitionerLicensesCertificationDto>()
+            CreateMap<PractitionerLC, PractitionerLCDto>()
                 .ForMember(dest => dest.RecordTypeId, opt => opt.MapFrom(src => src.RecordTypeId))
                 .ForMember(dest => dest.Credentialing_Profile_Id__c, opt => opt.MapFrom(src => src.CredentialingProfileId))
                 .ForMember(dest => dest.Expiration_Date__c, opt => opt.MapFrom(src => src.ExpirationDate))
@@ -168,7 +175,7 @@ namespace SalesforceAPI.Profiles
                 .ForMember(dest => dest.LicenseCertification_Type__c, opt => opt.MapFrom(src => src.LicenseCertificationType))
                 .ForMember(dest => dest.License_Types_LARA__c, opt => opt.MapFrom(src => src.LicenseTypesLARA));
 
-            CreateMap<PractitionerPrimarySourceVerification, PractitionerPrimarySourceVerificationDto>()
+            CreateMap<PractitionerPSV, PractitionerPSVDto>()
                 .ForMember(dest => dest.Credentialing_Profile__c, opt => opt.MapFrom(src => src.CredentialingProfile))
                 .ForMember(dest => dest.Primary_Source_Verifier_c, opt => opt.MapFrom(src => src.PrimarySourceVerifier))
                 .ForMember(dest => dest.CVO__c, opt => opt.MapFrom(src => src.CVO))
@@ -192,7 +199,7 @@ namespace SalesforceAPI.Profiles
                 .ForMember(dest => dest.MI_Public_Sex_Offender_Registry_Check__c, opt => opt.MapFrom(src => src.MIPublicSexOffenderRegistryheck))
                 .ForMember(dest => dest.ECFMG__c, opt => opt.MapFrom(src => src.ECFMG));
 
-            CreateMap<PractitionerCredentialingProfile, PractitionerCredentialingProfileDto>()
+            CreateMap<PractitionerCP, PractitionerCPDto>()
                 .ForMember(dest => dest.First_Name__c, opt => opt.MapFrom(src => src.FirstName))
                 .ForMember(dest => dest.Last_Name__c, opt => opt.MapFrom(src => src.LastName))
                 .ForMember(dest => dest.Date_of_Birth__c, opt => opt.MapFrom(src => src.DateofBirth))

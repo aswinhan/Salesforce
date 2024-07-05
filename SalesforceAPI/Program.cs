@@ -3,6 +3,8 @@ using Newtonsoft.Json.Converters;
 using SalesforceAPI.Controllers.Services;
 using SalesforceAPI.Data;
 using SalesforceAPI.Profiles;
+using SalesforceAPI.Repository.IRepostiory;
+using SalesforceAPI.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +20,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<ProviderService>();
+builder.Services.AddScoped<IPractitionerRepository, PractitionerRepository>();
+builder.Services.AddScoped<IOrganizationRepository, OrganizationRepository>();
 builder.Services.AddAutoMapper(typeof(DtoProfile));
 
 builder.Services.AddEndpointsApiExplorer();

@@ -1,0 +1,24 @@
+﻿@model SalesforceWeb.Dtos.OrganizationFullDto
+
+<form asp-action="GetOrganization">
+    <br />
+    <div class="container border p-3">
+        <h1 class="text-primary">Get Organization</h1>
+        <hr />
+        <div class="row">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="col-2">
+                <label asp-for="OrganizationalCPDtos.Medicare_Number__c" class="control-label pt-2" style="font-size:20px;"></label>
+            </div>
+            <div class="col-10 pb-3">
+                <input asp-for="OrganizationalCPDtos.Medicare_Number__c" class="form-control" />
+                <span asp-validation-for="OrganizationalCPDtos.Medicare_Number__c" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
