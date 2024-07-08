@@ -1,0 +1,1124 @@
+﻿@model SalesforceWeb.Dtos.OrganizationFullDto;
+
+@{
+    ViewData["Title"] = "Organization";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row pb-4">
+    <div class="col-md-12 stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h6 class="card-title">Organization CVO & PSV Form</h6>
+                <form asp-controller="Organization" asp-action="Index" method="post">
+                    <div class="row text-center">
+                        <div class="col-sm-4"></div><!-- Col -->
+                        <div class="col-sm-4">
+                            <div class="mb-3">
+                                <label class="form-label">Credentialing Profile Id</label>
+                                <input type="text" class="form-control" placeholder="Enter Credentialing Profile Id" name="credentialProfileId" value="@ViewBag.credentialProfileId" />
+                            </div>
+                        </div><!-- Col -->
+                        <div class="col-sm-4"></div><!-- Col -->
+                    </div><!-- Row -->
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary" id="GetOrganization">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (Model == null)
+{
+}
+else
+{
+    <form>
+        <div class="row pb-4">
+            <div class="col-md-12 stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h6 class="card-title">Accounts & Service Details</h6>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Related Accounts</label>
+                                    <select class="js-example-basic-single form-select" data-width="100%" id="relatedAccounts" name="relatedAccounts">
+                                        <option value="">-- Select Related Accounts --</option>
+                                        @foreach (var item in ViewBag.AccountList)
+                                        {
+                                            <option value="@item.Value">@item.Text</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Service Listings</label>
+                                    <select class="js-example-basic-single form-select" data-width="100%" id="serviceListing" name="serviceListing">
+                                        <option value="">-- Select Service --</option>
+                                        @foreach (var item in ViewBag.ServiceList)
+                                        {
+                                            <option value="@item.Value">@item.Text</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row pb-4">
+            <div class="col-md-12 stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h6 class="card-title">Credentialing Profile Details</h6>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Accrediting Body</label>
+                                    <select class="js-example-basic-single form-select" data-width="100%">
+                                        <option Value="0" selected>Zero</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Accreditation Start Date</label>
+                                    <input type="date" class="form-control" value="@Model.OrganizationalCPDtos.Accreditation_Start__c?.ToString("yyyy-MM-dd")">
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Accreditation End Date</label>
+                                    <input type="date" class="form-control" value="@Model.OrganizationalCPDtos.Accreditation_End__c?.ToString("yyyy-MM-dd")">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <input type="checkbox" class="form-check-input" id="checkProofAccredStatus"
+                                    @(Model.OrganizationalCPDtos.Proof_of_Accreditation_Status__c == true ? "checked" : "")>
+                                    <label class="form-label">Proof of Accreditation Status</label>
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">When was the last accreditation survey</label>
+                                    <input type="date" class="form-control" value="@Model.OrganizationalCPDtos.When_was_the_last_accreditation_survey__c?.ToString("yyyy-MM-dd")">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Date of Birth</label>
+                                    <input type="date" class="form-control" value="@Model.OrganizationalCPDtos.Date_of_Birth__c?.ToString("yyyy-MM-dd")">
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Tax ID</label>
+                                    <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.Tax_ID__c">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="mb-3">
+                                    <input type="checkbox" class="form-check-input" id="checkMedicareProvider"
+                                    @(Model.OrganizationalCPDtos.Medicare_Provider__c == true ? "checked" : "")>
+                                    <label class="form-label">Medicare Provider</label>
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-4">
+                                <div class="mb-3">
+                                    <label class="form-label">Medicare Number</label>
+                                    <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.Medicare_Number__c">
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-4">
+                                <div class="mb-3">
+                                    <label class="form-label">Practitioner NPI</label>
+                                    <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.Practitioner_NPI__c">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="mb-3">
+                                    <label class="form-label">Office Address Street</label>
+                                    <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.Office_Address_Street_1__c">
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-3">
+                                <div class="mb-3">
+                                    <label class="form-label">Office Address City</label>
+                                    <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.Office_Address_City__c">
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-3">
+                                <div class="mb-3">
+                                    <label class="form-label">Office Address State</label>
+                                    <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.Office_Address_State__c">
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-3">
+                                <div class="mb-3">
+                                    <label class="form-label">Office Address Zipcode</label>
+                                    <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.Office_Address_Zipcode__c">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="mb-3">
+                                    <label class="form-label">Home Address Street</label>
+                                    <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.Home_Address_Street_1__c">
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-3">
+                                <div class="mb-3">
+                                    <label class="form-label">Home Address City</label>
+                                    <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.Home_Address_City__c">
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-3">
+                                <div class="mb-3">
+                                    <label class="form-label">Home Address State</label>
+                                    <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.Home_Address_State__c">
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-3">
+                                <div class="mb-3">
+                                    <label class="form-label">Home Address Zipcode</label>
+                                    <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.Home_Address_Zipcode__c">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Specialties</label>
+                                    <select class="js-example-basic-single form-select" data-width="100%">
+                                        <option Value="0" selected>Zero</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Other Specialty</label>
+                                    <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.Specialty_Other__c">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <input type="checkbox" class="form-check-input" id="checkCertificateLiability"
+                                    @(Model.OrganizationalCPDtos.Certificate_of_Liability__c == true ? "checked" : "")>
+                                    <label class="form-label">Certificate of Liability</label>
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Certificate of Liability Expiration Date</label>
+                                    <input type="date" class="form-control" value="@Model.OrganizationalCPDtos.Certificate_of_Liability_Expiration_Date__c?.ToString("yyyy-MM-dd")">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Languages Spoken</label>
+                                    <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.Languages_Spoken__c">
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Cultural Competences</label>
+                                    <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.Cultural_Competences__c">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="mb-3">
+                                    <label class="form-label">X6-Month Gap in Employment Since Profession</label>
+                                    <select class="js-example-basic-single form-select" data-width="100%">
+                                        <option Value="0" selected>Zero</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-4">
+                                <div class="mb-3">
+                                    <label class="form-label">X6-Month Gap Start Date</label>
+                                    <input type="date" class="form-control" value="@Model.OrganizationalCPDtos.X6_Month_Gap_Start_Date__c?.ToString("yyyy-MM-dd")">
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-4">
+                                <div class="mb-3">
+                                    <label class="form-label">X6-Month Gap End Date</label>
+                                    <input type="date" class="form-control" value="@Model.OrganizationalCPDtos.X6_Month_Gap_End_Date__c?.ToString("yyyy-MM-dd")">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">X6-Month Gap Activity</label>
+                                    <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.X6_Month_Gap_Activity__c">
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">X6-Month Gap Reason</label>
+                                    <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.X6_Month_Gap_Reason__c">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <input type="checkbox" class="form-check-input" id="checkacknowledgeDeniedCredential"
+                                    @(Model.OrganizationalCPDtos.Please_acknowledge_If_denied_credential__c == true ? "checked" : "")>
+                                    <label class="form-label">Please Acknowledge if Denied Credential</label>
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Can You Perform the Essential Duties</label>
+                                    <select class="js-example-basic-single form-select" data-width="100%">
+                                        <option Value="0" selected>Zero</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Lack of Present Illegal Drug Use</label>
+                                    <select class="js-example-basic-single form-select" data-width="100%">
+                                        <option Value="0" selected>Zero</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">History of Loss of License</label>
+                                    <select class="js-example-basic-single form-select" data-width="100%">
+                                        <option Value="0" selected>Zero</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">History of Felony Convictions</label>
+                                    <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.History_of_felony_convictions__c">
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Explanation History of Felony Convictions</label>
+                                    <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.ExplanationHistory_of_felony_convictions__c">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">History of Loss or Limitations of Privileges</label>
+                                    <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.History_of_loss_or_limitations_of_privil__c">
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Current Malpractice Insurance Coverage</label>
+                                    <select class="js-example-basic-single form-select" data-width="100%">
+                                        <option Value="0" selected>Zero</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Attestation by the Applicant</label>
+                                    <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.Attestation_by_the_applicant_of_the_corr__c">
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Cultural Competencies Picklist</label>
+                                    <select class="js-example-basic-single form-select" data-width="100%">
+                                        <option Value="0" selected>Zero</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Office Phone Number</label>
+                                    <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.Office_Phone_Number__c">
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Email</label>
+                                    <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.Email__c">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">W9 Expiration</label>
+                                    <input type="date" class="form-control" value="@Model.OrganizationalCPDtos.W9_Expiration__c?.ToString("yyyy-MM-dd")">
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">W9 Status</label>
+                                    <select class="js-example-basic-single form-select" data-width="100%">
+                                        <option Value="0" selected>Zero</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Disclosure Form Expiration</label>
+                                    <input type="date" class="form-control" value="@Model.OrganizationalCPDtos.Disclosure_Form_Expiration__c?.ToString("yyyy-MM-dd")">
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Professional Liability Expiration</label>
+                                    <input type="date" class="form-control" value="@Model.OrganizationalCPDtos.Professional_Liability_Expiration__c?.ToString("yyyy-MM-dd")">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Commercial Liability Expiration</label>
+                                    <input type="date" class="form-control" value="@Model.OrganizationalCPDtos.Commercial_Liability_Expiration__c?.ToString("yyyy-MM-dd")">
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Workers Compensation Expiration</label>
+                                    <input type="date" class="form-control" value="@Model.OrganizationalCPDtos.Workers_Compensation_Expiration__c?.ToString("yyyy-MM-dd")">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Five year history org liability</label>
+                                    <select class="js-example-basic-single form-select" data-width="100%">
+                                        <option Value="0" selected>Zero</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Explanation five year history</label>
+                                    <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.Explanation_five_year_history__c">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Action pending org license</label>
+                                    <select class="js-example-basic-single form-select" data-width="100%">
+                                        <option Value="0" selected>Zero</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Explanation org license</label>
+                                    <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.Explanation_org_license__c">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Org accreditation limited</label>
+                                    <select class="js-example-basic-single form-select" data-width="100%">
+                                        <option Value="0" selected>Zero</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Explanation org accreditation limited</label>
+                                    <select class="js-example-basic-single form-select" data-width="100%">
+                                        <option Value="0" selected>Zero</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Action pending current accreditation</label>
+                                    <select class="js-example-basic-single form-select" data-width="100%">
+                                        <option Value="0" selected>Zero</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Explanation current accreditation</label>
+                                    <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.Explanation_current_accreditation__c">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Org medicaid sanctions</label>
+                                    <select class="js-example-basic-single form-select" data-width="100%">
+                                        <option Value="0" selected>Zero</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Org medicare sanctions</label>
+                                    <select class="js-example-basic-single form-select" data-width="100%">
+                                        <option Value="0" selected>Zero</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Explanation org medicaid sanctions</label>
+                                    <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.Explanation_org_medicaid_sanctions__c">
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Explanation org medicare sanctions</label>
+                                    <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.Explanation_org_medicare_sanctions__c">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Org insurance initially refused</label>
+                                    <select class="js-example-basic-single form-select" data-width="100%">
+                                        <option Value="0" selected>Zero</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Explanation org insurance initially refused</label>
+                                    <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.Explanation_org_insurance_initially_refu__c">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Org defendant SUD payment</label>
+                                    <select class="js-example-basic-single form-select" data-width="100%">
+                                        <option Value="0" selected>Zero</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Explanation org defendant SUD payment</label>
+                                    <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.Explanation_org_defendant_SUD_payment__c">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Org malpractice claims SUD</label>
+                                    <select class="js-example-basic-single form-select" data-width="100%">
+                                        <option Value="0" selected>Zero</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Explanation org malpractice claims SUD</label>
+                                    <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.Explanation_org_malpractice_claims_SUD__c">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <input type="checkbox" class="form-check-input" id="checkIndicateSpeciality"
+                                    @(Model.OrganizationalCPDtos.Please_indicate_if_you_have_a_speciality__c == true ? "checked" : "")>
+                                    <label class="form-label">Please indicate if you have a speciality</label>
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <input type="checkbox" class="form-check-input" id="checkProofAccreditation"
+                                    @(Model.OrganizationalCPDtos.Proof_of_Accreditation__c == true ? "checked" : "")>
+                                    <label class="form-label">Proof of Accreditation</label>
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <input type="checkbox" class="form-check-input" id="checkCyberLiability"
+                                    @(Model.OrganizationalCPDtos.Cyber_Liability_if_applicable__c == true ? "checked" : "")>
+                                    <label class="form-label">Cyber Liability (if applicable)</label>
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <input type="checkbox" class="form-check-input" id="checkCommercialLiability"
+                                    @(Model.OrganizationalCPDtos.Commercial_Liability__c == true ? "checked" : "")>
+                                    <label class="form-label">Commercial Liability</label>
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Proof of Accreditation Expiration</label>
+                                    <input type="date" class="form-control" value="@Model.OrganizationalCPDtos.Proof_of_Accreditation_Expiration__c?.ToString("yyyy-MM-dd")">
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Cyber Liability Expiration if applicable</label>
+                                    <input type="date" class="form-control" value="@Model.OrganizationalCPDtos.Cyber_Liability_Expiration_if_applicabl__c?.ToString("yyyy-MM-dd")">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Cyber Liability Status (if applicable)</label>
+                                    <select class="js-example-basic-single form-select" data-width="100%">
+                                        <option Value="0" selected>Zero</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Disclosure Form Status</label>
+                                    <select class="js-example-basic-single form-select" data-width="100%">
+                                        <option Value="0" selected>Zero</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row pb-4">
+            <div class="col-md-12 stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h6 class="card-title">Credentialing Contact Details</h6>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Contact First Name</label>
+                                    <input type="text" class="form-control" value="@Model.CredentialingContactDtos.Contact_First_Name__c">
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Contact Last Name</label>
+                                    <input type="text" class="form-control" value="@Model.CredentialingContactDtos.Contact_Last_Name__c">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Contact Email</label>
+                                    <input type="text" class="form-control" value="@Model.CredentialingContactDtos.Contact_Email__c">
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Contact Phone</label>
+                                    <input type="text" class="form-control" value="@Model.CredentialingContactDtos.Contact_Phone__c">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Contact Person Role</label>
+                                    <select class="js-example-basic-single form-select" data-width="100%">
+                                        <option Value="0" selected>Zero</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <input type="checkbox" class="form-check-input" id="checkPrimaryContact"
+                                    @(Model.CredentialingContactDtos.Primary_Contact__c == true ? "checked" : "")>
+                                    <label class="form-label">Primary Contact</label>
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row pb-4">
+            <div class="col-md-12 stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h6 class="card-title">Service Location Details</h6>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Account Site</label>
+                                    <input type="text" class="form-control" value="@Model.ServiceLocationDtos.Account_Site__c">
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Hours of Operation</label>
+                                    <input type="text" class="form-control" value="@Model.ServiceLocationDtos.Hours_of_Operation__c">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Facility License Number (If Applicable)</label>
+                                    <input type="text" class="form-control" value="@Model.ServiceLocationDtos.Facility_License_if_applicable__c">
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Facility License Status (If Applicable)</label>
+                                    <select class="js-example-basic-single form-select" data-width="100%">
+                                        <option Value="0" selected>Zero</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Accomodations Accessibility</label>
+                                    <select class="js-example-basic-single form-select" data-width="100%">
+                                        <option Value="0" selected>Zero</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Accomodations Accessibility Other</label>
+                                    <input type="text" class="form-control" value="@Model.ServiceLocationDtos.Accomodations_Accessibility_Other__c">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Facility License Expiration (If Applicable)</label>
+                                    <input type="date" class="form-control" value="@Model.ServiceLocationDtos.Facility_License_Expiration_if_applicab__c?.ToString("yyyy-MM-dd")">
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Facility License (If Applicable)</label>
+                                    <input type="text" class="form-control" value="@Model.ServiceLocationDtos.Facility_License_if_applicable__c">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <input type="checkbox" class="form-check-input" id="checkLicencedFacility"
+                                    @(Model.ServiceLocationDtos.Licensed_Facility__c == true ? "checked" : "")>
+                                    <label class="form-label">Licensed Facility</label>
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row pb-4">
+            <div class="col-md-12 stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h6 class="card-title">Direct Service Details</h6>
+
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="mb-3">
+                                    <label class="form-label">Operator</label>
+                                    <input type="text" class="form-control" value="@Model.DirectServiceDtos.Operator__c">
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-4">
+                                <div class="mb-3">
+                                    <label class="form-label">Service</label>
+                                    <input type="text" class="form-control" value="@Model.DirectServiceDtos.Service__c">
+                                </div>
+                            </div><!-- Col -->
+
+                            <div class="col-sm-4">
+                                <div class="mb-3">
+                                    <input type="checkbox" class="form-check-input" id="checkIsCertification"
+                                    @(Model.DirectServiceDtos.is_Certification__c == true ? "checked" : "")>
+                                    <label class="form-label">Is Certification</label>
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row pb-4">
+            <div class="col-md-12 stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h6 class="card-title">Service Location Licence Details</h6>
+
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="mb-3">
+                                    <label class="form-label">Service License Number (If Applicable)</label>
+                                    <input type="text" class="form-control" value="@Model.ServiceLocationLicenseDtos.Service_License_Number_if_applicable__c">
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-4">
+                                <div class="mb-3">
+                                    <label class="form-label">Service License Status (If Applicable)</label>
+                                    <select class="js-example-basic-single form-select" data-width="100%">
+                                        <option Value="0" selected>Zero</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-4">
+                                <div class="mb-3">
+                                    <label class="form-label">Service License Expiration (If Applicable)</label>
+                                    <input type="date" class="form-control" value="@Model.ServiceLocationLicenseDtos.Service_License_Expiration_if_applicabl__c?.ToString("yyyy-MM-dd")">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row pb-4">
+            <div class="col-md-12 stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h6 class="card-title">Primary Source Verification Details</h6>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Verifier's Credentialing Organization</label>
+                                    <select class="js-example-basic-single form-select" data-width="100%">
+                                        <option Value="0" selected>Zero</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Other Accred</label>
+                                    <input type="text" class="form-control" value="@Model.OrganizationalPSVDtos.Other_Accred__c">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">LARA License</label>
+                                    <select class="js-example-basic-single form-select" data-width="100%">
+                                        <option Value="0" selected>Zero</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <input type="checkbox" class="form-check-input" id="checkLARAUpload"
+                                    @(Model.OrganizationalPSVDtos.LARA_Uploaded__c == true ? "checked" : "")>
+                                    <label class="form-label">LARA Uploaded</label>
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <input type="checkbox" class="form-check-input" id="checkCVO"
+                                    @(Model.OrganizationalPSVDtos.CVO__c == true ? "checked" : "")>
+                                    <label class="form-label">CVO</label>
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <input type="checkbox" class="form-check-input" id="checkProofofAccreditation"
+                                    @(Model.OrganizationalPSVDtos.Proof_of_Accreditation__c == true ? "checked" : "")>
+                                    <label class="form-label">Proof of Accreditation</label>
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <input type="checkbox" class="form-check-input" id="checkDisciplinarystatus"
+                                    @(Model.OrganizationalPSVDtos.Disciplinary_status_with_regulatory_boar__c == true ? "checked" : "")>
+                                    <label class="form-label">Disciplinary status with regulatory board</label>
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <input type="checkbox" class="form-check-input" id="checkMDHHS"
+                                    @(Model.OrganizationalPSVDtos.MDHHS_Sanctioned_Provider_Check__c == true ? "checked" : "")>
+                                    <label class="form-label">MDHHS Sanctioned Provider Check</label>
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <input type="checkbox" class="form-check-input" id="checkFiveyearhistory"
+                                    @(Model.OrganizationalPSVDtos.At_least_five_year_history_of_organizati__c == true ? "checked" : "")>
+                                    <label class="form-label">Atleast five year history of organization</label>
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <input type="checkbox" class="form-check-input" id="checkOnSiteQualityAssessment"
+                                    @(Model.OrganizationalPSVDtos.On_Site_Quality_Assessment_Recredential__c == true ? "checked" : "")>
+                                    <label class="form-label">OnSite Quality Assessment Recredential</label>
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <input type="checkbox" class="form-check-input" id="checkOfficeInspectorGeneral"
+                                    @(Model.OrganizationalPSVDtos.Office_of_Inspector_General_Check__c == true ? "checked" : "")>
+                                    <label class="form-label">Office of Inspector General Check</label>
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <input type="checkbox" class="form-check-input" id="checkSamGov"
+                                    @(Model.OrganizationalPSVDtos.SAM_gov_Check__c == true ? "checked" : "")>
+                                    <label class="form-label">SAM.gov Check</label>
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="text-center pt-4">
+                            <button type="button" class="btn btn-primary" id="GenerateJson">Generate Json</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div class="row pb-4">
+        <div class="col-md-12 stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">Content Version Details</h6>
+
+                    <div id="rowsContainer"></div>
+                    <button id="addRowBtn" class="btn btn-primary mt-3">Add</button>
+                    <button id="removeRowBtn" class="btn btn-danger mt-3">Remove</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row pb-4">
+        <div class="col-md-12 stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">JSON Result Editor</h6>
+                    <form asp-controller="Organization" asp-action="PostCompositeOrganization" method="post" id="postOrganizationForm">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="mb-3">
+                                    <textarea id="jsonEditor" name="jsonBody" class="form-control" rows="10"></textarea>
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="text-center pt-4">
+                            <button type="submit" class="btn btn-primary">Post Json Result</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}

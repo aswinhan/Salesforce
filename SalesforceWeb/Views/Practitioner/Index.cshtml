@@ -1,0 +1,807 @@
+﻿@model SalesforceWeb.Dtos.PractitionerFullDto
+@{
+    ViewData["Title"] = "Practitioner";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row pb-4">
+    <div class="col-md-12 stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h6 class="card-title">Practitioner CVO & PSV Form</h6>
+                <form asp-controller="Practitioner" asp-action="Index" method="post">
+                    <div class="row text-center">
+                        <div class="col-sm-4"></div><!-- Col -->
+                        <div class="col-sm-4">
+                            <div class="mb-3">
+                                <label class="form-label">Credentialing Profile Id</label>
+                                <input type="text" class="form-control" placeholder="Enter Credentialing Profile Id" name="credentialProfileId" value="@ViewBag.credentialProfileId" />
+                            </div>
+                        </div><!-- Col -->
+                        <div class="col-sm-4"></div><!-- Col -->
+                    </div><!-- Row -->
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (Model == null)
+{
+
+}
+else
+{
+    <form>
+
+        <div class="row pb-4">
+            <div class="col-md-12 stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h6 class="card-title">Credentialing Profile Details</h6>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">First Name</label>
+                                    <input type="text" class="form-control" value="@Model.PractitionerCPDtos.First_Name__c">
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Last Name</label>
+                                    <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Last_Name__c">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Date of Birth</label>
+                                    <input type="date" class="form-control" value="@Model.PractitionerCPDtos.Date_of_Birth__c?.ToString("yyyy-MM-dd")">
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Tax ID</label>
+                                    <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Tax_ID__c">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="mb-3">
+                                    <input type="checkbox" class="form-check-input" id="checkMedicareProvider"
+                                    @(Model.PractitionerCPDtos.Medicare_Provider__c == true ? "checked" : "")>
+                                    <label class="form-label" for="checkDefault">
+                                        Medicare Provider
+                                    </label>
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-4">
+                                <div class="mb-3">
+                                    <label class="form-label">Medicare Number</label>
+                                    <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Medicare_Number__c">
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-4">
+                                <div class="mb-3">
+                                    <label class="form-label">Practitioner NPI</label>
+                                    <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Practitioner_NPI__c">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="mb-3">
+                                    <label class="form-label">Office Address Street</label>
+                                    <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Office_Address_Street_1__c">
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-3">
+                                <div class="mb-3">
+                                    <label class="form-label">Office Address City</label>
+                                    <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Office_Address_City__c">
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-3">
+                                <div class="mb-3">
+                                    <label class="form-label">Office Address State</label>
+                                    <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Office_Address_State__c">
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-3">
+                                <div class="mb-3">
+                                    <label class="form-label">Office Address Zipcode</label>
+                                    <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Office_Address_Zipcode__c">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="mb-3">
+                                    <label class="form-label">Home Address Street</label>
+                                    <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Home_Address_Street_1__c">
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-3">
+                                <div class="mb-3">
+                                    <label class="form-label">Home Address City</label>
+                                    <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Home_Address_City__c">
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-3">
+                                <div class="mb-3">
+                                    <label class="form-label">Home Address State</label>
+                                    <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Home_Address_State__c">
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-3">
+                                <div class="mb-3">
+                                    <label class="form-label">Home Address Zipcode</label>
+                                    <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Home_Address_Zipcode__c">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Specialties</label>
+                                    <select class="js-example-basic-single form-select" data-width="100%">
+                                        <option Value="0" selected>Zero</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Other Specialty</label>
+                                    <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Other_Specialty__c">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <input type="checkbox" class="form-check-input" id="checkCertificateofLiability"
+                                    @(Model.PractitionerCPDtos.Certificate_of_Liability__c == true ? "checked" : "")>
+                                    <label class="form-label">Certificate of Liability</label>
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Certificate of Liability Expiration Date</label>
+                                    <input type="date" class="form-control" value="@Model.PractitionerCPDtos.Certificate_of_Liability_Expiration_Date__c?.ToString("yyyy-MM-dd")">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Current Malpractice Insurance Coverage</label>
+                                    <select class="js-example-basic-single form-select" data-width="100%">
+                                        <option Value="0" selected>Zero</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Malpractice Insurance Coverage Status</label>
+                                    <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Malpractice_Insurance_Coverage_Status__c">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Explanation Current Malpractice</label>
+                                    <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Explanation_Current_Malpractice__c">
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Malpractice Insurance Coverage Expiration</label>
+                                    <input type="date" class="form-control" value="@Model.PractitionerCPDtos.MalpracticeInsurance_Coverage_Expiration__c?.ToString("yyyy-MM-dd")">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Languages Spoken</label>
+                                    <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Languages_Spoken__c">
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Cultural Competences</label>
+                                    <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Cultural_Competences__c">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="mb-3">
+                                    <label class="form-label">X6-Month Gap in Employment Since Profession</label>
+                                    <select class="js-example-basic-single form-select" data-width="100%">
+                                        <option Value="0" selected>Zero</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-4">
+                                <div class="mb-3">
+                                    <label class="form-label">X6-Month Gap Start Date</label>
+                                    <input type="date" class="form-control" value="@Model.PractitionerCPDtos.X6_Month_Gap_Start_Date__c?.ToString("yyyy-MM-dd")">
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-4">
+                                <div class="mb-3">
+                                    <label class="form-label">X6-Month Gap End Date</label>
+                                    <input type="date" class="form-control" value="@Model.PractitionerCPDtos.X6_Month_Gap_End_Date__c?.ToString("yyyy-MM-dd")">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">X6-Month Gap Activity</label>
+                                    <input type="text" class="form-control" value="@Model.PractitionerCPDtos.X6_Month_Gap_Activity__c">
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">X6-Month Gap Reason</label>
+                                    <input type="text" class="form-control" value="@Model.PractitionerCPDtos.X6_Month_Gap_Reason__c">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <input type="checkbox" class="form-check-input" id="checkFiveYearWorkHistory"
+                                    @(Model.PractitionerCPDtos.Five_year_work_history__c == true ? "checked" : "")>
+                                    <label class="form-label">Five-Year Work History</label>
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <input type="checkbox" class="form-check-input" id="checkAcknowledgeDeniedCredential"
+                                    @(Model.PractitionerCPDtos.Please_acknowledge_If_denied_credential__c == true ? "checked" : "")>
+                                    <label class="form-label">Please Acknowledge if Denied Credential</label>
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Can You Perform the Essential Duties</label>
+                                    <select class="js-example-basic-single form-select" data-width="100%">
+                                        <option Value="0" selected>Zero</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Reason for Inability to Perform Essential Duties</label>
+                                    <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Reason_for_inability_to_perform_essentia__c">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Lack of Present Illegal Drug Use</label>
+                                    <select class="js-example-basic-single form-select" data-width="100%">
+                                        <option Value="0" selected>Zero</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Explanation Lack of Present Illegal Drug Use</label>
+                                    <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Explanation_Lackofpresentillegaldrug__c">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">History of Loss of License</label>
+                                    <select class="js-example-basic-single form-select" data-width="100%">
+                                        <option Value="0" selected>Zero</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Explanation History of Loss of License</label>
+                                    <input type="text" class="form-control" value="@Model.PractitionerCPDtos.ExplanationHistoryoflossoflicense__c">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">History of Felony Convictions</label>
+                                    <input type="text" class="form-control" value="@Model.PractitionerCPDtos.History_of_felony_convictions__c">
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Explanation History of Felony Convictions</label>
+                                    <input type="text" class="form-control" value="@Model.PractitionerCPDtos.ExplanationHistory_of_felony_convictions__c">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">History of Loss or Limitations of Privileges</label>
+                                    <input type="text" class="form-control" value="@Model.PractitionerCPDtos.History_of_loss_or_limitations_of_privil__c">
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Explanation History of Loss or Limitations of Privileges</label>
+                                    <input type="text" class="form-control" value="@Model.PractitionerCPDtos.ExplanationHistory_of_loss__c">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Attestation by the Applicant</label>
+                                    <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Attestation_by_the_applicant_of_the_corr__c">
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Cultural Competencies Picklist</label>
+                                    <select class="js-example-basic-single form-select" data-width="100%">
+                                        <option Value="0" selected>Zero</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row pb-4">
+            <div class="col-md-12 stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h6 class="card-title">Education Details</h6>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">College/University Program Name</label>
+                                    <input type="text" class="form-control" value="@Model.EducationDtos.College_University_Program_Name__c">
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">College/University Program Address</label>
+                                    <input type="text" class="form-control" value="@Model.EducationDtos.College_University_Program_Address__c">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Degree</label>
+                                    <input type="text" class="form-control" value="@Model.EducationDtos.Degree__c">
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Graduation Date</label>
+                                    <input type="date" class="form-control" value="@Model.EducationDtos.Graduation_Date__c?.ToString("yyyy-MM-dd")">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row pb-4">
+            <div class="col-md-12 stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h6 class="card-title">Post Graduate Medical Training Details</h6>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Medical Training Hospital Name</label>
+                                    <input type="text" class="form-control" value="@Model.PGMedicalTrainingDtos.Medical_Training_Hospital_Name__c">
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Medical Training Hospital Address</label>
+                                    <input type="text" class="form-control" value="@Model.PGMedicalTrainingDtos.Medical_Training_Hospital_Address__c">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Medical Training Type</label>
+                                    <select class="js-example-basic-single form-select" data-width="100%">
+                                        <option Value="0" selected>Zero</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Specialty</label>
+                                    <input type="text" class="form-control" value="@Model.PGMedicalTrainingDtos.Specialty__c">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Training Start Date</label>
+                                    <input type="date" class="form-control" value="@Model.PGMedicalTrainingDtos.Training_Start_Date__c?.ToString("yyyy-MM-dd")">
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Training End Date</label>
+                                    <input type="date" class="form-control" value="@Model.PGMedicalTrainingDtos.Training_End_Date__c?.ToString("yyyy-MM-dd")">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row pb-4">
+            <div class="col-md-12 stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h6 class="card-title">Practitioner Licenses Certification Details</h6>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">License Certification Status</label>
+                                    <select class="js-example-basic-single form-select" data-width="100%">
+                                        <option Value="0" selected>Zero</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">License Certification Type</label>
+                                    <input type="text" class="form-control" value="@Model.PractitionerLCDtos.LicenseCertification_Type__c">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">License Types LARA</label>
+                                    <select class="js-example-basic-single form-select" data-width="100%">
+                                        <option Value="0" selected>Zero</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Expiration Date</label>
+                                    <input type="date" class="form-control" value="@Model.PractitionerLCDtos.Expiration_Date__c?.ToString("yyyy-MM-dd")">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <input type="checkbox" class="form-check-input" id="checkFileUploaded"
+                                    @(Model.PractitionerLCDtos.File_Uploaded__c == true ? "checked" : "")>
+                                    <label class="form-label">File Uploaded</label>
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row pb-4">
+            <div class="col-md-12 stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h6 class="card-title">Primary Source Verification Details</h6>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Verifier's Credentialing Organization</label>
+                                    <select class="js-example-basic-single form-select" data-width="100%">
+                                        <option Value="0" selected>Zero</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Other Accred</label>
+                                    <input type="text" class="form-control" value="@Model.practitionerPSVDtos.Other_Accred__c">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">LARA License</label>
+                                    <select class="js-example-basic-single form-select" data-width="100%">
+                                        <option Value="0" selected>Zero</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <input type="checkbox" class="form-check-input" id="checkLARAUploaded"
+                                    @(Model.practitionerPSVDtos.LARA_Uploaded__c == true ? "checked" : "")>
+                                    <label class="form-label">LARA Uploaded</label>
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <input type="checkbox" class="form-check-input" id="checkCVO"
+                                    @(Model.practitionerPSVDtos.CVO__c == true ? "checked" : "")>
+                                    <label class="form-label">CVO</label>
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <input type="checkbox" class="form-check-input" id="checkIchatBackground"
+                                    @(Model.practitionerPSVDtos.Ichat_Background_Check__c == true ? "checked" : "")>
+                                    <label class="form-label">ICHAT Background Check</label>
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <input type="checkbox" class="form-check-input" id="checkWorkforceBackground"
+                                    @(Model.practitionerPSVDtos.Workforce_Background_Check__c == true ? "checked" : "")>
+                                    <label class="form-label">Workforce Background Check</label>
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <input type="checkbox" class="form-check-input" id="checkMedicareBaseEnrollment"
+                                    @(Model.practitionerPSVDtos.Medicare_Base_Enrollment__c == true ? "checked" : "")>
+                                    <label class="form-label">Medicare Base Enrollment</label>
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <input type="checkbox" class="form-check-input" id="checkMedicareOptOut"
+                                    @(Model.practitionerPSVDtos.Medicare_Opt_Out__c == true ? "checked" : "")>
+                                    <label class="form-label">Medicare Opt Out</label>
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <input type="checkbox" class="form-check-input" id="checkOfficialTranscriptAccredited"
+                                    @(Model.practitionerPSVDtos.Official_Transcript_from_Accredited_Scho__c == true ? "checked" : "")>
+                                    <label class="form-label">Official Transcript from Accredited School</label>
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <input type="checkbox" class="form-check-input" id="checkDegreeVerification"
+                                    @(Model.practitionerPSVDtos.Degree_Verification__c == true ? "checked" : "")>
+                                    <label class="form-label">Degree Verification</label>
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <input type="checkbox" class="form-check-input" id="checkAMAVerification"
+                                    @(Model.practitionerPSVDtos.AMA_Verification__c == true ? "checked" : "")>
+                                    <label class="form-label">AMA Verification</label>
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <input type="checkbox" class="form-check-input" id="checkAOAVerification"
+                                    @(Model.practitionerPSVDtos.AOA_Verification__c == true ? "checked" : "")>
+                                    <label class="form-label">AOA Verification</label>
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <input type="checkbox" class="form-check-input" id="checkMDHHSSanctioned"
+                                    @(Model.practitionerPSVDtos.MDHHS_Sanctioned_Provider_Check__c == true ? "checked" : "")>
+                                    <label class="form-label">MDHHS Sanctioned Provider Check</label>
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <input type="checkbox" class="form-check-input" id="checkMCBAPVerification"
+                                    @(Model.practitionerPSVDtos.MCBAP_Verification__c == true ? "checked" : "")>
+                                    <label class="form-label">MCBAP Verification</label>
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <input type="checkbox" class="form-check-input" id="checkOfficeInspectorGeneral"
+                                    @(Model.practitionerPSVDtos.Office_of_Inspector_General_Check__c == true ? "checked" : "")>
+                                    <label class="form-label">Office of Inspector General Check</label>
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <input type="checkbox" class="form-check-input" id="checkSAMGov"
+                                    @(Model.practitionerPSVDtos.SAM_gov_Check__c == true ? "checked" : "")>
+                                    <label class="form-label">SAM.gov Check</label>
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <input type="checkbox" class="form-check-input" id="checkNationalSexOffenderRegistry"
+                                    @(Model.practitionerPSVDtos.National_Sex_Offender_Registry_Check__c == true ? "checked" : "")>
+                                    <label class="form-label">National Sex Offender Registry Check</label>
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <input type="checkbox" class="form-check-input" id="checkMIPublicSexOffenderRegistry"
+                                    @(Model.practitionerPSVDtos.MI_Public_Sex_Offender_Registry_Check__c == true ? "checked" : "")>
+                                    <label class="form-label">MI Public Sex Offender Registry Check</label>
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <input type="checkbox" class="form-check-input" id="checkECFMG"
+                                    @(Model.practitionerPSVDtos.ECFMG__c == true ? "checked" : "")>
+                                    <label class="form-label">ECFMG</label>
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="text-center pt-4">
+                            <button type="button" class="btn btn-primary" id="GenerateJson">Generate Json</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+    <div class="row pb-4">
+        <div class="col-md-12 stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">Content Version Details</h6>
+
+                    <div id="rowsContainer"></div>
+                    <button id="addRowBtn" class="btn btn-primary mt-3">Add</button>
+                    <button id="removeRowBtn" class="btn btn-danger mt-3">Remove</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row pb-4">
+        <div class="col-md-12 stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">JSON Result Editor</h6>
+                    <form asp-controller="Practitioner" asp-action="PostCompositePractitioner" method="post" id="postPractitionerForm">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="mb-3">
+                                    <textarea id="jsonEditor" name="jsonBody" class="form-control" rows="10"></textarea>
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="text-center pt-4">
+                            <button type="submit" class="btn btn-primary">Post Json Result</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+

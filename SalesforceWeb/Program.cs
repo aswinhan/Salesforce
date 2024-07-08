@@ -1,12 +1,16 @@
 using SalesforceWeb.Profiles;
 using SalesforceWeb.Services.IServices;
 using SalesforceWeb.Services;
+using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddAutoMapper(typeof(DtoProfile));
+
+builder.Services.AddHttpClient<OAuthService>();
+builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
 
 builder.Services.AddHttpClient<IPractitionerService, PractitionerService>();
 builder.Services.AddScoped<IPractitionerService, PractitionerService>();
