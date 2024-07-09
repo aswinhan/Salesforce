@@ -1,0 +1,306 @@
+{
+  "allOrNone": true,
+  "compositeRequest": [
+    {
+      "method": "GET",
+      "referenceId": "thisCredentialingProfile",
+      "url": "/services/data/v52.0/sobjects/Credentialing_Profile__c/a203S000002dbjNQAQ"
+    },
+    {
+      "method": "POST",
+      "url": "/services/data/v59.0/sobjects/ContentVersion",
+      "referenceId": "credFile1",
+      "body": {
+        "Title": "Test File",
+        "PathOnClient": "test.txt",
+        "VersionData": "dGVzdA==",
+        "FirstPublishLocationId": "@{thisCredentialingProfile.Id}",
+        "UC_Document_Type__c": "Certificate of Liability",
+        "LinkedEntityId__c": "@{thisCredentialingProfile.Id}",
+        "Associated_Provider_c": "@{thisCredentialingProfile.Provider_Name_c}"
+      }
+    },
+    {
+      "method": "POST",
+      "url": "/services/data/v59.0/sobjects/ContentVersion",
+      "referenceId": "credFile2",
+      "body": {
+        "Title": "Test File",
+        "PathOnClient": "test.txt",
+        "VersionData": "dGVzdA==",
+        "FirstPublishLocationId": "@{thisCredentialingProfile.Id}",
+        "UC_Document_Type__c": "Current Malpractice Insurance Coverage",
+        "LinkedEntityId__c": "@{thisCredentialingProfile.Id}",
+        "Associated_Provider_c": "@{thisCredentialingProfile.Provider_Name_c}"
+      }
+    },
+    {
+      "method": "POST",
+      "url": "/services/data/v59.0/sobjects/ContentVersion",
+      "referenceId": "credFile3",
+      "body": {
+        "Title": "Test File",
+        "PathOnClient": "test.txt",
+        "VersionData": "dGVzdA==",
+        "FirstPublishLocationId": "@{thisCredentialingProfile.Id}",
+        "UC_Document_Type__c": "Five year work history",
+        "LinkedEntityId__c": "@{thisCredentialingProfile.Id}",
+        "Associated_Provider_c": "@{thisCredentialingProfile.Provider_Name_c}"
+      }
+    },
+    {
+      "method": "PATCH",
+      "url": "/services/data/v59.0/sobjects/Credentialing_Profile__c/@{thisCredentialingProfile.Id}",
+      "referenceId": "updateCredentialingProfile",
+      "body": {
+        "First_Name__c": "Alexis",
+        "Last_Name__c": "Mitchell",
+        "Date_of_Birth__c": "1980-01-01",
+        "Tax_ID__c": 123456789,
+        "Medicare_Provider__c": true,
+        "Medicare_Number__c": 987654321,
+        "Practitioner_NPI__c": "12345",
+        "Office_Address_Street_1__c": "123 Main St",
+        "Office_Address_City__c": "Anytown",
+        "Office_Address_Zipcode__c": "12345",
+        "Office_Address_State__c": "CA",
+        "Office_Address_County__c": "County",
+        "Home_Address_Street_1__c": "456 Elm St",
+        "Home_Address_City__c": "Hometown",
+        "Home_Address_Zipcode__c": "54321",
+        "Home_Address_State__c": "NY",
+        "Home_Address_County__c": "County",
+        "Specialties__c": "Eating Disorders;Child Psych",
+        "Other_Specialty__c": "",
+        "Certificate_of_Liability__c": true,
+        "Certificate_of_Liability_Expiration_Date__c": "2024-12-31",
+        "Current_Malpractice_Insurance_Coverage__c": "Yes",
+        "Malpractice_Insurance_Coverage_Status__c": "Active",
+        "Explanation_Current_Malpractice__c": "Test",
+        "MalpracticeInsurance_Coverage_Expiration__c": "2024-12-31",
+        "Languages_Spoken__c": "English;Spanish",
+        "Cultural_Competences__c": "Cultural competency trained",
+        "Five_year_work_history__c": true,
+        "X6_month_gap_in_employment_since_profess__c": "Yes",
+        "X6_Month_Gap_Start_Date__c": "2022-01-01",
+        "X6_Month_Gap_End_Date__c": "2022-06-30",
+        "X6_Month_Gap_Activity__c": "Sabbatical",
+        "X6_Month_Gap_Reason__c": "Personal leave",
+        "Please_acknowledge_If_denied_credential__c": true,
+        "Can_you_perform_the_essential_duties_of__c": "Yes",
+        "Reason_for_inability_to_perform_essentia__c": "test",
+        "Lack_of_present_illegal_drug_use__c": "Yes",
+        "Explanation_Lackofpresentillegaldrug__c": "test",
+        "History_of_loss_of_license__c": "Yes",
+        "ExplanationHistoryoflossoflicense__c": "test",
+        "History_of_felony_convictions__c": "Yes",
+        "ExplanationHistory_of_felony_convictions__c": "test",
+        "History_of_loss_or_limitations_of_privil__c": "Yes",
+        "ExplanationHistory_of_loss__c": "test",
+        "Attestation_by_the_applicant_of_the_corr__c": "I attest to the correctness and completeness of this application",
+        "Cultural_Competencies_Picklist__c": "Yes"
+      }
+    },
+    {
+      "method": "POST",
+      "referenceId": "Education1",
+      "url": "/services/data/v52.0/sobjects/Education__c",
+      "body": {
+        "College_University_Program_Address__c": "test",
+        "College_University_Program_Name__c": "test",
+        "Credentialing_Profile_ID__c": "@{thisCredentialingProfile.Id}",
+        "Degree__c": "test",
+        "Graduation_Date__c": "2024-12-04"
+      }
+    },
+    {
+      "method": "POST",
+      "referenceId": "Education2",
+      "url": "/services/data/v52.0/sobjects/Education__c",
+      "body": {
+        "College_University_Program_Address__c": "test2",
+        "College_University_Program_Name__c": "test2",
+        "Credentialing_Profile_ID__c": "@{thisCredentialingProfile.Id}",
+        "Degree__c": "test2",
+        "Graduation_Date__c": "2024-12-05"
+      }
+    },
+    {
+      "method": "POST",
+      "referenceId": "PGMT1",
+      "url": "/services/data/v52.0/sobjects/Post_Graduate_Medical_Training__c",
+      "body": {
+        "Credentialing_Profile_Id__c": "@{thisCredentialingProfile.Id}",
+        "Medical_Training_Hospital_Address__c": "test",
+        "Medical_Training_Hospital_Name__c": "test",
+        "Medical_Training_Type__c": "Internship",
+        "Specialty__c": "test",
+        "Training_End_Date__c": "2024-12-04",
+        "Training_Start_Date__c": "2024-12-05"
+      }
+    },
+    {
+      "method": "POST",
+      "referenceId": "HA1",
+      "url": "/services/data/v52.0/sobjects/Hospital_Affiliations__c",
+      "body": {
+        "Credentialing_Profile_Id__c": "@{thisCredentialingProfile.Id}",
+        "Hospital_Affiliation_Address__c": "test",
+        "Hospital_Affiliation_Name__c": "test",
+        "Category_of_Membership__c": "test",
+        "Start_Date_of_Affiliation__c": "2024-12-04",
+        "End_Date_of_Affiliation__c": "2024-12-05"
+      }
+    },
+    {
+      "method": "POST",
+      "referenceId": "PLC1",
+      "url": "/services/data/v52.0/sobjects/Practitioner_Licenses_Certifications__c",
+      "body": {
+        "RecordTypeId": "0128z0000004TU4AAM",
+        "Credentialing_Profile_Id__c": "@{thisCredentialingProfile.Id}",
+        "Expiration_Date__c": "2024-12-04",
+        "File_Uploaded__c": true,
+        "LicenseCertification_Status__c": "Active",
+        "LicenseCertification_Type__c": "License",
+        "License_Types_LARA__c": "Acupuncture"
+      }
+    },
+    {
+      "method": "POST",
+      "url": "/services/data/v59.0/sobjects/Primary_Source_Verification__c",
+      "referenceId": "newPSVRecord",
+      "body": {
+        "Credentialing_Profile__c": "@{thisCredentialingProfile.Id}",
+        "CVO__c": true
+      }
+    },
+    {
+      "method": "POST",
+      "url": "/services/data/v59.0/sobjects/ContentVersion",
+      "referenceId": "psvFile1",
+      "body": {
+        "Title": "Test File",
+        "PathOnClient": "test.txt",
+        "VersionData": "dGVzdA==",
+        "FirstPublishLocationId": "@{newPSVRecord.id}",
+        "LinkedEntityId__c": "@{newPSVRecord.id}",
+        "UC_Document_Type__c": "Ichat Background Check",
+        "Associated_Provider_c": "@{thisCredentialingProfile.Provider_Name_c}"
+      }
+    },
+    {
+      "method": "POST",
+      "url": "/services/data/v59.0/sobjects/ContentVersion",
+      "referenceId": "psvFile2",
+      "body": {
+        "Title": "Test File",
+        "PathOnClient": "test.txt",
+        "VersionData": "dGVzdA==",
+        "FirstPublishLocationId": "@{newPSVRecord.id}",
+        "LinkedEntityId__c": "@{newPSVRecord.id}",
+        "UC_Document_Type__c": "Workforce Background Check",
+        "Associated_Provider_c": "@{thisCredentialingProfile.Provider_Name_c}"
+      }
+    },
+    {
+      "method": "POST",
+      "url": "/services/data/v59.0/sobjects/ContentVersion",
+      "referenceId": "psvFile3",
+      "body": {
+        "Title": "Test File",
+        "PathOnClient": "test.txt",
+        "VersionData": "dGVzdA==",
+        "FirstPublishLocationId": "@{newPSVRecord.id}",
+        "LinkedEntityId__c": "@{newPSVRecord.id}",
+        "UC_Document_Type__c": "SAM.gov Check",
+        "Associated_Provider_c": "@{thisCredentialingProfile.Provider_Name_c}"
+      }
+    },
+    {
+      "method": "POST",
+      "url": "/services/data/v59.0/sobjects/ContentVersion",
+      "referenceId": "psvFile4",
+      "body": {
+        "Title": "Test File",
+        "PathOnClient": "test.txt",
+        "VersionData": "dGVzdA==",
+        "FirstPublishLocationId": "@{newPSVRecord.id}",
+        "LinkedEntityId__c": "@{newPSVRecord.id}",
+        "UC_Document_Type__c": "Official Transcript from Accredited School",
+        "Associated_Provider_c": "@{thisCredentialingProfile.Provider_Name_c}"
+      }
+    },
+    {
+      "method": "POST",
+      "url": "/services/data/v59.0/sobjects/ContentVersion",
+      "referenceId": "psvFile5",
+      "body": {
+        "Title": "Test File",
+        "PathOnClient": "test.txt",
+        "VersionData": "dGVzdA==",
+        "FirstPublishLocationId": "@{newPSVRecord.id}",
+        "LinkedEntityId__c": "@{newPSVRecord.id}",
+        "UC_Document_Type__c": "MI Public Sex Offender Registry Check",
+        "Associated_Provider_c": "@{thisCredentialingProfile.Provider_Name_c}"
+      }
+    },
+    {
+      "method": "POST",
+      "url": "/services/data/v59.0/sobjects/ContentVersion",
+      "referenceId": "psvFile6",
+      "body": {
+        "Title": "Test File",
+        "PathOnClient": "test.txt",
+        "VersionData": "dGVzdA==",
+        "FirstPublishLocationId": "@{newPSVRecord.id}",
+        "LinkedEntityId__c": "@{newPSVRecord.id}",
+        "UC_Document_Type__c": "Office of Inspector General Check",
+        "Associated_Provider_c": "@{thisCredentialingProfile.Provider_Name_c}"
+      }
+    },
+    {
+      "method": "POST",
+      "url": "/services/data/v59.0/sobjects/ContentVersion",
+      "referenceId": "psvFile7",
+      "body": {
+        "Title": "Test File",
+        "PathOnClient": "test.txt",
+        "VersionData": "dGVzdA==",
+        "FirstPublishLocationId": "@{newPSVRecord.id}",
+        "LinkedEntityId__c": "@{newPSVRecord.id}",
+        "UC_Document_Type__c": "National Sex Offender Registry Check",
+        "Associated_Provider_c": "@{thisCredentialingProfile.Provider_Name_c}"
+      }
+    },
+    {
+      "method": "PATCH",
+      "url": "/services/data/v59.0/sobjects/Primary_Source_Verification__c/@{newPSVRecord.id}",
+      "referenceId": "updatePSVRecord",
+      "body": {
+        "Credentialing_Profile__c": "@{thisCredentialingProfile.Id}",
+        "Primary_Source_Verifier_c": "@{thisCredentialingProfile.Responsible_Credentialing_Coordinator_c}",
+        "CVO__c": true,
+        "Other_Accred__c": "Yes",
+        "Verifier_s_Credentialing_Organization__c": "Other",
+        "Ichat_Background_Check__c": true,
+        "Workforce_Background_Check__c": true,
+        "Medicare_Base_Enrollment__c": true,
+        "Medicare_Opt_Out__c": true,
+        "LARA_License__c": "Addiction Medicine",
+        "LARA_Uploaded__c": true,
+        "Official_Transcript_from_Accredited_Scho__c": true,
+        "Degree_Verification__c": true,
+        "AMA_Verification__c": true,
+        "AOA_Verification__c": true,
+        "MDHHS_Sanctioned_Provider_Check__c": true,
+        "MCBAP_Verification__c": false,
+        "Office_of_Inspector_General_Check__c": true,
+        "SAM_gov_Check__c": true,
+        "National_Sex_Offender_Registry_Check__c": true,
+        "MI_Public_Sex_Offender_Registry_Check__c": true,
+        "ECFMG__c": true
+      }
+    }
+  ]
+}

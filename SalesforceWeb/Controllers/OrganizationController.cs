@@ -186,5 +186,24 @@ namespace SalesforceWeb.Controllers
 
             return RedirectToAction("Index");
         }
+
+
+
+        [HttpGet]
+        public IActionResult GetJsonData()
+        {
+            string filePath = Path.Combine(Directory.GetCurrentDirectory(), "Data", "organization.json");
+
+            if (System.IO.File.Exists(filePath))
+            {
+                string jsonData = System.IO.File.ReadAllText(filePath);
+                return Json(new { success = true, data = jsonData });
+            }
+            else
+            {
+                return Json(new { success = false, message = "JSON file not found." });
+            }
+        }
+
     }
 }

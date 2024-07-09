@@ -5,7 +5,7 @@ VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesforceAPI", "SalesforceAPI\SalesforceAPI.csproj", "{08603678-A4BD-4E12-8993-B82F50FA5CE1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalesforceWeb", "SalesforceWeb\SalesforceWeb.csproj", "{751FCF45-EBD6-4960-AA99-61FD8BE2C74D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesforceWeb", "SalesforceWeb\SalesforceWeb.csproj", "{751FCF45-EBD6-4960-AA99-61FD8BE2C74D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
