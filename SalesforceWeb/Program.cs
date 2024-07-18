@@ -1,7 +1,6 @@
 using SalesforceWeb.Profiles;
 using SalesforceWeb.Services.IServices;
 using SalesforceWeb.Services;
-using System.Configuration;
 using MagicVilla_Web.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
@@ -11,20 +10,20 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddAutoMapper(typeof(DtoProfile));
 
-builder.Services.AddHttpClient<OAuthService>();
-builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
+builder.Services.AddHttpClient();
 
-builder.Services.AddHttpClient<IPractitionerService, PractitionerService>();
+// Register other services
+builder.Services.AddScoped<IOAuthService, OAuthService>();
 builder.Services.AddScoped<IPractitionerService, PractitionerService>();
-
-builder.Services.AddHttpClient<IOrganizationService, OrganizationService>();
 builder.Services.AddScoped<IOrganizationService, OrganizationService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddTransient<ISalesforceService, SalesforceService>();
 
+// Register other dependencies
+builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-builder.Services.AddHttpClient<IAuthService, AuthService>();
-builder.Services.AddScoped<IAuthService, AuthService>();
-
+//Authentication session and cache settings
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
               .AddCookie(options =>
@@ -48,13 +47,11 @@ var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();

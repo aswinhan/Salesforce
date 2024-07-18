@@ -5,28 +5,21 @@ using SalesforceWeb.Services.IServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System.Collections.Generic;
-using System.Reflection;
-using SalesforceWeb.Utilities;
-using SalesforceWeb.Services;
-using System.Net.Http.Headers;
-using System.Net.Http;       
+using SalesforceWeb.Utilities;    
 using System.Text;
 
 namespace SalesforceWeb.Controllers
 {
     public class EditPractitionerController : Controller
     {
-        private readonly IPractitionerService _salesforceService;
+        private readonly IPractitionerService _practitionerService;
         private readonly IMapper _mapper;
-        private readonly OAuthService _oAuthService;
-        private readonly HttpClient _httpClient;
-        public EditPractitionerController(IPractitionerService salesforceService, IMapper mapper, OAuthService oAuthService)
+        private readonly ISalesforceService _salesforceService;
+        public EditPractitionerController(IPractitionerService practitionerService, IMapper mapper, ISalesforceService salesforceService)
         {
-            _salesforceService = salesforceService;
+            _practitionerService = practitionerService;
             _mapper = mapper;
-            _httpClient = new HttpClient();
-            _oAuthService = oAuthService;
+            _salesforceService = salesforceService;
         }
 
         [Authorize(Roles = "admin")]
@@ -57,7 +50,7 @@ namespace SalesforceWeb.Controllers
         {
             try
             {
-                var response = await _salesforceService.EditAsync<APIResponse>(credentialProfileId, HttpContext.Session.GetString(StaticData.SessionToken));
+                var response = await _practitionerService.EditAsync<APIResponse>(credentialProfileId, HttpContext.Session.GetString(StaticData.SessionToken));
 
                 if (response.Result != null && response.IsSuccess)
                 {
@@ -66,7 +59,8 @@ namespace SalesforceWeb.Controllers
                 }
                 else
                 {
-                    return NotFound();
+                    TempData["error"] = "No Records found";
+                    return NotFound();                    
                 }
             }
             catch (Exception ex)
@@ -79,38 +73,29 @@ namespace SalesforceWeb.Controllers
         [Authorize(Roles = "admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> PostEditPractitioner(string jsonBody)
+
+        public async Task<IActionResult> PostCompositeEditPractitioner(string jsonBody)
         {
             try
             {
-                string token = await _oAuthService.GetBearerTokenAsync();
-                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
-                string apiUrl = "https://mcal--mcuatgcp.sandbox.my.salesforce.com/services/data/v59.0/composite/";
-
-                var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
-
-                HttpResponseMessage response = await _httpClient.PostAsync(apiUrl, content);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    string responseBody = await response.Content.ReadAsStringAsync();
-                    ViewBag.Message = "JSON body sent successfully!";
-                    string formattedJson = FormatJson(responseBody);
-                    TempData["FormattedError"] = formattedJson;
-                }
-                else
-                {
-                    string responseBody = await response.Content.ReadAsStringAsync();
-                    ViewBag.Error = "Failed to send JSON body. Status code: " + response.StatusCode + ", Reason: " + response.ReasonPhrase + ", Response: " + responseBody;
-                    TempData["Error"] = responseBody;
-                }
+                string responseBody = await _salesforceService.PostToCompositeApiAsync(jsonBody);
+                ViewBag.Message = "JSON body sent successfully!";
+                string formattedJson = JsonUtility.Format(responseBody);
+                TempData["FormattedError"] = formattedJson;
+            }
+            catch (HttpRequestException ex)
+            {
+                ViewBag.Error = $"Failed to send JSON body. {ex.Message}";
+                TempData["Error"] = ex.Message;
+            }
+            catch (ApplicationException ex)
+            {
+                ViewBag.Error = $"Error communicating with Salesforce API. {ex.Message}";
             }
             catch (Exception ex)
             {
-                ViewBag.Error = "Error: " + ex.Message;
+                ViewBag.Error = $"Unexpected error occurred. {ex.Message}";
             }
-
             return RedirectToAction("Index");
         }
 
@@ -130,21 +115,6 @@ namespace SalesforceWeb.Controllers
                 return Json(new { success = false, message = "JSON file not found." });
             }
         }
-        private string FormatJson(string json)
-        {
-            if (string.IsNullOrWhiteSpace(json))
-                return "";
 
-            try
-            {
-                dynamic parsedJson = JsonConvert.DeserializeObject(json);
-                return JsonConvert.SerializeObject(parsedJson, Formatting.Indented);
-            }
-            catch (JsonReaderException)
-            {
-                // Handle exception if JSON is invalid
-                return "Invalid JSON format";
-            }
-        }
     }
 }

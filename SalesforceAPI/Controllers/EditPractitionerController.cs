@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using SalesforceAPI.Dtos;
-using SalesforceAPI.Repository.IRepostiory;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using SalesforceWeb.Models;
@@ -17,12 +16,10 @@ namespace SalesforceAPI.Controllers
         protected APIResponse _response;
         private readonly ApplicationDbContext _context;
         private readonly ProviderService _providerService;
-        private readonly IPractitionerRepository _dbPractitioner;
         private readonly IMapper _mapper;
-        public EditPractitionerController(ApplicationDbContext context, IPractitionerRepository dbPractitioner, IMapper mapper, ProviderService providerService)
+        public EditPractitionerController(ApplicationDbContext context, IMapper mapper, ProviderService providerService)
         {
             _context = context;
-            _dbPractitioner = dbPractitioner;
             _providerService = providerService;
             _mapper = mapper;
             _response = new();

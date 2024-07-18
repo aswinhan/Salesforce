@@ -27,10 +27,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddResponseCaching();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-
 builder.Services.AddScoped<ProviderService>();
-builder.Services.AddScoped<IPractitionerRepository, PractitionerRepository>();
-builder.Services.AddScoped<IOrganizationRepository, OrganizationRepository>();
 builder.Services.AddAutoMapper(typeof(DtoProfile));
 
 var key = builder.Configuration.GetValue<string>("ApiSettings:Secret");

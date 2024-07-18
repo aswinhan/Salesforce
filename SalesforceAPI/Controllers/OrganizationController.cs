@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using SalesforceAPI.Dtos;
-using SalesforceAPI.Repository.IRepostiory;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using SalesforceWeb.Models;
@@ -17,12 +16,10 @@ namespace SalesforceAPI.Controllers
         protected APIResponse _response;
         private readonly ApplicationDbContext _context;
         private readonly ProviderService _providerService;
-        private readonly IOrganizationRepository _db;
         private readonly IMapper _mapper;
-        public OrganizationController(ApplicationDbContext context, IOrganizationRepository db, IMapper mapper, ProviderService providerService)
+        public OrganizationController(ApplicationDbContext context, IMapper mapper, ProviderService providerService)
         {
             _context = context;
-            _db = db;
             _providerService = providerService;
             _mapper = mapper;
             _response = new();

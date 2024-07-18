@@ -17,12 +17,10 @@ namespace SalesforceAPI.Controllers
         protected APIResponse _response;
         private readonly ApplicationDbContext _context;
         private readonly ProviderService _providerService;
-        private readonly IOrganizationRepository _db;
         private readonly IMapper _mapper;
-        public EditOrganizationController(ApplicationDbContext context, IOrganizationRepository db, IMapper mapper, ProviderService providerService)
+        public EditOrganizationController(ApplicationDbContext context, IMapper mapper, ProviderService providerService)
         {
             _context = context;
-            _db = db;
             _providerService = providerService;
             _mapper = mapper;
             _response = new();

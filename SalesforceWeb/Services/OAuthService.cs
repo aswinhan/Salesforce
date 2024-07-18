@@ -2,11 +2,12 @@
 //using System.Text.Json;
 
 using Newtonsoft.Json;
+using SalesforceWeb.Services.IServices;
 using System.Text;
 
 namespace SalesforceWeb.Services
 {
-    public class OAuthService
+    public class OAuthService: IOAuthService
     {
         private readonly HttpClient _httpClient;
         private readonly IConfiguration _configuration;

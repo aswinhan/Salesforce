@@ -56,7 +56,7 @@
 }
 else
 {
-    <form>
+    <form asp-controller="EditPractitioner" asp-action="GetJsonData" method="get" id="generateJsonForm">
 
         <div class="row pb-4">
             <div class="col-md-12 stretch-card">
@@ -104,7 +104,7 @@ else
             <div class="card">
                 <div class="card-body">
                     <h6 class="card-title">JSON Result Editor</h6>
-                    <form asp-controller="EditPractitioner" asp-action="PostEditPractitioner" method="post" id="postPractitionerForm">
+                    <form asp-controller="EditPractitioner" asp-action="PostCompositeEditPractitioner" method="post" id="postPractitionerForm">
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="mb-3">

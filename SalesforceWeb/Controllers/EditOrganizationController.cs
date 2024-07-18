@@ -4,11 +4,7 @@ using SalesforceWeb.Dtos;
 using SalesforceWeb.Services.IServices;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using SalesforceWeb.Services;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Net.Http.Headers;
 using System.Text;
-using System.Reflection;
 using SalesforceWeb.Utilities;
 using Microsoft.AspNetCore.Authorization;
 
@@ -16,16 +12,14 @@ namespace SalesforceWeb.Controllers
 {
     public class EditOrganizationController : Controller
     {
-        private readonly IOrganizationService _salesforceService;
+        private readonly IOrganizationService _organizationService;
         private readonly IMapper _mapper;
-        private readonly HttpClient _httpClient;
-        private readonly OAuthService _oAuthService;
-        public EditOrganizationController(IOrganizationService salesforceService, IMapper mapper, OAuthService oAuthService)
+        private readonly ISalesforceService _salesforceService;
+        public EditOrganizationController(IOrganizationService organizationService, IMapper mapper, ISalesforceService salesforceService)
         {
-            _salesforceService = salesforceService;
+            _organizationService = organizationService;
             _mapper = mapper;
-            _httpClient = new HttpClient();
-            _oAuthService = oAuthService;
+            _salesforceService = salesforceService;
         }
 
         [Authorize(Roles = "admin")]
@@ -40,8 +34,6 @@ namespace SalesforceWeb.Controllers
         {
             try
             {
-                string token = await _oAuthService.GetBearerTokenAsync();
-
                 ActionResult<OrganizationalCPDto> actionResult = await GetEditOrganization(credentialProfileId);
                 OrganizationalCPDto? model = actionResult.Value;
                 ViewBag.credentialProfileId = credentialProfileId;
@@ -53,14 +45,11 @@ namespace SalesforceWeb.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Internal server error occurred.");
             }
         }
-
-        
-
         public async Task<ActionResult<OrganizationalCPDto>> GetEditOrganization(string credentialProfileId)
         {
             try
             {
-                var response = await _salesforceService.EditAsync<APIResponse>(credentialProfileId, HttpContext.Session.GetString(StaticData.SessionToken));
+                var response = await _organizationService.EditAsync<APIResponse>(credentialProfileId, HttpContext.Session.GetString(StaticData.SessionToken));
 
                 if (response.Result != null && response.IsSuccess)
                 {
@@ -82,41 +71,30 @@ namespace SalesforceWeb.Controllers
         [Authorize(Roles = "admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> PostEditOrganization(string jsonBody)
+        public async Task<IActionResult> PostCompositeEditOrganization(string jsonBody)
         {
             try
             {
-                string token = await _oAuthService.GetBearerTokenAsync();
-                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
-                string apiUrl = "https://mcal--mcuatgcp.sandbox.my.salesforce.com/services/data/v59.0/composite/";
-
-                var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
-
-                HttpResponseMessage response = await _httpClient.PostAsync(apiUrl, content);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    string responseBody = await response.Content.ReadAsStringAsync();
-                    ViewBag.Message = "JSON body sent successfully!";
-                    string formattedJson = FormatJson(responseBody);
-                    TempData["FormattedError"] = formattedJson;
-                }
-                else
-                {
-                    string responseBody = await response.Content.ReadAsStringAsync();
-                    ViewBag.Error = "Failed to send JSON body. Status code: " + response.StatusCode + ", Reason: " + response.ReasonPhrase + ", Response: " + responseBody;
-                    TempData["Error"] = responseBody;
-                }
+                string responseBody = await _salesforceService.PostToCompositeApiAsync(jsonBody);
+                ViewBag.Message = "JSON body sent successfully!";
+                string formattedJson = JsonUtility.Format(responseBody);
+                TempData["FormattedError"] = formattedJson;
+            }
+            catch (HttpRequestException ex)
+            {
+                ViewBag.Error = $"Failed to send JSON body. {ex.Message}";
+                TempData["Error"] = ex.Message;
+            }
+            catch (ApplicationException ex)
+            {
+                ViewBag.Error = $"Error communicating with Salesforce API. {ex.Message}";
             }
             catch (Exception ex)
             {
-                ViewBag.Error = "Error: " + ex.Message;
+                ViewBag.Error = $"Unexpected error occurred. {ex.Message}";
             }
-
             return RedirectToAction("Index");
         }
-
 
         [Authorize(Roles = "admin")]
         [HttpGet]
@@ -137,21 +115,5 @@ namespace SalesforceWeb.Controllers
             }
         }
 
-        private string FormatJson(string json)
-        {
-            if (string.IsNullOrWhiteSpace(json))
-                return "";
-
-            try
-            {
-                dynamic parsedJson = JsonConvert.DeserializeObject(json);
-                return JsonConvert.SerializeObject(parsedJson, Formatting.Indented);
-            }
-            catch (JsonReaderException)
-            {
-                // Handle exception if JSON is invalid
-                return "Invalid JSON format";
-            }
-        }
     }
 }
