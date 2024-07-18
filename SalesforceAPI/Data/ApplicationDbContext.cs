@@ -1,13 +1,21 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SalesforceAPI.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System.Collections.Generic;
 
 namespace SalesforceAPI.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
+        }
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public DbSet<LocalUser> LocalUsers { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
         }
         public DbSet<CredentialingContact> CredentialingContacts { get; set; }
         public DbSet<DirectService> DirectServices { get; set; }        

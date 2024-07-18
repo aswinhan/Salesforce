@@ -29,6 +29,27 @@
     </div>
 </div>
 
+@if (TempData["FormattedError"] != null)
+{
+    <div class="row pb-4">
+        <div class="col-md-12 stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">JSON Response</h6>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="mb-3">
+                                <textarea id="FormattedError" class="form-control jsonEditor" name="JsonError" rows="10">@Html.Raw(TempData["FormattedError"])</textarea>
+                            </div>
+                        </div><!-- Col -->
+                    </div><!-- Row -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
 @if (Model == null)
 {
 
@@ -802,7 +823,7 @@ else
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="mb-3">
-                                    <textarea id="jsonEditor" name="jsonBody" class="form-control" rows="10"></textarea>
+                                    <textarea id="jsoneditor" class="form-control" name="jsonBody" rows="10"></textarea>
                                 </div>
                             </div><!-- Col -->
                         </div><!-- Row -->
@@ -817,8 +838,8 @@ else
     </div>
 }
 
-
 @section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function () {
             $('#GenerateJson').click(function () {
@@ -828,7 +849,17 @@ else
                     dataType: 'json',
                     success: function (response) {
                         if (response.success) {
-                            $('#jsonEditor').val(response.data);
+                            $('#jsoneditor').val(response.data);
+
+                            // Initialize CodeMirror
+                            var editor = CodeMirror.fromTextArea(document.getElementById("jsoneditor"), {
+                                mode: { name: "javascript", json: true },
+                                theme: "material",
+                                lineNumbers: true,
+                                autoCloseBrackets: true,
+                                matchBrackets: true
+                            });
+
                         } else {
                             alert('Failed to fetch JSON data: ' + response.message);
                         }

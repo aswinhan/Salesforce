@@ -1,0 +1,21 @@
+{
+  "allOrNone": true,
+  "compositeRequest": [
+    {
+      "method": "GET",
+      "referenceId": "thisCredentialingProfile",
+      "url": "/services/data/v52.0/sobjects/Credentialing_Profile__c/a203S000002YyQjQAK"
+    },
+
+    {
+      "method": "PATCH",
+      "url": "/services/data/v59.0/sobjects/Credentialing_Profile__c/@{thisCredentialingProfile.Id}",
+      "referenceId": "updateCredentialingProfile",
+      "body": {
+        "Certificate_of_Liability_Expiration_Date__c": "2025-05-17",
+        "MalpracticeInsurance_Coverage_Expiration__c": "2024-05-17",
+        "Summary_of_Changes__c": "TestEdit"
+      }
+    }
+  ]
+}

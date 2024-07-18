@@ -1,0 +1,173 @@
+﻿@model SalesforceWeb.Dtos.OrganizationalCPDto;
+
+@{
+    ViewData["Title"] = "Edit Organization";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row pb-4">
+    <div class="col-md-12 stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h6 class="card-title">Edit Organization CVO & PSV Form</h6>
+                <form asp-controller="EditOrganization" asp-action="Index" method="post">
+                    <div class="row text-center">
+                        <div class="col-sm-4"></div><!-- Col -->
+                        <div class="col-sm-4">
+                            <div class="mb-3">
+                                <label class="form-label">Credentialing Profile Id</label>
+                                <input type="text" class="form-control" placeholder="Enter Credentialing Profile Id" name="credentialProfileId" value="@ViewBag.credentialProfileId" />
+                            </div>
+                        </div><!-- Col -->
+                        <div class="col-sm-4"></div><!-- Col -->
+                    </div><!-- Row -->
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary" id="GetEditOrganization">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (TempData["FormattedError"] != null)
+{
+    <div class="row pb-4">
+        <div class="col-md-12 stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">JSON Response</h6>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="mb-3">
+                                <textarea id="FormattedError" class="form-control jsonEditor" name="JsonError" rows="10">@Html.Raw(TempData["FormattedError"])</textarea>
+                            </div>
+                        </div><!-- Col -->
+                    </div><!-- Row -->
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+@if (Model == null)
+{
+}
+else
+{
+    <form>
+
+        <div class="row pb-4">
+            <div class="col-md-12 stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h6 class="card-title">Credentialing Profile Details</h6>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Professional Liability Expiration</label>
+                                    <input type="date" class="form-control" value="@Model.Professional_Liability_Expiration__c?.ToString("yyyy-MM-dd")">
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Commercial Liability Expiration</label>
+                                    <input type="date" class="form-control" value="@Model.Commercial_Liability_Expiration__c?.ToString("yyyy-MM-dd")">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Attestation by the Applicant</label>
+                                    <input type="text" class="form-control" value="@Model.Attestation_by_the_applicant_of_the_corr__c">
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Summary of Changes</label>
+                                    <input type="text" class="form-control" value="@Model.Summary_of_Changes__c">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="text-center pt-4">
+                            <button type="button" class="btn btn-primary" id="GenerateJson">Generate Json</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+
+    <div class="row pb-4">
+        <div class="col-md-12 stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">JSON Result Editor</h6>
+                    <form asp-controller="EditOrganization" asp-action="PostEditOrganization" method="post" id="postOrganizationForm">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="mb-3">
+                                    <textarea id="jsoneditor" class="form-control" name="jsonBody" rows="10"></textarea>
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="text-center pt-4">
+                            <button type="submit" class="btn btn-primary">Post Json Result</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#GenerateJson').click(function () {
+                $.ajax({
+                    url: '@Url.Action("GetJsonData", "EditOrganization")',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (response) {
+                        if (response.success) {
+                            $('#jsoneditor').val(response.data);
+
+                            // Initialize CodeMirror
+                            var editor = CodeMirror.fromTextArea(document.getElementById("jsoneditor"), {
+                                mode: { name: "javascript", json: true },
+                                theme: "material",
+                                lineNumbers: true,
+                                autoCloseBrackets: true,
+                                matchBrackets: true
+                            });
+
+                        } else {
+                            alert('Failed to fetch JSON data: ' + response.message);
+                        }
+                    },
+                    error: function () {
+                        alert('Error fetching JSON data.');
+                    }
+                });
+            });
+        });
+    </script>
+}
+
+
+
+@* @section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+} *@

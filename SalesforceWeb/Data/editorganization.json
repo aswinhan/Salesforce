@@ -1,0 +1,21 @@
+{
+  "allOrNone": true,
+  "compositeRequest": [
+    {
+      "method": "GET",
+      "referenceId": "thisCredentialingProfile",
+      "url": "/services/data/v52.0/sobjects/Credentialing_Profile__c/a20BZ000001pA4VYAU"
+    },
+    {
+      "method": "PATCH",
+      "url": "/services/data/v59.0/sobjects/Credentialing_Profile__c/@{thisCredentialingProfile.Id}",
+      "referenceId": "updateCredentialingProfile",
+      "body": {
+        "Professional_Liability_Expiration__c": "2024-10-31",
+        "Commercial_Liability_Expiration__c": "2024-11-31",
+        "Attestation_by_the_applicant_of_the_corr__c": "I attest to the correctness and completeness of this application",
+        "Summary_of_Changes__c": "Test edit"
+      }
+    }
+  ]
+}

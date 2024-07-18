@@ -54,5 +54,6 @@ namespace SalesforceWeb.Dtos
         public string? ExplanationHistory_of_loss__c { get; set; }
         public string? Attestation_by_the_applicant_of_the_corr__c { get; set; }
         public CulturalCompetenciesPicklistCEnum? Cultural_Competencies_Picklist__c { get; set; }
+        public string? Summary_of_Changes__c { get; set; }
     }
 }

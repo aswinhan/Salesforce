@@ -10,18 +10,18 @@ using System.Reflection;
 using SalesforceWeb.Utilities;
 using SalesforceWeb.Services;
 using System.Net.Http.Headers;
-using System.Net.Http;
+using System.Net.Http;       
 using System.Text;
 
 namespace SalesforceWeb.Controllers
 {
-    public class PractitionerController : Controller
+    public class EditPractitionerController : Controller
     {
         private readonly IPractitionerService _salesforceService;
         private readonly IMapper _mapper;
         private readonly OAuthService _oAuthService;
         private readonly HttpClient _httpClient;
-        public PractitionerController(IPractitionerService salesforceService, IMapper mapper, OAuthService oAuthService)
+        public EditPractitionerController(IPractitionerService salesforceService, IMapper mapper, OAuthService oAuthService)
         {
             _salesforceService = salesforceService;
             _mapper = mapper;
@@ -29,19 +29,20 @@ namespace SalesforceWeb.Controllers
             _oAuthService = oAuthService;
         }
 
+        [Authorize(Roles = "admin")]
         public IActionResult Index()
         {
             return View();
-
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public async Task<IActionResult> Index(string credentialProfileId)
         {
             try
             {
-                ActionResult<PractitionerFullDto> actionResult = await GetPractitioner(credentialProfileId);
-                PractitionerFullDto model = actionResult.Value;
+                ActionResult<PractitionerCPDto> actionResult = await GetEditPractitioner(credentialProfileId);
+                PractitionerCPDto model = actionResult.Value;
                 ViewBag.credentialProfileId = credentialProfileId;
                 return View(model);
             }
@@ -52,16 +53,16 @@ namespace SalesforceWeb.Controllers
             }
         }
 
-        public async Task<ActionResult<PractitionerFullDto>> GetPractitioner(string credentialProfileId)
+        public async Task<ActionResult<PractitionerCPDto>> GetEditPractitioner(string credentialProfileId)
         {
             try
             {
-                var response = await _salesforceService.GetAsync<APIResponse>(credentialProfileId, HttpContext.Session.GetString(StaticData.SessionToken));
+                var response = await _salesforceService.EditAsync<APIResponse>(credentialProfileId, HttpContext.Session.GetString(StaticData.SessionToken));
 
                 if (response.Result != null && response.IsSuccess)
                 {
-                    PractitionerFullDto model = JsonConvert.DeserializeObject<PractitionerFullDto>(Convert.ToString(response.Result));
-                    return _mapper.Map<PractitionerFullDto>(model);
+                    PractitionerCPDto model = JsonConvert.DeserializeObject<PractitionerCPDto>(Convert.ToString(response.Result));
+                    return _mapper.Map<PractitionerCPDto>(model);
                 }
                 else
                 {
@@ -75,8 +76,10 @@ namespace SalesforceWeb.Controllers
             }
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPost]
-        public async Task<IActionResult> PostCompositePractitioner(string jsonBody)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> PostEditPractitioner(string jsonBody)
         {
             try
             {
@@ -101,23 +104,21 @@ namespace SalesforceWeb.Controllers
                     string responseBody = await response.Content.ReadAsStringAsync();
                     ViewBag.Error = "Failed to send JSON body. Status code: " + response.StatusCode + ", Reason: " + response.ReasonPhrase + ", Response: " + responseBody;
                     TempData["Error"] = responseBody;
-                    TempData["error"] = responseBody;
                 }
             }
             catch (Exception ex)
             {
-                TempData["error"] = ex.Message;
                 ViewBag.Error = "Error: " + ex.Message;
             }
 
             return RedirectToAction("Index");
         }
 
-
+        [Authorize(Roles = "admin")]
         [HttpGet]
         public IActionResult GetJsonData()
         {
-            string filePath = Path.Combine(Directory.GetCurrentDirectory(), "Data", "practitioner.json");
+            string filePath = Path.Combine(Directory.GetCurrentDirectory(), "Data", "editPractitioner.json");
 
             if (System.IO.File.Exists(filePath))
             {

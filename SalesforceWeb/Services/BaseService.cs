@@ -3,6 +3,7 @@ using SalesforceWeb.Services.IServices;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using System.Text;
+using SalesforceWeb.Utilities;
 
 namespace SalesforceWeb.Services
 {
@@ -30,6 +31,9 @@ namespace SalesforceWeb.Services
                 }
                 switch (apiRequest.ApiType)
                 {
+                    case StaticData.ApiType.POST:
+                        message.Method = HttpMethod.Post;
+                        break;
                     default:
                         message.Method = HttpMethod.Get;
                         break;
@@ -37,6 +41,11 @@ namespace SalesforceWeb.Services
                 }
 
                 HttpResponseMessage apiResponse = null;
+
+                if (!string.IsNullOrEmpty(apiRequest.Token))
+                {
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiRequest.Token);
+                }
 
                 apiResponse = await client.SendAsync(message);
 

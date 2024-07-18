@@ -30,6 +30,28 @@
     </div>
 </div>
 
+@if (TempData["FormattedError"] != null)
+{
+    <div class="row pb-4">
+        <div class="col-md-12 stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">JSON Response</h6>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="mb-3">
+                                <textarea id="FormattedError" class="form-control jsonEditor" name="JsonError" rows="10">@Html.Raw(TempData["FormattedError"])</textarea>
+                            </div>
+                        </div><!-- Col -->
+                    </div><!-- Row -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+
 @if (Model == null)
 {
 }
@@ -85,11 +107,11 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">Accrediting Body</label>
                                     @* <select class="js-example-basic-single form-select" data-width="100%">
-                                        <option Value="0" selected>Zero</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select> *@
+                                <option Value="0" selected>Zero</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                                </select> *@
                                     <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.Accrediting_Body__c">
                                 </div>
                             </div><!-- Col -->
@@ -221,11 +243,11 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">Specialties</label>
                                     @* <select class="js-example-basic-single form-select" data-width="100%">
-                                        <option Value="0" selected>Zero</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select> *@
+                                <option Value="0" selected>Zero</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                                </select> *@
                                     <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.Specialties__c">
                                 </div>
                             </div><!-- Col -->
@@ -273,11 +295,11 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">X6-Month Gap in Employment Since Profession</label>
                                     @* <select class="js-example-basic-single form-select" data-width="100%">
-                                        <option Value="0" selected>Zero</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select> *@
+                                <option Value="0" selected>Zero</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                                </select> *@
                                     <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.X6_month_gap_in_employment_since_profess__c">
                                 </div>
                             </div><!-- Col -->
@@ -322,11 +344,11 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">Can You Perform the Essential Duties</label>
                                     @* <select class="js-example-basic-single form-select" data-width="100%">
-                                        <option Value="0" selected>Zero</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select> *@
+                                <option Value="0" selected>Zero</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                                </select> *@
                                     <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.Can_you_perform_the_essential_duties_of__c">
                                 </div>
                             </div><!-- Col -->
@@ -337,11 +359,11 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">Lack of Present Illegal Drug Use</label>
                                     @* <select class="js-example-basic-single form-select" data-width="100%">
-                                        <option Value="0" selected>Zero</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select> *@
+                                <option Value="0" selected>Zero</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                                </select> *@
                                     <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.Lack_of_present_illegal_drug_use__c">
                                 </div>
                             </div><!-- Col -->
@@ -349,11 +371,11 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">History of Loss of License</label>
                                     @* <select class="js-example-basic-single form-select" data-width="100%">
-                                        <option Value="0" selected>Zero</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select> *@
+                                <option Value="0" selected>Zero</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                                </select> *@
                                     <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.History_of_loss_of_license__c">
                                 </div>
                             </div><!-- Col -->
@@ -385,11 +407,11 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">Current Malpractice Insurance Coverage</label>
                                     @* <select class="js-example-basic-single form-select" data-width="100%">
-                                        <option Value="0" selected>Zero</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select> *@
+                                <option Value="0" selected>Zero</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                                </select> *@
                                     <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.Current_Malpractice_Insurance_Coverage__c">
                                 </div>
                             </div><!-- Col -->
@@ -406,11 +428,11 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">Cultural Competencies Picklist</label>
                                     @* <select class="js-example-basic-single form-select" data-width="100%">
-                                        <option Value="0" selected>Zero</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select> *@
+                                <option Value="0" selected>Zero</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                                </select> *@
                                     <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.Cultural_Competencies_Picklist__c">
                                 </div>
                             </div><!-- Col -->
@@ -442,11 +464,11 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">W9 Status</label>
                                     @* <select class="js-example-basic-single form-select" data-width="100%">
-                                        <option Value="0" selected>Zero</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select> *@
+                                <option Value="0" selected>Zero</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                                </select> *@
                                     <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.W9_Status__c">
                                 </div>
                             </div><!-- Col -->
@@ -487,11 +509,11 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">Five year history org liability</label>
                                     @* <select class="js-example-basic-single form-select" data-width="100%">
-                                        <option Value="0" selected>Zero</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select> *@
+                                <option Value="0" selected>Zero</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                                </select> *@
                                     <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.Five_year_history_org_liability__c">
                                 </div>
                             </div><!-- Col -->
@@ -508,11 +530,11 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">Action pending org license</label>
                                     @* <select class="js-example-basic-single form-select" data-width="100%">
-                                        <option Value="0" selected>Zero</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select> *@
+                                <option Value="0" selected>Zero</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                                </select> *@
                                     <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.Action_pending_org_license__c">
                                 </div>
                             </div><!-- Col -->
@@ -529,11 +551,11 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">Org accreditation limited</label>
                                     @* <select class="js-example-basic-single form-select" data-width="100%">
-                                        <option Value="0" selected>Zero</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select> *@
+                                <option Value="0" selected>Zero</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                                </select> *@
                                     <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.Org_accreditation_limited__c">
                                 </div>
                             </div><!-- Col -->
@@ -541,11 +563,11 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">Explanation org accreditation limited</label>
                                     @* <select class="js-example-basic-single form-select" data-width="100%">
-                                        <option Value="0" selected>Zero</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select> *@
+                                <option Value="0" selected>Zero</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                                </select> *@
                                     <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.Explanation_org_accreditation_limited__c">
                                 </div>
                             </div><!-- Col -->
@@ -556,11 +578,11 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">Action pending current accreditation</label>
                                     @* <select class="js-example-basic-single form-select" data-width="100%">
-                                        <option Value="0" selected>Zero</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select> *@
+                                <option Value="0" selected>Zero</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                                </select> *@
                                     <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.Action_pending_current_accreditation__c">
                                 </div>
                             </div><!-- Col -->
@@ -577,11 +599,11 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">Org medicaid sanctions</label>
                                     @* <select class="js-example-basic-single form-select" data-width="100%">
-                                        <option Value="0" selected>Zero</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select> *@
+                                <option Value="0" selected>Zero</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                                </select> *@
                                     <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.Org_medicaid_sanctions__c">
                                 </div>
                             </div><!-- Col -->
@@ -589,11 +611,11 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">Org medicare sanctions</label>
                                     @* <select class="js-example-basic-single form-select" data-width="100%">
-                                        <option Value="0" selected>Zero</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select> *@
+                                <option Value="0" selected>Zero</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                                </select> *@
                                     <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.Org_medicare_sanctions__c">
                                 </div>
                             </div><!-- Col -->
@@ -619,11 +641,11 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">Org insurance initially refused</label>
                                     @* <select class="js-example-basic-single form-select" data-width="100%">
-                                        <option Value="0" selected>Zero</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select> *@
+                                <option Value="0" selected>Zero</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                                </select> *@
                                     <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.Org_insurance_initially_refused__c">
                                 </div>
                             </div><!-- Col -->
@@ -640,11 +662,11 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">Org defendant SUD payment</label>
                                     @* <select class="js-example-basic-single form-select" data-width="100%">
-                                        <option Value="0" selected>Zero</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select> *@
+                                <option Value="0" selected>Zero</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                                </select> *@
                                     <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.Org_defendant_SUD_payment__c">
                                 </div>
                             </div><!-- Col -->
@@ -661,11 +683,11 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">Org malpractice claims SUD</label>
                                     @* <select class="js-example-basic-single form-select" data-width="100%">
-                                        <option Value="0" selected>Zero</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select> *@
+                                <option Value="0" selected>Zero</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                                </select> *@
                                     <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.Org_malpractice_claims_SUD__c">
                                 </div>
                             </div><!-- Col -->
@@ -731,11 +753,11 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">Cyber Liability Status (if applicable)</label>
                                     @* <select class="js-example-basic-single form-select" data-width="100%">
-                                        <option Value="0" selected>Zero</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select> *@
+                                <option Value="0" selected>Zero</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                                </select> *@
                                     <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.Cyber_Liability_if_applicable__c">
                                 </div>
                             </div><!-- Col -->
@@ -743,11 +765,11 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">Disclosure Form Status</label>
                                     @* <select class="js-example-basic-single form-select" data-width="100%">
-                                        <option Value="0" selected>Zero</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select> *@
+                                <option Value="0" selected>Zero</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                                </select> *@
                                     <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.Disclosure_Form_Status__c">
                                 </div>
                             </div><!-- Col -->
@@ -799,11 +821,11 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">Contact Person Role</label>
                                     @* <select class="js-example-basic-single form-select" data-width="100%">
-                                        <option Value="0" selected>Zero</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select> *@
+                                <option Value="0" selected>Zero</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                                </select> *@
                                     <input type="text" class="form-control" value="@Model.CredentialingContactDtos.Contact_Person_Role__c">
                                 </div>
                             </div><!-- Col -->
@@ -853,11 +875,11 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">Facility License Status (If Applicable)</label>
                                     @* <select class="js-example-basic-single form-select" data-width="100%">
-                                        <option Value="0" selected>Zero</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select> *@
+                                <option Value="0" selected>Zero</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                                </select> *@
                                     <input type="text" class="form-control" value="@Model.ServiceLocationDtos.Facility_License_Status_if_applicable__c">
                                 </div>
                             </div><!-- Col -->
@@ -868,11 +890,11 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">Accomodations Accessibility</label>
                                     @* <select class="js-example-basic-single form-select" data-width="100%">
-                                        <option Value="0" selected>Zero</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select> *@
+                                <option Value="0" selected>Zero</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                                </select> *@
                                     <input type="text" class="form-control" value="@Model.ServiceLocationDtos.Accomodations_Accessibility__c">
                                 </div>
                             </div><!-- Col -->
@@ -965,11 +987,11 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">Service License Status (If Applicable)</label>
                                     @* <select class="js-example-basic-single form-select" data-width="100%">
-                                        <option Value="0" selected>Zero</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select> *@
+                                <option Value="0" selected>Zero</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                                </select> *@
                                     <input type="text" class="form-control" value="@Model.ServiceLocationLicenseDtos.Service_License_Status_if_applicable__c">
                                 </div>
                             </div><!-- Col -->
@@ -997,11 +1019,11 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">Verifier's Credentialing Organization</label>
                                     @* <select class="js-example-basic-single form-select" data-width="100%">
-                                        <option Value="0" selected>Zero</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select> *@
+                                <option Value="0" selected>Zero</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                                </select> *@
                                     <input type="text" class="form-control" value="@Model.OrganizationalPSVDtos.Verifier_s_Credentialing_Organization__c">
                                 </div>
                             </div><!-- Col -->
@@ -1018,11 +1040,11 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">LARA License</label>
                                     @* <select class="js-example-basic-single form-select" data-width="100%">
-                                        <option Value="0" selected>Zero</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select> *@
+                                <option Value="0" selected>Zero</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                                </select> *@
                                     <input type="text" class="form-control" value="@Model.OrganizationalPSVDtos.LARA_License__c">
                                 </div>
                             </div><!-- Col -->
@@ -1134,7 +1156,7 @@ else
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="mb-3">
-                                    <textarea id="jsonEditor" name="jsonBody" class="form-control" rows="10"></textarea>
+                                    <textarea id="jsoneditor" class="form-control" name="jsonBody" rows="10"></textarea>
                                 </div>
                             </div><!-- Col -->
                         </div><!-- Row -->
@@ -1149,9 +1171,9 @@ else
     </div>
 
 }
-
-
+    
 @section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function () {
             $('#GenerateJson').click(function () {
@@ -1161,7 +1183,17 @@ else
                     dataType: 'json',
                     success: function (response) {
                         if (response.success) {
-                            $('#jsonEditor').val(response.data);
+                            $('#jsoneditor').val(response.data);
+
+                            // Initialize CodeMirror
+                            var editor = CodeMirror.fromTextArea(document.getElementById("jsoneditor"), {
+                                mode: { name: "javascript", json: true },
+                                theme: "material",
+                                lineNumbers: true,
+                                autoCloseBrackets: true,
+                                matchBrackets: true
+                            });
+
                         } else {
                             alert('Failed to fetch JSON data: ' + response.message);
                         }
@@ -1174,6 +1206,7 @@ else
         });
     </script>
 }
+
 
 @* @section Scripts {
     <partial name="_ValidationScriptsPartial" />

@@ -1,5 +1,4 @@
-﻿
-using AutoMapper;
+﻿using AutoMapper;
 using SalesforceAPI.Dtos;
 using SalesforceAPI.Models;
 namespace SalesforceAPI.Profiles
@@ -13,6 +12,8 @@ namespace SalesforceAPI.Profiles
 
             CreateMap<OrganizationFull, OrganizationFullDto>();
             CreateMap<OrganizationFullDto, OrganizationFull>();
+
+            CreateMap<ApplicationUser, UserDto>().ReverseMap();
 
 
             CreateMap<CredentialingContact, CredentialingContactDto>()

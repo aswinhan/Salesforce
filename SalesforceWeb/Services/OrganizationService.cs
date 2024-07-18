@@ -15,12 +15,23 @@ namespace SalesforceWeb.Services
             salesforceUrl = configuration.GetValue<string>("ServiceUrls:SalesforceAPI");
 
         }
-        public Task<T> GetAsync<T>(string id)
+        public Task<T> GetAsync<T>(string id, string token)
         {
             return SendAsync<T>(new APIRequest()
             {
                 ApiType = StaticData.ApiType.GET,
-                Url = salesforceUrl + "/Organization/" + id
+                Url = salesforceUrl + "/Organization/" + id,
+                Token = token
+            });
+        }
+
+        public Task<T> EditAsync<T>(string id, string token)
+        {
+            return SendAsync<T>(new APIRequest()
+            {
+                ApiType = StaticData.ApiType.GET,
+                Url = salesforceUrl + "/EditOrganization/" + id,
+                Token = token
             });
         }
     }

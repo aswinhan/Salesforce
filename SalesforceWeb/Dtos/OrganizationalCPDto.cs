@@ -123,6 +123,7 @@ namespace SalesforceWeb.Dtos
 
         [JsonConverter(typeof(StringEnumConverter))]
         public DisclosureFormStatusCEnum? Disclosure_Form_Status__c { get; set; }
+        public string? Summary_of_Changes__c { get; set; }
 
         public enum AccreditationBodyCEnum
         {
