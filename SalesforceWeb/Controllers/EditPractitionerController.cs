@@ -34,13 +34,13 @@ namespace SalesforceWeb.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(string credentialProfileId)
         {
-                ActionResult<PractitionerCPDto> actionResult = await GetEditPractitioner(credentialProfileId);
-                PractitionerCPDto model = actionResult.Value;
-                ViewBag.credentialProfileId = credentialProfileId;
+            ActionResult<PractitionerFullDto> actionResult = await GetEditPractitioner(credentialProfileId);
+            PractitionerFullDto model = actionResult.Value;
+            ViewBag.credentialProfileId = credentialProfileId;
                 return View(model);
         }
 
-        public async Task<ActionResult<PractitionerCPDto>> GetEditPractitioner(string credentialProfileId)
+        public async Task<ActionResult<PractitionerFullDto>> GetEditPractitioner(string credentialProfileId)
         {
             try
             {
@@ -48,12 +48,11 @@ namespace SalesforceWeb.Controllers
 
                 if (response.Result != null && response.IsSuccess)
                 {
-                    PractitionerCPDto model = JsonConvert.DeserializeObject<PractitionerCPDto>(Convert.ToString(response.Result));
-                    return _mapper.Map<PractitionerCPDto>(model);
+                    PractitionerFullDto model = JsonConvert.DeserializeObject<PractitionerFullDto>(Convert.ToString(response.Result));
+                    return _mapper.Map<PractitionerFullDto>(model);
                 }
                 else
                 {
-                    TempData["error"] = "No Records found";
                     return NotFound();
                 }
             }

@@ -15,7 +15,7 @@ namespace SalesforceAPI.Controllers.Services
         {
             return await _context.ProviderKeys
             .AsNoTracking()
-            .Where(x => x.CredentialingProfileId == credentialingProfileId)
+            .Where(x => x.EncompassID == credentialingProfileId || x.CredentialingProfileId == credentialingProfileId)
             .Select(x => x.ProviderId)
             .FirstOrDefaultAsync();
         }
