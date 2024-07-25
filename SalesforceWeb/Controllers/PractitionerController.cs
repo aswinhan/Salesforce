@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using SalesforceWeb.Utilities;
 using System.Text;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SalesforceWeb.Controllers
 {
@@ -23,6 +24,7 @@ namespace SalesforceWeb.Controllers
             _logger = logger;
         }
 
+        [Authorize(Roles = "admin,customer")]
         public IActionResult Index()
         {
             return View();

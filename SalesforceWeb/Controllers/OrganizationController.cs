@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Net.Http.Headers;
 using System.Text;
 using SalesforceWeb.Utilities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SalesforceWeb.Controllers
 {
@@ -29,6 +30,7 @@ namespace SalesforceWeb.Controllers
             _logger = logger;
         }
 
+        [Authorize(Roles = "admin,customer")]
         public IActionResult Index()
         {
             return View();

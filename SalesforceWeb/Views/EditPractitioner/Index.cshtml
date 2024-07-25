@@ -10,20 +10,21 @@
         height: 20px; /* Smaller height */
         border-radius: 5px;
         appearance: none;
-        background-color: red;
-        border: 2px solid red;
+        background-color: green;
+        border: 2px solid green;
         cursor: pointer;
         position: relative;
         transition: background-color 250ms, box-shadow 250ms;
     }
 
         .toggle-checkbox.form-check-input:checked {
-            background-color: green;
-            border: 2px solid green;
+            background-color: red;
+            border: 2px solid red;
+            background-image: none;
         }
 
         .toggle-checkbox.form-check-input::before {
-            content: "✖";
+            content: "✔";
             position: absolute;
             top: 50%;
             left: 50%;
@@ -33,7 +34,8 @@
         }
 
         .toggle-checkbox.form-check-input:checked::before {
-            content: "✔";
+            content: "✖";
+            
         }
 </style>
 
@@ -1173,28 +1175,31 @@ else
     <script>
         $(document).ready(function () {
 
-            // toggleAll click
+            // Set the toggleAll checkbox to checked on page load
+            $('#toggleAll').prop('checked', true);
+
+            // Call toggleAll to set the initial state for other checkboxes and textboxes
+            toggleAll();
+
+            // toggleAll click event
             $('#toggleAll').on('click', function () {
                 toggleAll();
             });
 
             function toggleAll() {
-                const isDisabled = $('#toggleAll').prop('checked');
+                const isChecked = $('#toggleAll').prop('checked');
+                const isDisabled = isChecked;
 
                 $('.toggle-checkbox').each(function () {
                     const targetSelector = $(this).data('target');
 
-                    $(this).prop('checked', isDisabled);
+                    // Set the state of the checkbox itself
+                    $(this).prop('checked', isChecked);
 
+                    // Set the state of the target element
                     $(targetSelector).prop('disabled', isDisabled);
                 });
             }
-
-            $('.toggle-checkbox').each(function () {
-                const targetSelector = $(this).data('target');
-                $(this).prop('checked', false);
-                $(targetSelector).prop('disabled', false);
-            });
 
             function toggleField(checkbox) {
                 const targetSelector = $(checkbox).data('target');

@@ -8,6 +8,7 @@ namespace SalesforceWeb.Dtos
         public string Name { get; set; }
 
         [Required(ErrorMessage = "Email is Required")]
+        [EmailAddress(ErrorMessage = "Invalid email address format.")]
         public string UserName { get; set; }        
 
         [Required(ErrorMessage = "Password is Required")]
@@ -15,6 +16,6 @@ namespace SalesforceWeb.Dtos
 
         [Compare("Password", ErrorMessage = "Password and confirmation password do not match")]
         public string ConfirmPassword { get; set; } = null;
-        public string Role { get; set; } = "admin";
+        public string Role { get; set; } = "customer";
     }
 }

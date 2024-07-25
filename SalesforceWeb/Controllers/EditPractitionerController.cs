@@ -30,7 +30,6 @@ namespace SalesforceWeb.Controllers
             return View();
         }
 
-        [Authorize(Roles = "admin")]
         [HttpPost]
         public async Task<IActionResult> Index(string credentialProfileId)
         {
@@ -63,9 +62,7 @@ namespace SalesforceWeb.Controllers
             }
         }
 
-        [Authorize(Roles = "admin")]
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> PostCompositeEditPractitioner(PractitionerCPDto model)
         {
             try
@@ -100,7 +97,6 @@ namespace SalesforceWeb.Controllers
             }
         }
 
-        [Authorize(Roles = "admin")]
         [HttpGet]
         public IActionResult GetJsonData()
         {

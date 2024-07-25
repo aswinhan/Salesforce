@@ -80,7 +80,7 @@ namespace SalesforceWeb.Controllers
         {
             await HttpContext.SignOutAsync();
             HttpContext.Session.SetString(StaticData.SessionToken, "");
-            return RedirectToAction("Index","Home");
+            return RedirectToAction("Login","Auth");
         }
 
         public IActionResult AccessDenied()
