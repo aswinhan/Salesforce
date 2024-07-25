@@ -1,18 +1,28 @@
-using SalesforceWeb.Profiles;
-using SalesforceWeb.Services.IServices;
-using SalesforceWeb.Services;
-using MagicVilla_Web.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Serilog;
+using Serilog.Events;
+using SalesforceWeb.Profiles;
+using SalesforceWeb.Services;
+using SalesforceWeb.Services.IServices;
+using MagicVilla_Web.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Configure Serilog
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+    .Enrich.FromLogContext()
+    .WriteTo.File("Logs/log.txt", rollingInterval: RollingInterval.Day, rollOnFileSizeLimit: true, fileSizeLimitBytes: 10485760, retainedFileCountLimit: 7)
+    .CreateLogger();
+
+builder.Host.UseSerilog();
+
+// Add services to the container with appropriate lifetimes
 builder.Services.AddControllersWithViews();
 builder.Services.AddAutoMapper(typeof(DtoProfile));
-
 builder.Services.AddHttpClient();
+builder.Services.AddHttpContextAccessor(); // Scoped service for HTTP request context
 
-// Register other services
 builder.Services.AddScoped<IOAuthService, OAuthService>();
 builder.Services.AddScoped<IPractitionerService, PractitionerService>();
 builder.Services.AddScoped<IOrganizationService, OrganizationService>();
@@ -21,19 +31,18 @@ builder.Services.AddTransient<ISalesforceService, SalesforceService>();
 
 // Register other dependencies
 builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
-builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-//Authentication session and cache settings
+// Add session and authentication services
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-              .AddCookie(options =>
-              {
-                  options.Cookie.HttpOnly = true;
-                  options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
-                  options.LoginPath = "/Auth/Login";
-                  options.AccessDeniedPath = "/Auth/AccessDenied";
-                  options.SlidingExpiration = true;
-              });
+    .AddCookie(options =>
+    {
+        options.Cookie.HttpOnly = true;
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+        options.LoginPath = "/Auth/Login";
+        options.AccessDeniedPath = "/Auth/AccessDenied";
+        options.SlidingExpiration = true;
+    });
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(100);
@@ -43,7 +52,8 @@ builder.Services.AddSession(options =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+
+// Configure the HTTP request pipeline
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -56,6 +66,7 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseSession();
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");

@@ -2,7 +2,7 @@
 using SalesforceAPI.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
-using SalesforceWeb.Models;
+using SalesforceAPI.Models;
 using SalesforceAPI.Controllers.Services;
 using SalesforceAPI.Data;
 using Microsoft.EntityFrameworkCore;

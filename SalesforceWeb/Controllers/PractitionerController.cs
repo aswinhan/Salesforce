@@ -14,11 +14,13 @@ namespace SalesforceWeb.Controllers
         private readonly IPractitionerService _practitionerService;
         private readonly IMapper _mapper;
         private readonly ISalesforceService _salesforceService;
-        public PractitionerController(IPractitionerService practitionerService, IMapper mapper, ISalesforceService salesforceService)
+        private readonly ILogger<PractitionerController> _logger;
+        public PractitionerController(IPractitionerService practitionerService, IMapper mapper, ISalesforceService salesforceService, ILogger<PractitionerController> logger)
         {
             _practitionerService = practitionerService;
             _mapper = mapper;
             _salesforceService = salesforceService;
+            _logger = logger;
         }
 
         public IActionResult Index()
@@ -39,7 +41,7 @@ namespace SalesforceWeb.Controllers
             }
             catch (Exception ex)
             {
-                //_logger.LogError(ex, "Error occurred while fetching practitioner in Index method.");
+                _logger.LogError(ex, "Error occurred while fetching practitioner in Index method. {errorMessage}",ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Internal server error occurred.");
             }
         }
@@ -62,7 +64,7 @@ namespace SalesforceWeb.Controllers
             }
             catch (Exception ex)
             {
-                //_logger.LogError(ex, "Error occurred while fetching practitioner.");
+                _logger.LogError(ex, "Error occurred while fetching practitioner.");
                 return StatusCode(StatusCodes.Status500InternalServerError, "Internal server error occurred.");
             }
         }

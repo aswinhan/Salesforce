@@ -8,10 +8,10 @@ namespace SalesforceWeb.Models
         [Key]
         public int Id { get; set; }
         public int ProviderId { get; set; }
-        public string? CredentialingProfile { get; set; }
-        public string? PrimarySourceVerifier { get; set; }
+        public string CredentialingProfile { get; set; }
+        public string PrimarySourceVerifier { get; set; }
         public bool? CVO { get; set; }
-        public string? OtherAccred { get; set; }
+        public string OtherAccred { get; set; }
         public VerifierSCredentialingOrganizationCEnum? VerifiersCredentialingOrganization { get; set; }
         public LARALicenseCEnum? LARALicense { get; set; }
         public bool? LARAUploaded { get; set; }

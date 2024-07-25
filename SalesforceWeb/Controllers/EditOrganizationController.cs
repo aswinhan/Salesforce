@@ -15,11 +15,13 @@ namespace SalesforceWeb.Controllers
         private readonly IOrganizationService _organizationService;
         private readonly IMapper _mapper;
         private readonly ISalesforceService _salesforceService;
-        public EditOrganizationController(IOrganizationService organizationService, IMapper mapper, ISalesforceService salesforceService)
+        private readonly ILogger<EditOrganizationController> _logger;
+        public EditOrganizationController(IOrganizationService organizationService, IMapper mapper, ISalesforceService salesforceService, ILogger<EditOrganizationController> logger)
         {
             _organizationService = organizationService;
             _mapper = mapper;
             _salesforceService = salesforceService;
+            _logger = logger;
         }
 
         [Authorize(Roles = "admin")]
@@ -35,13 +37,13 @@ namespace SalesforceWeb.Controllers
             try
             {
                 ActionResult<OrganizationalCPDto> actionResult = await GetEditOrganization(credentialProfileId);
-                OrganizationalCPDto? model = actionResult.Value;
+                OrganizationalCPDto model = actionResult.Value;
                 ViewBag.credentialProfileId = credentialProfileId;
                 return View(model);
             }
             catch (Exception ex)
             {
-                //_logger.LogError(ex, "Error occurred while fetching practitioner in Index method.");
+                _logger.LogError(ex, "Error occurred while fetching Organization in Index method.");
                 return StatusCode(StatusCodes.Status500InternalServerError, "Internal server error occurred.");
             }
         }
@@ -53,7 +55,7 @@ namespace SalesforceWeb.Controllers
 
                 if (response.Result != null && response.IsSuccess)
                 {
-                    OrganizationalCPDto? model = JsonConvert.DeserializeObject<OrganizationalCPDto>(Convert.ToString(response.Result));
+                    OrganizationalCPDto model = JsonConvert.DeserializeObject<OrganizationalCPDto>(Convert.ToString(response.Result));
                     return _mapper.Map<OrganizationalCPDto>(model);
                 }
                 else
@@ -63,7 +65,7 @@ namespace SalesforceWeb.Controllers
             }
             catch (Exception ex)
             {
-                //_logger.LogError(ex, "Error occurred while fetching practitioner.");
+                _logger.LogError(ex, "Error occurred while fetching Organization.");
                 return StatusCode(StatusCodes.Status500InternalServerError, "Internal server error occurred.");
             }
         }

@@ -12,7 +12,7 @@ using SalesforceAPI.Data;
 namespace SalesforceAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240716133024_InitialAuthMigration")]
+    [Migration("20240725101455_InitialAuthMigration")]
     partial class InitialAuthMigration
     {
         /// <inheritdoc />
@@ -184,7 +184,6 @@ namespace SalesforceAPI.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NormalizedEmail")
@@ -363,19 +362,15 @@ namespace SalesforceAPI.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Role")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

@@ -2,7 +2,7 @@
 using SalesforceAPI.Repository.IRepostiory;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
-using SalesforceWeb.Models;
+using SalesforceAPI.Models;
 
 namespace SalesforceAPI.Controllers
 {

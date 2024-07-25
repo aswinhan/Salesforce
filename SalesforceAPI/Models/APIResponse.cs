@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace SalesforceWeb.Models
+namespace SalesforceAPI.Models
 {
     public class APIResponse
     {

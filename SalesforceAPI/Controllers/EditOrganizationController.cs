@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
 using SalesforceAPI.Dtos;
-using SalesforceAPI.Repository.IRepostiory;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
-using SalesforceWeb.Models;
 using SalesforceAPI.Controllers.Services;
 using SalesforceAPI.Data;
 using Microsoft.EntityFrameworkCore;
+using SalesforceAPI.Models;
 
 namespace SalesforceAPI.Controllers
 {

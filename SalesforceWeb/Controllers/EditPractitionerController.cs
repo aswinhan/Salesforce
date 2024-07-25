@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
-using SalesforceWeb.Models;
-using SalesforceWeb.Dtos;
-using SalesforceWeb.Services.IServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using SalesforceWeb.Utilities;    
-using System.Text;
+using SalesforceWeb.Dtos;
+using SalesforceWeb.Models;
+using SalesforceWeb.Services.IServices;
+using SalesforceWeb.Utilities;
 
 namespace SalesforceWeb.Controllers
 {
@@ -15,11 +14,14 @@ namespace SalesforceWeb.Controllers
         private readonly IPractitionerService _practitionerService;
         private readonly IMapper _mapper;
         private readonly ISalesforceService _salesforceService;
-        public EditPractitionerController(IPractitionerService practitionerService, IMapper mapper, ISalesforceService salesforceService)
+        private readonly ILogger<EditPractitionerController> _logger;
+
+        public EditPractitionerController(IPractitionerService practitionerService, IMapper mapper, ISalesforceService salesforceService, ILogger<EditPractitionerController> logger)
         {
             _practitionerService = practitionerService;
             _mapper = mapper;
             _salesforceService = salesforceService;
+            _logger = logger;
         }
 
         [Authorize(Roles = "admin")]
@@ -32,18 +34,10 @@ namespace SalesforceWeb.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(string credentialProfileId)
         {
-            try
-            {
                 ActionResult<PractitionerCPDto> actionResult = await GetEditPractitioner(credentialProfileId);
                 PractitionerCPDto model = actionResult.Value;
                 ViewBag.credentialProfileId = credentialProfileId;
                 return View(model);
-            }
-            catch (Exception ex)
-            {
-                //_logger.LogError(ex, "Error occurred while fetching practitioner in Index method.");
-                return StatusCode(StatusCodes.Status500InternalServerError, "Internal server error occurred.");
-            }
         }
 
         public async Task<ActionResult<PractitionerCPDto>> GetEditPractitioner(string credentialProfileId)
@@ -60,43 +54,51 @@ namespace SalesforceWeb.Controllers
                 else
                 {
                     TempData["error"] = "No Records found";
-                    return NotFound();                    
+                    return NotFound();
                 }
             }
             catch (Exception ex)
             {
-                //_logger.LogError(ex, "Error occurred while fetching practitioner.");
-                return StatusCode(StatusCodes.Status500InternalServerError, "Internal server error occurred.");
+                _logger.LogError(ex, "Error fetching practitioner with credentialProfileId {CredentialProfileId}: {ErrorMessage}", credentialProfileId, ex.Message);
+                return StatusCode(500, "Internal server error occurred: " + ex.Message);
             }
         }
 
         [Authorize(Roles = "admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-
-        public async Task<IActionResult> PostCompositeEditPractitioner(string jsonBody)
+        public async Task<IActionResult> PostCompositeEditPractitioner(PractitionerCPDto model)
         {
             try
             {
-                string responseBody = await _salesforceService.PostToCompositeApiAsync(jsonBody);
-                ViewBag.Message = "JSON body sent successfully!";
-                string formattedJson = JsonUtility.Format(responseBody);
-                TempData["FormattedError"] = formattedJson;
-            }
-            catch (HttpRequestException ex)
-            {
-                ViewBag.Error = $"Failed to send JSON body. {ex.Message}";
-                TempData["Error"] = ex.Message;
-            }
-            catch (ApplicationException ex)
-            {
-                ViewBag.Error = $"Error communicating with Salesforce API. {ex.Message}";
+                if (ModelState.IsValid)
+                {
+                    // Prepare JSON body from model
+                    string jsonBody = JsonConvert.SerializeObject(model);
+
+                    // Send JSON to Salesforce API and get response
+                    string responseBody = await _salesforceService.PostToCompositeApiAsync(jsonBody);
+
+                    // Format and store response in TempData
+                    string formattedJson = JsonUtility.Format(responseBody);
+                    TempData["FormattedError"] = formattedJson;
+
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    // If model state is not valid, return to view with validation errors
+                    _logger.LogError("Validation Error {ErrorMessage}", model);
+                    return View("Index", model);
+                }
             }
             catch (Exception ex)
             {
-                ViewBag.Error = $"Unexpected error occurred. {ex.Message}";
+                ViewBag.Error = $"Unexpected error occurred: {ex.Message}";
+                _logger.LogError(ex, "Unexpected error occurred: {ErrorMessage}", ex.Message);
+                return View("Index", model);
+
             }
-            return RedirectToAction("Index");
         }
 
         [Authorize(Roles = "admin")]
@@ -112,9 +114,9 @@ namespace SalesforceWeb.Controllers
             }
             else
             {
-                return Json(new { success = false, message = "JSON file not found." });
+                _logger.LogError("JSON file not found.");
+                return Json(new { success = false, message = "JSON file not found." });                
             }
         }
-
     }
 }

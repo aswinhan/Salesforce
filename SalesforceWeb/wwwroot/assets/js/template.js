@@ -90,10 +90,10 @@
 
 
     // Sidebar theme settings
-    $("input:radio[name=sidebarThemeSettings]").click(function() {
-      $('body').removeClass('sidebar-light sidebar-dark');
-      $('body').addClass($(this).val());
-     })
+    //$("input:radio[name=sidebarThemeSettings]").click(function() {
+    //  $('body').removeClass('sidebar-light sidebar-dark');
+    //  $('body').addClass($(this).val());
+    // })
 
 
 
@@ -136,17 +136,17 @@
 
 
     //  open sidebar-folded when hover
-    $(".sidebar .sidebar-body").hover(
-    function () {
-      if (body.hasClass('sidebar-folded')){
-        body.addClass("open-sidebar-folded");
-      }
-    },
-    function () {
-      if (body.hasClass('sidebar-folded')){
-        body.removeClass("open-sidebar-folded");
-      }
-    });
+    //$(".sidebar .sidebar-body").hover(
+    //function () {
+    //  if (body.hasClass('sidebar-folded')){
+    //    body.addClass("open-sidebar-folded");
+    //  }
+    //},
+    //function () {
+    //  if (body.hasClass('sidebar-folded')){
+    //    body.removeClass("open-sidebar-folded");
+    //  }
+    //});
 
 
     // close sidebar when click outside on mobile/table    
@@ -181,24 +181,24 @@
       }        
     })
 
-    $(window).scroll(function() {
-      if(window.matchMedia('(min-width: 992px)').matches) {
-        var header = $('.horizontal-menu');
-        if ($(window).scrollTop() >= 60) {
-          $(header).addClass('fixed-on-scroll');
-        } else {
-          $(header).removeClass('fixed-on-scroll');
-        }
-      }
-    });
+    //$(window).scroll(function() {
+    //  if(window.matchMedia('(min-width: 992px)').matches) {
+    //    var header = $('.horizontal-menu');
+    //    if ($(window).scrollTop() >= 60) {
+    //      $(header).addClass('fixed-on-scroll');
+    //    } else {
+    //      $(header).removeClass('fixed-on-scroll');
+    //    }
+    //  }
+    //});
 
 
     // Prevent body scrolling while sidebar scroll
-    $('.sidebar .sidebar-body').hover(function () {
-      $('body').addClass('overflow-hidden');
-    }, function () {
-      $('body').removeClass('overflow-hidden');
-    });
+    //$('.sidebar .sidebar-body').hover(function () {
+    //  $('body').addClass('overflow-hidden');
+    //}, function () {
+    //  $('body').removeClass('overflow-hidden');
+    //});
    
 
   });

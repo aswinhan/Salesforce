@@ -9,10 +9,10 @@ namespace SalesforceAPI.Models
         [Key]
         public int Id { get; set; }
         public int ProviderId { get; set; }
-        public string? CredentialingProfile { get; set; }
-        public string? PrimarySourceVerifier { get; set; }
+        public string CredentialingProfile { get; set; }
+        public string PrimarySourceVerifier { get; set; }
         public bool? CVO { get; set; }
-        public string? OtherAccred { get; set; }
+        public string OtherAccred { get; set; }
         public VerifiersCredentialingOrganizationEnum? VerifiersredentialingOrganization { get; set; }
         public bool? IchatBackgroundheck { get; set; }
         public bool? WorkforceBackgroundheck { get; set; }

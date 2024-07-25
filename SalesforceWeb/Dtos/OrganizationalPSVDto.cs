@@ -7,10 +7,10 @@ namespace SalesforceWeb.Dtos
 {
     public class OrganizationalPSVDto
     {
-        public string? Credentialing_Profile__c { get; set; }
-        public string? Primary_Source_Verifier__c { get; set; }
+        public string Credentialing_Profile__c { get; set; }
+        public string Primary_Source_Verifier__c { get; set; }
         public bool? CVO__c { get; set; }
-        public string? Other_Accred__c { get; set; }
+        public string Other_Accred__c { get; set; }
 
         [JsonConverter(typeof(StringEnumConverter))]
         public VerifierSCredentialingOrganizationCEnum? Verifier_s_Credentialing_Organization__c { get; set; }

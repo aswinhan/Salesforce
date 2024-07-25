@@ -17,32 +17,32 @@ namespace SalesforceWeb.Dtos
         public long? Tax_ID__c { get; set; }
         public bool? Medicare_Provider__c { get; set; }
         public long? Medicare_Number__c { get; set; }
-        public string? Practitioner_NPI__c { get; set; }
-        public string? Office_Address_Street_1__c { get; set; }
-        public string? Office_Address_City__c { get; set; }
-        public string? Office_Address_Zipcode__c { get; set; }
-        public string? Office_Address_State__c { get; set; }
-        public string? Office_Address_County__c { get; set; }
-        public string? Home_Address_Street_1__c { get; set; }
-        public string? Home_Address_City__c { get; set; }
-        public string? Home_Address_Zipcode__c { get; set; }
-        public string? Home_Address_State__c { get; set; }
-        public string? Home_Address_County__c { get; set; }
+        public string Practitioner_NPI__c { get; set; }
+        public string Office_Address_Street_1__c { get; set; }
+        public string Office_Address_City__c { get; set; }
+        public string Office_Address_Zipcode__c { get; set; }
+        public string Office_Address_State__c { get; set; }
+        public string Office_Address_County__c { get; set; }
+        public string Home_Address_Street_1__c { get; set; }
+        public string Home_Address_City__c { get; set; }
+        public string Home_Address_Zipcode__c { get; set; }
+        public string Home_Address_State__c { get; set; }
+        public string Home_Address_County__c { get; set; }
 
         [JsonConverter(typeof(StringEnumConverter))]
         public SpecialtiesCEnum? Specialties__c { get; set; }
-        public string? Specialty_Other__c { get; set; }
+        public string Specialty_Other__c { get; set; }
         public bool? Certificate_of_Liability__c { get; set; }
         public DateTime? Certificate_of_Liability_Expiration_Date__c { get; set; }
-        public string? Languages_Spoken__c { get; set; }
-        public string? Cultural_Competences__c { get; set; }
+        public string Languages_Spoken__c { get; set; }
+        public string Cultural_Competences__c { get; set; }
 
         [JsonConverter(typeof(StringEnumConverter))]
         public X6MonthGapInEmploymentSinceProfessCEnum? X6_month_gap_in_employment_since_profess__c { get; set; }
         public DateTime? X6_Month_Gap_Start_Date__c { get; set; }
         public DateTime? X6_Month_Gap_End_Date__c { get; set; }
-        public string? X6_Month_Gap_Activity__c { get; set; }
-        public string? X6_Month_Gap_Reason__c { get; set; }
+        public string X6_Month_Gap_Activity__c { get; set; }
+        public string X6_Month_Gap_Reason__c { get; set; }
         public bool? Please_acknowledge_If_denied_credential__c { get; set; }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -53,15 +53,15 @@ namespace SalesforceWeb.Dtos
 
         [JsonConverter(typeof(StringEnumConverter))]
         public HistoryOfLossOfLicenseCEnum? History_of_loss_of_license__c { get; set; }
-        public string? History_of_felony_convictions__c { get; set; }
-        public string? History_of_loss_or_limitations_of_privil__c { get; set; }
-        public string? ExplanationHistory_of_felony_convictions__c { get; set; }
+        public string History_of_felony_convictions__c { get; set; }
+        public string History_of_loss_or_limitations_of_privil__c { get; set; }
+        public string ExplanationHistory_of_felony_convictions__c { get; set; }
 
         [JsonConverter(typeof(StringEnumConverter))]
         public CurrentMalpracticeInsuranceCoverageCEnum? Current_Malpractice_Insurance_Coverage__c { get; set; }
-        public string? Attestation_by_the_applicant_of_the_corr__c { get; set; }
-        public string? Office_Phone_Number__c { get; set; }
-        public string? Email__c { get; set; }
+        public string Attestation_by_the_applicant_of_the_corr__c { get; set; }
+        public string Office_Phone_Number__c { get; set; }
+        public string Email__c { get; set; }
 
         [JsonConverter(typeof(StringEnumConverter))]
         public CulturalCompetenciesPicklistCEnum? Cultural_Competencies_Picklist__c { get; set; }
@@ -76,11 +76,11 @@ namespace SalesforceWeb.Dtos
 
         [JsonConverter(typeof(StringEnumConverter))]
         public FiveYearHistoryOrgLiabilityCEnum? Five_year_history_org_liability__c { get; set; }
-        public string? Explanation_five_year_history__c { get; set; }
+        public string Explanation_five_year_history__c { get; set; }
 
         [JsonConverter(typeof(StringEnumConverter))]
         public ActionPendingOrgLicenseCEnum? Action_pending_org_license__c { get; set; }
-        public string? Explanation_org_license__c { get; set; }
+        public string Explanation_org_license__c { get; set; }
 
         [JsonConverter(typeof(StringEnumConverter))]
         public OrgAccreditationLimitedCEnum? Org_accreditation_limited__c { get; set; }
@@ -90,27 +90,27 @@ namespace SalesforceWeb.Dtos
 
         [JsonConverter(typeof(StringEnumConverter))]
         public ActionPendingCurrentAccreditationCEnum? Action_pending_current_accreditation__c { get; set; }
-        public string? Explanation_current_accreditation__c { get; set; }
+        public string Explanation_current_accreditation__c { get; set; }
 
         [JsonConverter(typeof(StringEnumConverter))]
         public OrgMedicaidSanctionsCEnum? Org_medicaid_sanctions__c { get; set; }
 
         [JsonConverter(typeof(StringEnumConverter))]
         public OrgMedicareSanctionsCEnum? Org_medicare_sanctions__c { get; set; }
-        public string? Explanation_org_medicaid_sanctions__c { get; set; }
-        public string? Explanation_org_medicare_sanctions__c { get; set; }
+        public string Explanation_org_medicaid_sanctions__c { get; set; }
+        public string Explanation_org_medicare_sanctions__c { get; set; }
 
         [JsonConverter(typeof(StringEnumConverter))]
         public OrgInsuranceInitiallyRefusedCEnum? Org_insurance_initially_refused__c { get; set; }
-        public string? Explanation_org_insurance_initially_refu__c { get; set; }
+        public string Explanation_org_insurance_initially_refu__c { get; set; }
 
         [JsonConverter(typeof(StringEnumConverter))]
         public OrgDefendantSUDPaymentCEnum? Org_defendant_SUD_payment__c { get; set; }
-        public string? Explanation_org_defendant_SUD_payment__c { get; set; }
+        public string Explanation_org_defendant_SUD_payment__c { get; set; }
 
         [JsonConverter(typeof(StringEnumConverter))]
         public OrgMalPracticeClaimsSUDCEnum? Org_malpractice_claims_SUD__c { get; set; }
-        public string? Explanation_org_malpractice_claims_SUD__c { get; set; }
+        public string Explanation_org_malpractice_claims_SUD__c { get; set; }
         public bool? Please_indicate_if_you_have_a_speciality__c { get; set; }
         public bool? Proof_of_Accreditation__c { get; set; }
         public bool? Cyber_Liability_if_applicable__c { get; set; }
@@ -123,7 +123,7 @@ namespace SalesforceWeb.Dtos
 
         [JsonConverter(typeof(StringEnumConverter))]
         public DisclosureFormStatusCEnum? Disclosure_Form_Status__c { get; set; }
-        public string? Summary_of_Changes__c { get; set; }
+        public string Summary_of_Changes__c { get; set; }
 
         public enum AccreditationBodyCEnum
         {

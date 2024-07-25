@@ -8,6 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace SalesforceAPI.Repository
 {
@@ -18,6 +19,7 @@ namespace SalesforceAPI.Repository
         private readonly RoleManager<IdentityRole> _roleManager;
         private string secretKey;
         private readonly IMapper _mapper;
+
 
         public UserRepository(ApplicationDbContext db, IConfiguration configuration,
             UserManager<ApplicationUser> userManager, IMapper mapper, RoleManager<IdentityRole> roleManager)
@@ -101,15 +103,23 @@ namespace SalesforceAPI.Repository
                         await _roleManager.CreateAsync(new IdentityRole("admin"));
                         await _roleManager.CreateAsync(new IdentityRole("customer"));
                     }
-                    await _userManager.AddToRoleAsync(user, "customer");
+                    await _userManager.AddToRoleAsync(user, "admin");
                     var userToReturn = _db.ApplicationUsers
                         .FirstOrDefault(u => u.UserName == registerationRequestDto.UserName);
                     return _mapper.Map<UserDto>(userToReturn);
 
                 }
             }
-            catch(Exception e)
+            catch(Exception ex)
             {
+                var dto = new APIResponse
+                {
+                    ErrorMessages = new List<string> { Convert.ToString(ex.Message) },
+                    IsSuccess = false
+                };
+                var res = JsonConvert.SerializeObject(dto);
+                var APIResponse = JsonConvert.DeserializeObject(res);
+                return (UserDto)APIResponse;
 
             }
 

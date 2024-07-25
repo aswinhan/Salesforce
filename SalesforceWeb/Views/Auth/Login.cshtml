@@ -1,31 +1,46 @@
 ﻿@model SalesforceWeb.Dtos.LoginRequestDto
 
-<form method="post">
-    <div class="container border p-4">
-        <div class="row text-center">
-            <h1>Login</h1>
-        </div>
-        <div class="row text-center">
-            <div asp-validation-summary="All" class="text-danger"></div>
-        </div>
-        <div class="row">
-            <div class="col-6 offset-3 pb-2">
-                <input asp-for="UserName" type="text" class="form-control" placeholder="Username..." />
-            </div>
-
-            <div class="col-6 offset-3 pb-2">
-                <input asp-for="Password" type="text" class="form-control" placeholder="Password..." />
-
-            </div>
-            <div class="col-6 offset-3 pb-2">
-                <button type="submit" class="form-control btn-success" value="Submit">Login</button>
-
+<div class="row w-100 mx-0 auth-page">
+    <div class="col-md-8 col-xl-6 mx-auto">
+        <div class="card">
+            <div class="row">
+                <div class="col-md-4 pe-md-0">
+                    <div class="auth-side-wrapper">
+                    </div>
+                </div>
+                <div class="col-md-8 ps-md-0">
+                    <div class="auth-form-wrapper px-4 py-5">
+                        <a href="#" class="noble-ui-logo d-block mb-2">Login</a>
+                        <h5 class="text-muted fw-normal mb-4">Welcome back! Log in to your account.</h5>
+                        <form class="forms-sample" method="post">
+                            <div class="row text-center">
+                                <div asp-validation-summary="All" class="text-danger"></div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="userEmail" class="form-label">Email address</label>
+                                <input asp-for="UserName" type="email" class="form-control" id="userEmail" placeholder="Email" />
+                            </div>
+                            <div class="mb-3">
+                                <label for="userPassword" class="form-label">Password</label>
+                                <input asp-for="Password" type="password" class="form-control" id="userPassword" autocomplete="current-password" placeholder="Password" />
+                            </div>
+                            <div class="form-check mb-3">
+                                <input type="checkbox" class="form-check-input" id="authCheck">
+                                <label class="form-check-label" for="authCheck">
+                                    Remember me
+                                </label>
+                            </div>
+                            <div>
+                                <button type="submit" class="btn btn-outline-primary btn-icon-text mb-2 mb-md-0" value="Submit">Login</button>
+                            </div>
+                            <a asp-controller="Auth" asp-action="Register" class="d-block mt-3 text-muted">Not a user? Sign up</a>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-
-
-</form>
+</div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

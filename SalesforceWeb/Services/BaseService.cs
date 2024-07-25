@@ -63,20 +63,26 @@ namespace SalesforceWeb.Services
                         return returnObj;
                     }
                 }
-                catch (Exception e)
+                catch (Exception ex)
                 {
-                    var exceptionResponse = JsonConvert.DeserializeObject<T>(apiContent);
+                    var dto = new APIResponse
+                    {
+                        ErrorMessages = new List<string> { Convert.ToString(ex.Message) },
+                        IsSuccess = false
+                    };
+                    var res = JsonConvert.SerializeObject(dto);
+                    var exceptionResponse = JsonConvert.DeserializeObject<T>(res);
                     return exceptionResponse;
                 }
                 var APIResponse = JsonConvert.DeserializeObject<T>(apiContent);
                 return APIResponse;
 
             }
-            catch(Exception e)
+            catch(Exception ex)
             {
                 var dto = new APIResponse
                 {
-                    ErrorMessages = new List<string> { Convert.ToString(e.Message) },
+                    ErrorMessages = new List<string> { Convert.ToString(ex.Message) },
                     IsSuccess = false
                 };
                 var res = JsonConvert.SerializeObject(dto);

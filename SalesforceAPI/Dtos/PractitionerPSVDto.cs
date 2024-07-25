@@ -5,10 +5,10 @@ namespace SalesforceAPI.Dtos
 {
     public class PractitionerPSVDto
     {
-        public string? Credentialing_Profile__c { get; set; }
-        public string? Primary_Source_Verifier_c { get; set; }
+        public string Credentialing_Profile__c { get; set; }
+        public string Primary_Source_Verifier_c { get; set; }
         public bool? CVO__c { get; set; }
-        public string? Other_Accred__c { get; set; }
+        public string Other_Accred__c { get; set; }
         public VerifiersCredentialingOrganizationEnum? Verifier_s_Credentialing_Organization__c { get; set; }
         public bool? Ichat_Background_Check__c { get; set; }
         public bool? Workforce_Background_Check__c { get; set; }

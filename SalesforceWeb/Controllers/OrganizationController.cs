@@ -18,13 +18,15 @@ namespace SalesforceWeb.Controllers
         private readonly HttpClient _httpClient;
         private readonly IOAuthService _oAuthService;
         private readonly ISalesforceService _salesforceService;
-        public OrganizationController(IOrganizationService organizationService, IMapper mapper, IOAuthService oAuthService, ISalesforceService salesforceService)
+        private readonly ILogger<OrganizationController> _logger;
+        public OrganizationController(IOrganizationService organizationService, IMapper mapper, IOAuthService oAuthService, ISalesforceService salesforceService, ILogger<OrganizationController> logger)
         {
             _organizationService = organizationService;
             _mapper = mapper;
             _httpClient = new HttpClient();
             _oAuthService = oAuthService;
             _salesforceService = salesforceService;
+            _logger = logger;
         }
 
         public IActionResult Index()
@@ -42,13 +44,13 @@ namespace SalesforceWeb.Controllers
                 await GetRelatedAccount(token, credentialProfileId);
 
                 ActionResult<OrganizationFullDto> actionResult = await GetOrganization(credentialProfileId);
-                OrganizationFullDto? model = actionResult.Value;
+                OrganizationFullDto model = actionResult.Value;
                 ViewBag.credentialProfileId = credentialProfileId;
                 return View(model);
             }
             catch (Exception ex)
             {
-                //_logger.LogError(ex, "Error occurred while fetching practitioner in Index method.");
+                _logger.LogError(ex, "Error occurred while fetching Organization in Index method.");
                 return StatusCode(StatusCodes.Status500InternalServerError, "Internal server error occurred.");
             }
         }
@@ -61,7 +63,7 @@ namespace SalesforceWeb.Controllers
 
                 if (response.Result != null && response.IsSuccess)
                 {
-                    OrganizationFullDto? model = JsonConvert.DeserializeObject<OrganizationFullDto>(Convert.ToString(response.Result));
+                    OrganizationFullDto model = JsonConvert.DeserializeObject<OrganizationFullDto>(Convert.ToString(response.Result));
                     return _mapper.Map<OrganizationFullDto>(model);
                 }
                 else
@@ -71,7 +73,7 @@ namespace SalesforceWeb.Controllers
             }
             catch (Exception ex)
             {
-                //_logger.LogError(ex, "Error occurred while fetching practitioner.");
+                _logger.LogError(ex, "Error occurred while fetching Organization.");
                 return StatusCode(StatusCodes.Status500InternalServerError, "Internal server error occurred.");
             }
         }

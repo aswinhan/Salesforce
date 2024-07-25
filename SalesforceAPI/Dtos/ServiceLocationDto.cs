@@ -7,20 +7,20 @@ namespace SalesforceAPI.Dtos
 {
     public class ServiceLocationDto
     {
-        public string? Credentialing_Profile__c { get; set; }
-        public string? Account_Site__c { get; set; }
-        public string? Account__c { get; set; }
+        public string Credentialing_Profile__c { get; set; }
+        public string Account_Site__c { get; set; }
+        public string Account__c { get; set; }
         public bool? Facility_License_if_applicable__c { get; set; }
         public DateTime? Facility_License_Expiration_if_applicab__c { get; set; }
-        public string? Facility_License_Number_if_applicable__c { get; set; }
+        public string Facility_License_Number_if_applicable__c { get; set; }
 
         [JsonConverter(typeof(StringEnumConverter))]
         public FacilityLicenseStatusIfApplicableCEnum? Facility_License_Status_if_applicable__c { get; set; }
-        public string? Hours_of_Operation__c { get; set; }
+        public string Hours_of_Operation__c { get; set; }
 
         [JsonConverter(typeof(StringEnumConverter))]
         public AccomodationsAccessibilityCEnum? Accomodations_Accessibility__c { get; set; }
-        public string? Accomodations_Accessibility_Other__c { get; set; }
+        public string Accomodations_Accessibility_Other__c { get; set; }
         public bool? Licensed_Facility__c { get; set; }
         public enum FacilityLicenseStatusIfApplicableCEnum
         {

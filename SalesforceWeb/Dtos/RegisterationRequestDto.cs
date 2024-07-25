@@ -1,10 +1,20 @@
-﻿namespace SalesforceWeb.Dtos
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace SalesforceWeb.Dtos
 {
     public class RegisterationRequestDto
     {
-        public string UserName { get; set; }
+        [Required(ErrorMessage = "Name is Required")]
         public string Name { get; set; }
+
+        [Required(ErrorMessage = "Email is Required")]
+        public string UserName { get; set; }        
+
+        [Required(ErrorMessage = "Password is Required")]
         public string Password { get; set; }
-        public string Role { get; set; } = "customer";
+
+        [Compare("Password", ErrorMessage = "Password and confirmation password do not match")]
+        public string ConfirmPassword { get; set; } = null;
+        public string Role { get; set; } = "admin";
     }
 }
