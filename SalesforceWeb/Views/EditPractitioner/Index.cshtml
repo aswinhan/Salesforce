@@ -98,7 +98,7 @@ else
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <div class="form-check form-switch">
                             <input type="checkbox" class="form-check-input" id="toggleAll">
-                            <label class="form-check-label" for="checkDefault">Disable All</label>
+                            <label class="form-check-label" for="checkDefault">full credential </label>
                         </div>
                     </div>
                     <div class="card-body">
@@ -1176,13 +1176,16 @@ else
         $(document).ready(function () {
 
             // Set the toggleAll checkbox to checked on page load
-            $('#toggleAll').prop('checked', true);
+            $('#toggleAll').prop('checked', false);
+            jQuery('.rounded-circle').hide();
+     
 
             // Call toggleAll to set the initial state for other checkboxes and textboxes
             toggleAll();
 
             // toggleAll click event
             $('#toggleAll').on('click', function () {
+                jQuery('.rounded-circle').show();
                 toggleAll();
             });
 
