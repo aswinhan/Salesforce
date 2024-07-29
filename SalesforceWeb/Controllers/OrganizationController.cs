@@ -86,7 +86,7 @@ namespace SalesforceWeb.Controllers
             {
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-                HttpResponseMessage response = await _httpClient.GetAsync("https://mcal--mcuatgcp.sandbox.my.salesforce.com/services/data/v59.0/query/?q=SELECT Id, Name FROM Service_Listing__c WHERE is_Certification__c = true AND Active__c = true");
+                HttpResponseMessage response = await _httpClient.GetAsync("https://mcal--mctraining.sandbox.my.salesforce.com/services/data/v59.0/query/?q=SELECT Id, Name FROM Service_Listing__c WHERE is_Certification__c = true AND Active__c = true");
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -129,7 +129,7 @@ namespace SalesforceWeb.Controllers
             {
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-                HttpResponseMessage response = await _httpClient.GetAsync("https://mcal--mcuatgcp.sandbox.my.salesforce.com/services/apexrest/api/Account/" + Id);
+                HttpResponseMessage response = await _httpClient.GetAsync("https://mcal--mctraining.sandbox.my.salesforce.com/services/apexrest/api/Account/" + Id);
 
 
                 if (response.IsSuccessStatusCode)

@@ -97,7 +97,15 @@ else
                                     <label class="form-label">
                                         Tax ID
                                     </label>
-                                    <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Tax_ID__c" id="Tax_ID__c">
+                                    @if (Model.PractitionerCPDtos.Tax_ID__c == null)
+                                    {
+                                        <input type="text" class="form-control" value="112342342" id="Tax_ID__c">
+                                    }
+                                    else
+                                    {
+                                        <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Tax_ID__c" id="Tax_ID__c">
+                                    }
+                                    
                                 </div>
                             </div><!-- Col -->
                         </div><!-- Row -->
@@ -1115,7 +1123,9 @@ else
 
 @section Scripts {
     <script>
+
         $(document).ready(function () {
+
             // Function to generate JSON from active fields
             $('#GenerateJson').click(function () {
 

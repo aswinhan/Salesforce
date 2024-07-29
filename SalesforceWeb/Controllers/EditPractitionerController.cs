@@ -63,38 +63,29 @@ namespace SalesforceWeb.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostCompositeEditPractitioner(PractitionerCPDto model)
+        public async Task<IActionResult> PostCompositeEditPractitioner(string jsonBody)
         {
             try
             {
-                if (ModelState.IsValid)
-                {
-                    // Prepare JSON body from model
-                    string jsonBody = JsonConvert.SerializeObject(model);
-
-                    // Send JSON to Salesforce API and get response
-                    string responseBody = await _salesforceService.PostToCompositeApiAsync(jsonBody);
-
-                    // Format and store response in TempData
-                    string formattedJson = JsonUtility.Format(responseBody);
-                    TempData["FormattedError"] = formattedJson;
-
-                    return RedirectToAction("Index");
-                }
-                else
-                {
-                    // If model state is not valid, return to view with validation errors
-                    _logger.LogError("Validation Error {ErrorMessage}", model);
-                    return View("Index", model);
-                }
+                string responseBody = await _salesforceService.PostToCompositeApiAsync(jsonBody);
+                ViewBag.Message = "JSON body sent successfully!";
+                string formattedJson = JsonUtility.Format(responseBody);
+                TempData["FormattedError"] = formattedJson;
+            }
+            catch (HttpRequestException ex)
+            {
+                ViewBag.Error = $"Failed to send JSON body. {ex.Message}";
+                TempData["Error"] = ex.Message;
+            }
+            catch (ApplicationException ex)
+            {
+                ViewBag.Error = $"Error communicating with Salesforce API. {ex.Message}";
             }
             catch (Exception ex)
             {
-                ViewBag.Error = $"Unexpected error occurred: {ex.Message}";
-                _logger.LogError(ex, "Unexpected error occurred: {ErrorMessage}", ex.Message);
-                return View("Index", model);
-
+                ViewBag.Error = $"Unexpected error occurred. {ex.Message}";
             }
+            return RedirectToAction("Index");
         }
 
         [HttpGet]

@@ -4,40 +4,55 @@ document.addEventListener("DOMContentLoaded", function () {
     const rowsContainer = document.getElementById("rowsContainer");
     const primarySourceDiv = document.getElementById("primarySourceVerificationDetails");
 
-    function createRow() {
+    function createRow(rowIndex) {
         const row = document.createElement("div");
         row.className = "row";
         row.innerHTML = `
-            <div class="col-sm-3">
-                <div class="mb-3">
-                    <label class="form-label">Title</label>
-                    <input type="text" class="form-control" placeholder="Title" name="title">
-                </div>
-            </div><!-- Col -->
-            <div class="col-sm-3">
-                <div class="mb-3">
-                    <label class="form-label">Path On Client</label>
-                    <input class="form-control" type="file" id="formFile" name="pathOnClient">
-                </div>
-            </div><!-- Col -->
-            <div class="col-sm-3">
-                <div class="mb-3">
-                    <label class="form-label">Version Data</label>
-                    <input type="text" class="form-control" placeholder="Version Data" name="versionData">
-                </div>
-            </div><!-- Col -->
-            <div class="col-sm-3">
-                <div class="mb-3">
-                    <label class="form-label">UC Document Type</label>
-                    <input type="text" class="form-control" placeholder="UC Document Type" name="ucDocumentType">
-                </div>
-            </div><!-- Col -->
-        `;
+                    <div class="col-sm-3">
+                        <div class="mb-3">
+                            <label class="form-label">Title</label>
+                            <input type="text" class="form-control" placeholder="Title" name="title">
+                        </div>
+                    </div><!-- Col -->
+                    <div class="col-sm-3">
+                        <div class="mb-3">
+                            <label class="form-label">Path On Client</label>
+                            <input class="form-control file-input" type="file" data-row-index="${rowIndex}" name="pathOnClient">
+                        </div>
+                    </div><!-- Col -->
+                    <div class="col-sm-3">
+                        <div class="mb-3">
+                            <label class="form-label">Version Data</label>
+                            <input type="text" class="form-control base64-output" placeholder="Version Data" name="versionData" readonly>
+                        </div>
+                    </div><!-- Col -->
+                    <div class="col-sm-3">
+                        <div class="mb-3">
+                            <label class="form-label">UC Document Type</label>
+                            <input type="text" class="form-control" placeholder="UC Document Type" name="ucDocumentType">
+                        </div>
+                    </div><!-- Col -->
+                `;
+
+        row.querySelector('.file-input').addEventListener('change', function (event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const base64String = e.target.result.split(',')[1];
+                    const base64Output = row.querySelector('.base64-output');
+                    base64Output.value = base64String;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
         return row;
     }
 
     function addNewRow() {
-        rowsContainer.appendChild(createRow());
+        const rowIndex = rowsContainer.children.length; // Generate index based on the number of existing rows
+        rowsContainer.appendChild(createRow(rowIndex));
     }
 
     function updateRows() {
@@ -49,7 +64,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const checkboxes = primarySourceDiv.querySelectorAll("input[type='checkbox']:not(.toggle-checkbox)");
         const checkedEnabledCount = Array.from(checkboxes).filter(cb => cb.checked && !cb.disabled).length;
         const totalCheckedCount = Array.from(checkboxes).filter(cb => cb.checked).length;
-        const unchekedEnabledCount = Array.from(checkboxes).filter(cb => !cb.checked && !cb.disabled).length;
+        const uncheckedEnabledCount = Array.from(checkboxes).filter(cb => !cb.checked && !cb.disabled).length;
 
         const currentRows = rowsContainer.children.length;
         if (checkedEnabledCount > currentRows) {
@@ -64,7 +79,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
 
-        addRowBtn.disabled = (checkedEnabledCount === 0 || totalCheckedCount === checkboxes.length || checkedEnabledCount === currentRows || unchekedEnabledCount > 0);
+        addRowBtn.disabled = (checkedEnabledCount === 0 || totalCheckedCount === checkboxes.length || checkedEnabledCount === currentRows || uncheckedEnabledCount > 0);
     }
 
     function monitorCheckboxes() {
@@ -111,6 +126,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const formData = collectFormData();
         console.log(formData);
     });
+
     function collectFormData() {
         const formInputs = rowsContainer.querySelectorAll(".row input");
         const formData = [];

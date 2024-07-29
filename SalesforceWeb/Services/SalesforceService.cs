@@ -22,7 +22,7 @@ namespace SalesforceWeb.Services
                 string token = await _oAuthService.GetBearerTokenAsync();
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-                string apiUrl = "https://mcal--mcuatgcp.sandbox.my.salesforce.com/services/data/v59.0/composite/";
+                string apiUrl = "https://mcal--mctraining.sandbox.my.salesforce.com/services/data/v59.0/composite/";
 
                 var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
 
