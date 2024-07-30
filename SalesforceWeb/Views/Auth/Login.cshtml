@@ -1,17 +1,21 @@
 ﻿@model SalesforceWeb.Dtos.LoginRequestDto
 
 <div class="row w-100 mx-0 auth-page p-5">
-    <div class="col-md-8 col-xl-6 mx-auto">
+    <div class="col-md-8 col-xl-10 mx-auto">
         <div class="card">
             <div class="row">
-                <div class="col-md-4 pe-md-0">
+                <div class="col-md-4 col-xl-6 pe-md-0">
                     <div class="auth-side-wrapper">
                     </div>
                 </div>
-                <div class="col-md-8 ps-md-0">
+                <div class="col-md-8 col-xl-6 ps-md-0">
                     <div class="auth-form-wrapper px-4 py-5">
+                        <div class="logo-container">
+                            <img src="~/assets/images/medversantlogo.jpeg" alt="Logo" class="logo">
+                        </div>
                         <a href="#" class="noble-ui-logo d-block mb-2">Login</a>
                         <h5 class="text-muted fw-normal mb-4">Welcome back! Log in to your account.</h5>
+                        <a href="#" class="login-head d-block mb-2">UNIVERSAL CREDENTIALING APPLICATION</a>
                         <form class="forms-sample" method="post">
                             <div class="row text-center">
                                 <div asp-validation-summary="All" class="text-danger"></div>
@@ -33,7 +37,7 @@
                             <div>
                                 <button type="submit" class="btn btn-outline-primary btn-icon-text mb-2 mb-md-0" value="Submit">Login</button>
                             </div>
-                            <a asp-controller="Auth" asp-action="Register" class="d-block mt-3 text-muted">Not a user? Sign up</a>
+                            <a asp-controller="Auth" asp-action="Register" class="d-block mt-3 text-muted">Didn't have an account? <span class="text-primary">Sign up</span></a>
                         </form>
                     </div>
                 </div>

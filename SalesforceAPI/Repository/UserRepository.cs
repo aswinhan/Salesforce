@@ -9,6 +9,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Newtonsoft.Json;
+using Microsoft.EntityFrameworkCore;
 
 namespace SalesforceAPI.Repository
 {
@@ -46,10 +47,7 @@ namespace SalesforceAPI.Repository
             var user = _db.ApplicationUsers
                 .FirstOrDefault(u => u.UserName.ToLower() == loginRequestDto.UserName.ToLower());
 
-            bool isValid = await _userManager.CheckPasswordAsync(user, loginRequestDto.Password);
-
-
-            if (user == null || isValid == false)
+            if (user == null)
             {
                 return new LoginResponseDto()
                 {
@@ -58,30 +56,78 @@ namespace SalesforceAPI.Repository
                 };
             }
 
-            //if user was found generate JWT Token
+            bool isValid = await _userManager.CheckPasswordAsync(user, loginRequestDto.Password);
+
+            if (!isValid)
+            {
+                return new LoginResponseDto()
+                {
+                    Token = "",
+                    User = null
+                };
+            }
+
+            // If user was found, generate JWT Token
             var roles = await _userManager.GetRolesAsync(user);
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(secretKey);
 
+            var claims = new List<Claim>
+            {
+                 new Claim(ClaimTypes.Name, user.UserName),
+                 new Claim(ClaimTypes.NameIdentifier, user.Id),
+                 new Claim(ClaimTypes.Role, roles.FirstOrDefault() ?? "User")
+            };
+
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new Claim[]
-                {
-                    new Claim(ClaimTypes.Name, user.UserName.ToString()),
-                    new Claim(ClaimTypes.Role, roles.FirstOrDefault())
-                }),
+                Subject = new ClaimsIdentity(claims),
                 Expires = DateTime.UtcNow.AddDays(7),
-                SigningCredentials = new(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
-            LoginResponseDto loginResponseDTO = new LoginResponseDto()
+            var loginResponseDTO = new LoginResponseDto()
             {
                 Token = tokenHandler.WriteToken(token),
                 User = _mapper.Map<UserDto>(user),
-                
             };
+
+            //Audit Entry
+            await _db.AuditLogs.AddAsync(new Audit
+            {
+                UserId = user.Id,
+                Type = "Login",
+                DateTime = DateTime.Now
+            });
+
+            // Save Audit Log
+            await _db.SaveChangesAsync();
+
             return loginResponseDTO;
+        }
+
+        public async Task<bool> LogOutAuditEntry(string userName)
+        {
+            // Get current user from user claim using Httpcontext
+            var user = await _db.Users.FirstOrDefaultAsync(x => x.UserName == userName);
+
+            if (user == null)
+            {
+                return false;
+            }
+
+            //Audit Entry
+            await _db.AuditLogs.AddAsync(new Audit
+            {
+                UserId = user.Id,
+                Type = "Logout",
+                DateTime = DateTime.Now
+            });
+
+            // Save Audit Log
+            await _db.SaveChangesAsync();
+            return true;
         }
 
         public async Task<UserDto> Register(RegisterationRequestDto registerationRequestDto)
@@ -89,8 +135,8 @@ namespace SalesforceAPI.Repository
             ApplicationUser user = new()
             {
                 UserName = registerationRequestDto.UserName,
-                Email= registerationRequestDto.UserName,
-                NormalizedEmail= registerationRequestDto.UserName.ToUpper(),
+                Email = registerationRequestDto.UserName,
+                NormalizedEmail = registerationRequestDto.UserName.ToUpper(),
                 Name = registerationRequestDto.Name
             };
 
@@ -99,7 +145,8 @@ namespace SalesforceAPI.Repository
                 var result = await _userManager.CreateAsync(user, registerationRequestDto.Password);
                 if (result.Succeeded)
                 {
-                    if (!_roleManager.RoleExistsAsync("admin").GetAwaiter().GetResult()){
+                    if (!_roleManager.RoleExistsAsync("admin").GetAwaiter().GetResult())
+                    {
                         await _roleManager.CreateAsync(new IdentityRole("admin"));
                         await _roleManager.CreateAsync(new IdentityRole("customer"));
                     }
@@ -110,7 +157,7 @@ namespace SalesforceAPI.Repository
 
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 var dto = new APIResponse
                 {

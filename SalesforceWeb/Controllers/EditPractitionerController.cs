@@ -88,6 +88,59 @@ namespace SalesforceWeb.Controllers
             return RedirectToAction("Index");
         }
 
+
+        //[HttpPost]
+        //public async Task<IActionResult> PostCompositeEditPractitioner(string jsonBody1, string jsonBody2)
+        //{
+        //    try
+        //    {
+        //        PractitionerFullDto payload2;
+
+        //        try
+        //        {
+        //            payload2 = DeserializeWithFallback<PractitionerFullDto>(jsonBody2);
+        //        }
+        //        catch (JsonException ex)
+        //        {
+        //            ModelState.AddModelError("jsonBody", "Invalid JSON format.");
+        //            _logger.LogError(ex, "Invalid JSON format: {ErrorMessage}", ex.Message);
+        //            return View("Index");
+        //        }
+
+        //        if (ModelState.IsValid)
+        //        {
+        //            ////Send JSON to Salesforce API and get response
+        //            //string responseBody = await _salesforceService.PostToCompositeApiAsync(jsonBody1);
+
+        //            //// Format and store response in TempData
+        //            //string formattedJson = JsonUtility.Format(responseBody);
+        //            //TempData["FormattedError"] = formattedJson;
+
+
+        //            // Process the second payload
+        //            var response2 = await _practitionerService.UpdateAsync<PractitionerFullDto>(
+        //                payload2.practitionerPSVDtos.Credentialing_Profile__c,
+        //                HttpContext.Session.GetString(StaticData.SessionToken),
+        //                payload2
+        //            );
+
+        //            return RedirectToAction("Index");
+        //        }
+        //        else
+        //        {
+        //            // If model state is not valid, return to view with validation errors
+        //            _logger.LogError("Validation Error: {ErrorMessage}", payload2);
+        //            return View("Index", payload2);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ViewBag.Error = $"Unexpected error occurred: {ex.Message}";
+        //        _logger.LogError(ex, "Unexpected error occurred: {ErrorMessage}", ex.Message);
+        //        return View("Index");
+        //    }
+        //}
+
         [HttpGet]
         public IActionResult GetJsonData()
         {
@@ -103,6 +156,28 @@ namespace SalesforceWeb.Controllers
                 _logger.LogError("JSON file not found.");
                 return Json(new { success = false, message = "JSON file not found." });                
             }
+        }
+
+        private T DeserializeWithFallback<T>(string json)
+        {
+            var result = Activator.CreateInstance<T>();
+            var errorList = new List<string>();
+
+            JsonConvert.PopulateObject(json, result, new JsonSerializerSettings
+            {
+                Error = (sender, args) =>
+                {
+                    errorList.Add(args.ErrorContext.Member.ToString());
+                    args.ErrorContext.Handled = true;
+                }
+            });
+
+            if (errorList.Count > 0)
+            {
+                _logger.LogWarning("Some fields were not deserialized: {Fields}", string.Join(", ", errorList));
+            }
+
+            return result;
         }
     }
 }

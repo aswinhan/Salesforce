@@ -4,40 +4,54 @@ document.addEventListener("DOMContentLoaded", function () {
     const rowsContainer = $("#rowsContainer");
     const primarySourceDiv = $("#primarySourceVerificationDetails");
 
-    function createRow(labelText, checkboxId) {
+    function createRow(labelText, checkboxId, rowIndex) {
+        // Create the row with jQuery
         const row = $(`
-            <div class="row" data-checkbox-id="${checkboxId}">
-                <div class="col-sm-3">
-                    <div class="mb-3">
-                        <label class="form-label">Title</label>
-                        <input type="text" class="form-control" placeholder="Title" name="title">
-                    </div>
-                </div><!-- Col -->
-                <div class="col-sm-3">
-                    <div class="mb-3">
-                        <label class="form-label">Path On Client</label>
-                        <input class="form-control" type="file" id="formFile" name="pathOnClient">
-                    </div>
-                </div><!-- Col -->
-                <div class="col-sm-3">
-                    <div class="mb-3">
-                        <label class="form-label">Version Data</label>
-                        <input type="text" class="form-control" placeholder="Version Data" name="versionData">
-                    </div>
-                </div><!-- Col -->
-                <div class="col-sm-3">
-                    <div class="mb-3">
-                        <label class="form-label">UC Document Type</label>
-                        <input type="text" class="form-control" placeholder="UC Document Type" name="ucDocumentType" value="${labelText}">
-                    </div>
-                </div><!-- Col -->
-            </div>
-        `);
+        <div class="row" data-checkbox-id="${checkboxId}">
+            <div class="col-sm-3">
+                <div class="mb-3">
+                    <label class="form-label">Title</label>
+                    <input type="text" class="form-control" placeholder="Title" name="title">
+                </div>
+            </div><!-- Col -->
+            <div class="col-sm-3">
+                <div class="mb-3">
+                    <label class="form-label">Path On Client</label>
+                    <input class="form-control file-input" type="file" data-row-index="${rowIndex}" name="pathOnClient">
+                </div>
+            </div><!-- Col -->
+            <div class="col-sm-3">
+                <div class="mb-3">
+                    <label class="form-label">Version Data</label>
+                    <input type="text" class="form-control base64-output" placeholder="Version Data" name="versionData" readonly>
+                </div>
+            </div><!-- Col -->
+            <div class="col-sm-3">
+                <div class="mb-3">
+                    <label class="form-label">UC Document Type</label>
+                    <input type="text" class="form-control" placeholder="UC Document Type" name="ucDocumentType" value="${labelText}">
+                </div>
+            </div><!-- Col -->
+        </div>
+    `);
+
+        // Add event listener using jQuery
+        row.find('.file-input').on('change', function (event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const base64String = e.target.result.split(',')[1];
+                    row.find('.base64-output').val(base64String);
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
         return row;
     }
-
-    function addNewRow(labelText, checkboxId) {
-        rowsContainer.append(createRow(labelText, checkboxId));
+    function addNewRow(labelText, checkboxId, rowIndex) {
+        rowsContainer.append(createRow(labelText, checkboxId, rowIndex));
     }
 
     function updateRows() {

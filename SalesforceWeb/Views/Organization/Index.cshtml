@@ -9,7 +9,7 @@
     <div class="col-md-12 stretch-card">
         <div class="card">
             <div class="card-body">
-                <h6 class="card-title">Organization CVO & PSV Form</h6>
+                <h6 class="card-title">Full / Edit Organization CVO & PSV Form</h6>
                 <form asp-controller="Organization" asp-action="Index" method="post">
                     <div class="row text-center">
                         <div class="col-sm-4"></div><!-- Col -->
@@ -185,55 +185,101 @@ else
                         </div><!-- Row -->
 
                         <div class="row">
-                            <div class="col-sm-3">
+                            <div class="col-sm-6">
                                 <div class="mb-3">
-                                    <label class="form-label">Office Address Street</label>
-                                    <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.Office_Address_Street_1__c">
+                                    <label class="form-label">
+                                        Office Address Street
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Office_Address_Street_1__c" />
+                                    </label>
+                                    <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.Office_Address_Street_1__c" id="Office_Address_Street_1__c">
                                 </div>
                             </div><!-- Col -->
-                            <div class="col-sm-3">
+                            <div class="col-sm-6">
                                 <div class="mb-3">
-                                    <label class="form-label">Office Address City</label>
-                                    <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.Office_Address_City__c">
+                                    <label class="form-label">
+                                        Office Address City
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Office_Address_City__c" />
+                                    </label>
+                                    <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.Office_Address_City__c" id="Office_Address_City__c">
                                 </div>
                             </div><!-- Col -->
-                            <div class="col-sm-3">
+                        </div><!-- Row -->
+                        <div class="row">
+                            <div class="col-sm-4">
                                 <div class="mb-3">
-                                    <label class="form-label">Office Address State</label>
-                                    <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.Office_Address_State__c">
+                                    <label class="form-label">
+                                        Office Address State
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Office_Address_State__c" />
+                                    </label>
+                                    <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.Office_Address_State__c" id="Office_Address_State__c">
                                 </div>
                             </div><!-- Col -->
-                            <div class="col-sm-3">
+                            <div class="col-sm-4">
                                 <div class="mb-3">
-                                    <label class="form-label">Office Address Zipcode</label>
-                                    <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.Office_Address_Zipcode__c">
+                                    <label class="form-label">
+                                        Office Address Zipcode
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Office_Address_Zipcode__c" />
+                                    </label>
+                                    <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.Office_Address_Zipcode__c" id="Office_Address_Zipcode__c">
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-4">
+                                <div class="mb-3">
+                                    <label class="form-label">
+                                        Office Address Country
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Office_Address_County__c" />
+                                    </label>
+                                    <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.Office_Address_County__c" id="Office_Address_County__c">
                                 </div>
                             </div><!-- Col -->
                         </div><!-- Row -->
 
                         <div class="row">
-                            <div class="col-sm-3">
+                            <div class="col-sm-6">
                                 <div class="mb-3">
-                                    <label class="form-label">Home Address Street</label>
-                                    <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.Home_Address_Street_1__c">
+                                    <label class="form-label">
+                                        Home Address Street
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Home_Address_Street_1__c" />
+                                    </label>
+                                    <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.Home_Address_Street_1__c" id="Home_Address_Street_1__c">
                                 </div>
                             </div><!-- Col -->
-                            <div class="col-sm-3">
+                            <div class="col-sm-6">
                                 <div class="mb-3">
-                                    <label class="form-label">Home Address City</label>
-                                    <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.Home_Address_City__c">
+                                    <label class="form-label">
+                                        Home Address City
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Home_Address_City__c" />
+                                    </label>
+                                    <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.Home_Address_City__c" id="Home_Address_City__c">
                                 </div>
                             </div><!-- Col -->
-                            <div class="col-sm-3">
+                        </div><!-- Row -->
+                        <div class="row">
+                            <div class="col-sm-4">
                                 <div class="mb-3">
-                                    <label class="form-label">Home Address State</label>
-                                    <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.Home_Address_State__c">
+                                    <label class="form-label">
+                                        Home Address State
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Home_Address_State__c" />
+                                    </label>
+                                    <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.Home_Address_State__c" id="Home_Address_State__c">
                                 </div>
                             </div><!-- Col -->
-                            <div class="col-sm-3">
+                            <div class="col-sm-4">
                                 <div class="mb-3">
-                                    <label class="form-label">Home Address Zipcode</label>
-                                    <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.Home_Address_Zipcode__c">
+                                    <label class="form-label">
+                                        Home Address Zipcode
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Home_Address_Zipcode__c" />
+                                    </label>
+                                    <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.Home_Address_Zipcode__c" id="Home_Address_Zipcode__c">
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-4">
+                                <div class="mb-3">
+                                    <label class="form-label">
+                                        Home Address Country
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Home_Address_County__c" />
+                                    </label>
+                                    <input type="text" class="form-control" value="@Model.OrganizationalCPDtos.Home_Address_County__c" id="Home_Address_County__c">
                                 </div>
                             </div><!-- Col -->
                         </div><!-- Row -->

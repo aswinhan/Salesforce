@@ -7,6 +7,7 @@ namespace SalesforceAPI.Repository.IRepostiory
     {
         bool IsUniqueUser(string username);
         Task<LoginResponseDto> Login(LoginRequestDto loginRequestDto);
+        Task<bool> LogOutAuditEntry(string userName);
         Task<UserDto> Register(RegisterationRequestDto registerationRequestDto);
     }
 }

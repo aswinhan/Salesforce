@@ -37,5 +37,15 @@ namespace MagicVilla_Web.Services
                 Url = salesforceUrl + "/api/UsersAuth/register"
             });
         }
+
+        public Task<T> LogOut<T>(string token)
+        {
+            return SendAsync<T>(new APIRequest()
+            {
+                ApiType = StaticData.ApiType.GET,
+                Url = salesforceUrl + "/api/UsersAuth/logout",
+                Token = token
+            });
+        }
     }
 }

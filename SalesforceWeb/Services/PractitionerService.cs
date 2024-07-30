@@ -33,5 +33,15 @@ namespace SalesforceWeb.Services
                 Token = token
             });
         }
+        public Task<T> UpdateAsync<T>(string id, string token, T practitioner)
+        {
+            return SendAsync<T>(new APIRequest()
+            {
+                ApiType = StaticData.ApiType.POST,
+                Url = salesforceUrl + "/EditPractitioner/" + id,
+                Data = practitioner,
+                Token = token
+            });
+        }
     }
 }

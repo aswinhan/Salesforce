@@ -28,6 +28,7 @@ builder.Services.AddScoped<IPractitionerService, PractitionerService>();
 builder.Services.AddScoped<IOrganizationService, OrganizationService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddTransient<ISalesforceService, SalesforceService>();
+builder.Services.AddScoped<IAuditService, AuditService>();
 
 // Register other dependencies
 builder.Services.AddSingleton<IConfiguration>(builder.Configuration);

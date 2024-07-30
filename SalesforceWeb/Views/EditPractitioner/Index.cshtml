@@ -178,7 +178,7 @@ else
                         </div><!-- Row -->
 
                         <div class="row">
-                            <div class="col-sm-3">
+                            <div class="col-sm-6">
                                 <div class="mb-3">
                                     <label class="form-label">
                                         Office Address Street
@@ -187,17 +187,18 @@ else
                                     <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Office_Address_Street_1__c" id="Office_Address_Street_1__c">
                                 </div>
                             </div><!-- Col -->
-                            <div class="col-sm-3">
+                            <div class="col-sm-6">
                                 <div class="mb-3">
                                     <label class="form-label">
                                         Office Address City
                                         <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Office_Address_City__c" />
-
                                     </label>
                                     <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Office_Address_City__c" id="Office_Address_City__c">
                                 </div>
                             </div><!-- Col -->
-                            <div class="col-sm-3">
+                        </div><!-- Row -->
+                        <div class="row">
+                            <div class="col-sm-4">
                                 <div class="mb-3">
                                     <label class="form-label">
                                         Office Address State
@@ -206,7 +207,7 @@ else
                                     <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Office_Address_State__c" id="Office_Address_State__c">
                                 </div>
                             </div><!-- Col -->
-                            <div class="col-sm-3">
+                            <div class="col-sm-4">
                                 <div class="mb-3">
                                     <label class="form-label">
                                         Office Address Zipcode
@@ -215,10 +216,19 @@ else
                                     <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Office_Address_Zipcode__c" id="Office_Address_Zipcode__c">
                                 </div>
                             </div><!-- Col -->
+                            <div class="col-sm-4">
+                                <div class="mb-3">
+                                    <label class="form-label">
+                                        Office Address Country
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Office_Address_County__c" />
+                                    </label>
+                                    <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Office_Address_County__c" id="Office_Address_County__c">
+                                </div>
+                            </div><!-- Col -->
                         </div><!-- Row -->
 
                         <div class="row">
-                            <div class="col-sm-3">
+                            <div class="col-sm-6">
                                 <div class="mb-3">
                                     <label class="form-label">
                                         Home Address Street
@@ -227,7 +237,7 @@ else
                                     <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Home_Address_Street_1__c" id="Home_Address_Street_1__c">
                                 </div>
                             </div><!-- Col -->
-                            <div class="col-sm-3">
+                            <div class="col-sm-6">
                                 <div class="mb-3">
                                     <label class="form-label">
                                         Home Address City
@@ -236,7 +246,9 @@ else
                                     <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Home_Address_City__c" id="Home_Address_City__c">
                                 </div>
                             </div><!-- Col -->
-                            <div class="col-sm-3">
+                        </div><!-- Row -->
+                        <div class="row">
+                            <div class="col-sm-4">
                                 <div class="mb-3">
                                     <label class="form-label">
                                         Home Address State
@@ -245,7 +257,7 @@ else
                                     <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Home_Address_State__c" id="Home_Address_State__c">
                                 </div>
                             </div><!-- Col -->
-                            <div class="col-sm-3">
+                            <div class="col-sm-4">
                                 <div class="mb-3">
                                     <label class="form-label">
                                         Home Address Zipcode
@@ -254,6 +266,15 @@ else
                                     <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Home_Address_Zipcode__c" id="Home_Address_Zipcode__c">
                                 </div>
                             </div><!-- Col -->
+                            <div class="col-sm-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">
+                                            Home Address Country
+                                            <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Home_Address_County__c" />
+                                        </label>
+                                        <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Home_Address_County__c" id="Home_Address_County__c">
+                                    </div>
+                                </div><!-- Col -->
                         </div><!-- Row -->
 
                         <div class="row">
@@ -761,7 +782,28 @@ else
                 <div class="card">
                     <div class="card-body">
                         <h6 class="card-title">Practitioner Licenses Certification Details</h6>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                        <label class="form-label">
+                                            Record Type
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#RecordTypeId" />
+                                        </label>
+                                        <input type="text" class="form-control" value="@Model.PractitionerLCDtos.RecordTypeId" id="RecordTypeId">
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <input type="checkbox" class="form-check-input" id="File_Uploaded__c"
+                                    @(Model.PractitionerLCDtos.File_Uploaded__c == true ? "checked" : "")>
+                                    <label class="form-label">
+                                        File Uploaded
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#File_Uploaded__c" />
 
+                                    </label>
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="mb-3">
@@ -789,7 +831,6 @@ else
                                 </div>
                             </div><!-- Col -->
                         </div><!-- Row -->
-
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="mb-3">
@@ -816,25 +857,99 @@ else
                                 </div>
                             </div><!-- Col -->
                         </div><!-- Row -->
-
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="mb-3">
-                                    <input type="checkbox" class="form-check-input" id="File_Uploaded__c"
-                                    @(Model.PractitionerLCDtos.File_Uploaded__c == true ? "checked" : "")>
                                     <label class="form-label">
-                                        File Uploaded
-                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#File_Uploaded__c" />
+                                        Board Of Certification
 
                                     </label>
+                                    @* <select class="js-example-basic-single form-select" data-width="100%">
+                                <option Value="0" selected>Zero</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                                </select> *@
+                                    <input type="text" class="form-control" value="@Model.PractitionerLCDtos.License_Types_LARA__c" id="Board_Certifications__c">
                                 </div>
                             </div><!-- Col -->
                         </div><!-- Row -->
+                        
 
                     </div>
                 </div>
             </div>
         </div>
+
+            <div class="row pb-4">
+                <div class="col-md-12 stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <h6 class="card-title">Hospital Affiliation Details</h6>
+
+                            <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">
+                                        Hospital Affiliation Name
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Hospital_Affiliation_Name__c" />
+                                    </label>
+                                    <input type="text" class="form-control" value="@Model.HospitalAffiliationDtos.Hospital_Affiliation_Name__c" id="Hospital_Affiliation_Name__c">
+                                </div>
+                            </div><!-- Col -->
+                                <div class="col-sm-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">
+                                            Hospital Affiliation Address
+                                            <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Hospital_Affiliation_Address__c" />
+                                        </label>
+                                        <input type="text" class="form-control" value="@Model.HospitalAffiliationDtos.Hospital_Affiliation_Address__c" id="Hospital_Affiliation_Address__c">
+                                    </div>
+                                </div><!-- Col -->
+                            </div><!-- Row -->
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">
+                                            Start Date of Affiliation
+                                            <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Start_Date_of_Affiliation__c" />
+                                        </label>
+                                        <input type="date" class="form-control" value="@Model.HospitalAffiliationDtos.Start_Date_of_Affiliation__c?.ToString("yyyy-MM-dd")" id="Start_Date_of_Affiliation__c">
+                                    </div>
+                                </div><!-- Col -->
+                                <div class="col-sm-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">
+                                            Expiration Date of Affiliation
+                                            <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#End_Date_of_Affiliation__c" />
+                                        </label>
+                                        <input type="date" class="form-control" value="@Model.HospitalAffiliationDtos.End_Date_of_Affiliation__c?.ToString("yyyy-MM-dd")" id="End_Date_of_Affiliation__c">
+                                    </div>
+                                </div><!-- Col -->
+                            </div><!-- Row -->
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">
+                                            Catagory of Membership
+                                            <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Category_of_Membership__c" />
+                                        </label>
+                                        @* <select class="js-example-basic-single form-select" data-width="100%">
+                                    <option Value="0" selected>Zero</option>
+                                    <option value="1">One</option>
+                                    <option value="2">Two</option>
+                                    <option value="3">Three</option>
+                                    </select> *@
+                                        <input type="text" class="form-control" value="@Model.HospitalAffiliationDtos.Category_of_Membership__c" id="Category_of_Membership__c">
+                                    </div>
+                                </div><!-- Col -->
+                            </div><!-- Row -->
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         <div id="primarySourceVerificationDetails" class="row pb-4">
             <div class="col-md-12 stretch-card">
@@ -1245,10 +1360,12 @@ else
                                 "Office_Address_City__c": getFieldValue('Office_Address_City__c'),
                                 "Office_Address_State__c": getFieldValue('Office_Address_State__c'),
                                 "Office_Address_Zipcode__c": getFieldValue('Office_Address_Zipcode__c'),
+                                "Office_Address_County__c": getFieldValue('Office_Address_County__c'),
                                 "Home_Address_Street_1__c": getFieldValue('Home_Address_Street_1__c'),
                                 "Home_Address_City__c": getFieldValue('Home_Address_City__c'),
                                 "Home_Address_State__c": getFieldValue('Home_Address_State__c'),
                                 "Home_Address_Zipcode__c": getFieldValue('Home_Address_Zipcode__c'),
+                                "Home_Address_County__c": getFieldValue('Home_Address_County__c'),
                                 "Specialties__c": getFieldValue('Specialties__c'),
                                 "Other_Specialty__c": getFieldValue('Other_Specialty__c'),
                                 "Certificate_of_Liability__c": getFieldValue('Certificate_of_Liability__c'),

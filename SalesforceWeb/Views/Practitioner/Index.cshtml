@@ -141,7 +141,7 @@ else
                         </div><!-- Row -->
 
                         <div class="row">
-                            <div class="col-sm-3">
+                            <div class="col-sm-6">
                                 <div class="mb-3">
                                     <label class="form-label">
                                         Office Address Street
@@ -151,16 +151,16 @@ else
                                 </div>
                             </div><!-- Col -->
                             <div class="col-sm-3">
-                                <div class="mb-3">
+                                <div class="mb-6">
                                     <label class="form-label">
                                         Office Address City
-
-
                                     </label>
                                     <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Office_Address_City__c" id="Office_Address_City__c">
                                 </div>
                             </div><!-- Col -->
-                            <div class="col-sm-3">
+                        </div><!-- Row -->
+                        <div class="row">
+                            <div class="col-sm-4">
                                 <div class="mb-3">
                                     <label class="form-label">
                                         Office Address State
@@ -169,13 +169,21 @@ else
                                     <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Office_Address_State__c" id="Office_Address_State__c">
                                 </div>
                             </div><!-- Col -->
-                            <div class="col-sm-3">
+                            <div class="col-sm-4">
                                 <div class="mb-3">
                                     <label class="form-label">
                                         Office Address Zipcode
 
                                     </label>
                                     <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Office_Address_Zipcode__c" id="Office_Address_Zipcode__c">
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-4">
+                                <div class="mb-3">
+                                    <label class="form-label">
+                                        Office Address Country
+                                    </label>
+                                    <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Office_Address_County__c" id="Office_Address_County__c">
                                 </div>
                             </div><!-- Col -->
                         </div><!-- Row -->
@@ -713,6 +721,25 @@ else
                         <h6 class="card-title">Practitioner Licenses Certification Details</h6>
 
                         <div class="row">
+                            <div class="mb-3">
+                                <label class="form-label">
+                                    Record Type
+
+                                </label>
+                                <input type="text" class="form-control" value="@Model.PractitionerLCDtos.RecordTypeId" id="RecordTypeId">
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <input type="checkbox" class="form-check-input" id="File_Uploaded__c"
+                                    @(Model.PractitionerLCDtos.File_Uploaded__c == true ? "checked" : "")>
+                                    <label class="form-label">
+                                        File Uploaded
+                                    </label>
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
                             <div class="col-sm-6">
                                 <div class="mb-3">
                                     <label class="form-label">
@@ -770,13 +797,99 @@ else
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="mb-3">
-                                    <input type="checkbox" class="form-check-input" id="File_Uploaded__c"
-                                    @(Model.PractitionerLCDtos.File_Uploaded__c == true ? "checked" : "")>
                                     <label class="form-label">
-                                        File Uploaded
-
+                                        Board Of Certification
 
                                     </label>
+                                    @* <select class="js-example-basic-single form-select" data-width="100%">
+                                <option Value="0" selected>Zero</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                                </select> *@
+                                    <input type="text" class="form-control" value="@Model.PractitionerLCDtos.License_Types_LARA__c" id="License_Types_LARA__c">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row pb-4">
+            <div class="col-md-12 stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h6 class="card-title">Hospital Affiliation Details</h6>
+
+                        <div class="row">
+                            <div class="mb-3">
+                                <label class="form-label">
+                                    Hospital Affiliation Name
+                                </label>
+                                <input type="text" class="form-control" value="@Model.HospitalAffiliationDtos.Hospital_Affiliation_Name__c" id="Hospital_Affiliation_Name__c">
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">
+                                        Hospital Affiliation Address
+                                    </label>
+                                    <input type="text" class="form-control" value="@Model.HospitalAffiliationDtos.Hospital_Affiliation_Address__c" id="Hospital_Affiliation_Address__c">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">
+                                        Start Date of Affiliation
+                                    </label>
+                                    <input type="date" class="form-control" value="@Model.HospitalAffiliationDtos.Start_Date_of_Affiliation__c?.ToString("yyyy-MM-dd")" id="Start_Date_of_Affiliation__c">
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">
+                                        Expiration Date of Affiliation
+                                    </label>
+                                    <input type="date" class="form-control" value="@Model.HospitalAffiliationDtos.End_Date_of_Affiliation__c?.ToString("yyyy-MM-dd")" id="End_Date_of_Affiliation__c">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">
+                                        Catagory of Membership
+                                    </label>
+                                    @* <select class="js-example-basic-single form-select" data-width="100%">
+                                <option Value="0" selected>Zero</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                                </select> *@
+                                    <input type="text" class="form-control" value="@Model.HospitalAffiliationDtos.Category_of_Membership__c" id="Category_of_Membership__c">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">
+                                        Board Of Certification
+
+                                    </label>
+                                    @* <select class="js-example-basic-single form-select" data-width="100%">
+                                <option Value="0" selected>Zero</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                                </select> *@
+                                    <input type="text" class="form-control" value="@Model.PractitionerLCDtos.License_Types_LARA__c" id="License_Types_LARA__c">
                                 </div>
                             </div><!-- Col -->
                         </div><!-- Row -->
@@ -1237,7 +1350,7 @@ else
                             "referenceId": "PLC1",
                             "url": "/services/data/v52.0/sobjects/Practitioner_Licenses_Certifications__c",
                             "body": {
-                                "RecordTypeId": "0128z0000004TU4AAM",
+                                "RecordTypeId": getFieldValue('RecordTypeId'),
                                 "Credentialing_Profile_Id__c": "" + getFieldValue('credentialProfileId') + "",
                                 "Expiration_Date__c": getFieldValue('Expiration_Date__c'),
                                 "File_Uploaded__c": true,

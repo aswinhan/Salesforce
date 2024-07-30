@@ -142,21 +142,21 @@ namespace SalesforceAPI.Profiles
                 .ForMember(dest => dest.Proof_of_Accreditation_Expiration__c, opt => opt.MapFrom(src => src.ProofofAccreditationExpiration))
                 .ForMember(dest => dest.Cyber_Liability_Expiration_if_applicabl__c, opt => opt.MapFrom(src => src.CyberLiabilityExpirationifapplicable))
                 .ForMember(dest => dest.Cyber_Liability_Status_if_applicable__c, opt => opt.MapFrom(src => src.CyberLiabilityStatusifapplicable))
-                .ForMember(dest => dest.Disclosure_Form_Status__c, opt => opt.MapFrom(src => src.DisclosureFormStatus));
+                .ForMember(dest => dest.Disclosure_Form_Status__c, opt => opt.MapFrom(src => src.DisclosureFormStatus)).ReverseMap();
 
             CreateMap<Education, EducationDto>()
                 .ForMember(dest => dest.College_University_Program_Address__c, opt => opt.MapFrom(src => src.CollegeUniversityProgramAddress))
                 .ForMember(dest => dest.College_University_Program_Name__c, opt => opt.MapFrom(src => src.CollegeUniversityProgramName))
                 .ForMember(dest => dest.Credentialing_Profile_ID__c, opt => opt.MapFrom(src => src.CredentialingProfileID))
                 .ForMember(dest => dest.Degree__c, opt => opt.MapFrom(src => src.Degree))
-                .ForMember(dest => dest.Graduation_Date__c, opt => opt.MapFrom(src => src.GraduationDate));
+                .ForMember(dest => dest.Graduation_Date__c, opt => opt.MapFrom(src => src.GraduationDate)).ReverseMap();
 
             CreateMap<HospitalAffiliation, HospitalAffiliationDto>()
                 .ForMember(dest => dest.Hospital_Affiliation_Address__c, opt => opt.MapFrom(src => src.HospitalAffiliationAddress))
                 .ForMember(dest => dest.Hospital_Affiliation_Name__c, opt => opt.MapFrom(src => src.HospitalAffiliationName))
                 .ForMember(dest => dest.Category_of_Membership__c, opt => opt.MapFrom(src => src.CategoryofMembership))
                 .ForMember(dest => dest.Start_Date_of_Affiliation__c, opt => opt.MapFrom(src => src.StartDateofAffiliation))
-                .ForMember(dest => dest.End_Date_of_Affiliation__c, opt => opt.MapFrom(src => src.EndDateofAffiliation));
+                .ForMember(dest => dest.End_Date_of_Affiliation__c, opt => opt.MapFrom(src => src.EndDateofAffiliation)).ReverseMap();
 
             CreateMap<PGMedicalTraining, PGMedicalTrainingDto>()
                 .ForMember(dest => dest.Credentialing_Profile_Id__c, opt => opt.MapFrom(src => src.CredentialingProfileId))
@@ -165,7 +165,7 @@ namespace SalesforceAPI.Profiles
                 .ForMember(dest => dest.Medical_Training_Type__c, opt => opt.MapFrom(src => src.MedicalTrainingType))
                 .ForMember(dest => dest.Specialty__c, opt => opt.MapFrom(src => src.Specialty))
                 .ForMember(dest => dest.Training_End_Date__c, opt => opt.MapFrom(src => src.TrainingEndDate))
-                .ForMember(dest => dest.Training_Start_Date__c, opt => opt.MapFrom(src => src.TrainingStartDate));
+                .ForMember(dest => dest.Training_Start_Date__c, opt => opt.MapFrom(src => src.TrainingStartDate)).ReverseMap();
 
             CreateMap<PractitionerLC, PractitionerLCDto>()
                 .ForMember(dest => dest.RecordTypeId, opt => opt.MapFrom(src => src.RecordTypeId))
@@ -174,7 +174,7 @@ namespace SalesforceAPI.Profiles
                 .ForMember(dest => dest.File_Uploaded__c, opt => opt.MapFrom(src => src.FileUploaded))
                 .ForMember(dest => dest.LicenseCertification_Status__c, opt => opt.MapFrom(src => src.LicenseCertificationStatus))
                 .ForMember(dest => dest.LicenseCertification_Type__c, opt => opt.MapFrom(src => src.LicenseCertificationType))
-                .ForMember(dest => dest.License_Types_LARA__c, opt => opt.MapFrom(src => src.LicenseTypesLARA));
+                .ForMember(dest => dest.License_Types_LARA__c, opt => opt.MapFrom(src => src.LicenseTypesLARA)).ReverseMap();
 
             CreateMap<PractitionerPSV, PractitionerPSVDto>()
                 .ForMember(dest => dest.Credentialing_Profile__c, opt => opt.MapFrom(src => src.CredentialingProfile))
@@ -198,7 +198,7 @@ namespace SalesforceAPI.Profiles
                 .ForMember(dest => dest.SAM_gov_Check__c, opt => opt.MapFrom(src => src.SAMgovheck))
                 .ForMember(dest => dest.National_Sex_Offender_Registry_Check__c, opt => opt.MapFrom(src => src.NationalSexOffenderRegistryheck))
                 .ForMember(dest => dest.MI_Public_Sex_Offender_Registry_Check__c, opt => opt.MapFrom(src => src.MIPublicSexOffenderRegistryheck))
-                .ForMember(dest => dest.ECFMG__c, opt => opt.MapFrom(src => src.ECFMG));
+                .ForMember(dest => dest.ECFMG__c, opt => opt.MapFrom(src => src.ECFMG)).ReverseMap();
 
             CreateMap<PractitionerCP, PractitionerCPDto>()
                 .ForMember(dest => dest.First_Name__c, opt => opt.MapFrom(src => src.FirstName))
@@ -246,7 +246,7 @@ namespace SalesforceAPI.Profiles
                 .ForMember(dest => dest.History_of_loss_or_limitations_of_privil__c, opt => opt.MapFrom(src => src.Historyoflossorlimitationsofprivil))
                 .ForMember(dest => dest.ExplanationHistory_of_loss__c, opt => opt.MapFrom(src => src.ExplanationHistoryofloss))
                 .ForMember(dest => dest.Attestation_by_the_applicant_of_the_corr__c, opt => opt.MapFrom(src => src.Attestationbytheapplicantofthecorr))
-                .ForMember(dest => dest.Cultural_Competencies_Picklist__c, opt => opt.MapFrom(src => src.CulturalCompetenciesPicklist));
+                .ForMember(dest => dest.Cultural_Competencies_Picklist__c, opt => opt.MapFrom(src => src.CulturalCompetenciesPicklist)).ReverseMap();
 
         }
     }

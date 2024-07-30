@@ -1,0 +1,85 @@
+﻿@model List<SalesforceWeb.Dtos.AuditDto>
+@{
+    ViewData["Title"] = "Audit Trail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row pb-4">
+    <div class="col-md-12 stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h6 class="card-title">Audit Trail</h6>
+                <div class="table-responsive">
+                    <table id="auditTable" class="display">
+                        <thead>
+                            <tr>
+                                <th>User ID</th>
+                                <th>Table Name</th>
+                                <th>Type</th>
+                                <th>Primary Key</th>
+                                <th>Old Values</th>
+                                <th>New Values</th>
+                                <th>Affected Columns</th>
+                                <th>Date Time</th>
+                                <th>User Name</th>
+                                <th>User Full Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null)
+                            {
+                                foreach (var audit in Model)
+                                {
+                                    <tr>
+                                        <td>@audit.UserId</td>
+                                        <td>@audit.TableName</td>
+                                        <td>@audit.Type</td>
+                                        <td><div class="json-collapsible">@Html.Raw(audit.PrimaryKey)</div></td>
+                                        <td><div class="json-collapsible">@Html.Raw(audit.OldValues)</div></td>
+                                        <td><div class="json-collapsible">@Html.Raw(audit.NewValues)</div></td>
+                                        <td><div class="json-collapsible">@Html.Raw(audit.AffectedColumns)</div></td>
+                                        <td>@audit.DateTime</td>
+                                        <td>@audit.UserDto.UserName</td>
+                                        <td>@audit.UserDto.Name</td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            function applyJsonViewer() {
+                $('.json-collapsible').each(function () {
+                    if (!$(this).hasClass('json-viewer-applied')) {
+                        var json = $(this).text().trim();
+                        if (json && json !== "") {
+                            try {
+                                var jsonObject = JSON.parse(json);
+                                $(this).jsonViewer(jsonObject, { collapsed: true });
+                                $(this).addClass('json-viewer-applied');
+                            } catch (e) {
+                                console.error('Invalid JSON:', json);
+                                $(this).text('Invalid JSON');
+                            }
+                        }
+                    }
+                });
+            }
+
+            $('#auditTable').DataTable({
+                "drawCallback": function (settings) {
+                    applyJsonViewer();
+                }
+            });
+
+            applyJsonViewer();
+        });
+    </script>
+}
