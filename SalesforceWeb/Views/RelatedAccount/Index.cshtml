@@ -1,0 +1,51 @@
+﻿@model SalesforceWeb.Dtos.PractitionerFullDto
+@{
+    ViewData["Title"] = "Get Related Accounts";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row pb-4">
+    <div class="col-md-12 stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h6 class="card-title">Get Related Accounts Details</h6>
+                <form asp-controller="RelatedAccount" asp-action="Index" method="post">
+                    <div class="row text-center">
+                        <div class="col-sm-4"></div><!-- Col -->
+                        <div class="col-sm-4">
+                            <div class="mb-3">
+                                <label class="form-label">Credentialing Profile Id</label>
+                                <input type="text" class="form-control" placeholder="Enter Credentialing Profile Id" name="credentialProfileId" id="credentialProfileId" value="@ViewBag.credentialProfileId" />
+                            </div>
+                        </div><!-- Col -->
+                        <div class="col-sm-4"></div><!-- Col -->
+                    </div><!-- Row -->
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (TempData["FormattedError"] != null)
+{
+    <div class="row pb-4">
+        <div class="col-md-12 stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">JSON Response</h6>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="mb-3">
+                                <textarea id="FormattedError" class="form-control jsonEditor" name="JsonError" rows="10">@Html.Raw(TempData["FormattedError"])</textarea>
+                            </div>
+                        </div><!-- Col -->
+                    </div><!-- Row -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+}

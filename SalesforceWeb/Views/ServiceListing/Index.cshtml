@@ -1,0 +1,26 @@
+﻿@model SalesforceWeb.Dtos.PractitionerFullDto
+@{
+    ViewData["Title"] = "Get Service Listings";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (TempData["FormattedError"] != null)
+{
+    <div class="row pb-4">
+        <div class="col-md-12 stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">JSON Response</h6>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="mb-3">
+                                <textarea id="FormattedError" class="form-control jsonEditor" name="JsonError" rows="10">@Html.Raw(TempData["FormattedError"])</textarea>
+                            </div>
+                        </div><!-- Col -->
+                    </div><!-- Row -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+}

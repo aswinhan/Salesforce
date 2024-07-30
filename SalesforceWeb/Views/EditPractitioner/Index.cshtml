@@ -44,7 +44,7 @@
     <div class="col-md-12 stretch-card">
         <div class="card">
             <div class="card-body">
-                <h6 class="card-title">Edit Practitioner CVO & PSV Form</h6>
+                <h6 class="card-title">Full / Edit Practitioner CVO & PSV Form</h6>
                 <form asp-controller="EditPractitioner" asp-action="Index" method="post">
                     <div class="row text-center">
                         <div class="col-sm-4"></div><!-- Col -->
@@ -98,7 +98,7 @@ else
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <div class="form-check form-switch">
                             <input type="checkbox" class="form-check-input" id="toggleAll">
-                            <label class="form-check-label" for="checkDefault">full credential </label>
+                            <label class="form-check-label" for="checkDefault" id="lbl_toggleAll">FULL CREDENTIALING</label>
                         </div>
                     </div>
                     <div class="card-body">
@@ -1187,6 +1187,7 @@ else
             $('#toggleAll').on('click', function () {
                 jQuery('.rounded-circle').show();
                 toggleAll();
+
             });
 
             function toggleAll() {
