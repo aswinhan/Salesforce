@@ -23,7 +23,8 @@ namespace SalesforceWeb.Controllers
         private readonly IOAuthService _oAuthService;
         private readonly ISalesforceService _salesforceService;
         private readonly ILogger<PractitionerController> _logger;
-        public ServiceListingController(IPractitionerService practitionerService, IMapper mapper, IOAuthService oAuthService, ISalesforceService salesforceService, ILogger<PractitionerController> logger)
+        private readonly IServiceListingService _serviceListingService;
+        public ServiceListingController(IPractitionerService practitionerService, IMapper mapper, IOAuthService oAuthService, ISalesforceService salesforceService, ILogger<PractitionerController> logger, IServiceListingService serviceListingService)
         {
             _practitionerService = practitionerService;
             _mapper = mapper;
@@ -31,6 +32,7 @@ namespace SalesforceWeb.Controllers
             _oAuthService = oAuthService;
             _salesforceService = salesforceService;
             _logger = logger;
+            _serviceListingService = serviceListingService;
         }
 
         [Authorize(Roles = "admin,customer")]
@@ -39,7 +41,19 @@ namespace SalesforceWeb.Controllers
             try
             {
                 string token = await _oAuthService.GetBearerTokenAsync();
-                await GetServiceListing(token);
+                string serviceListing = await _serviceListingService.GetServiceListing(token);
+
+                if (!string.IsNullOrEmpty(serviceListing))
+                {
+                    ViewBag.Message = "JSON body sent successfully!";
+                    string formattedJson = JsonUtility.Format(serviceListing);
+                    TempData["FormattedError"] = formattedJson;
+                }
+                else
+                {
+                    TempData["error"] = "Empty response received from Salesforce API.";
+                }
+
                 return View();
             }
             catch (Exception ex)
@@ -48,42 +62,58 @@ namespace SalesforceWeb.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Internal server error occurred.");
             }
         }
-        public async Task<IActionResult> GetServiceListing(string token)
-        {
-            try
-            {
-                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        //public async Task<IActionResult> Index()
+        //{
+        //    try
+        //    {
+        //        string token = await _oAuthService.GetBearerTokenAsync();
+        //        await GetServiceListing(token);
+        //        return View();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex, "Error occurred while fetching practitioner in Index method. {errorMessage}", ex.Message);
+        //        return StatusCode(StatusCodes.Status500InternalServerError, "Internal server error occurred.");
+        //    }
+        //}
+        //public async Task<IActionResult> GetServiceListing(string token)
+        //{
+        //    try
+        //    {
+        //        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-                HttpResponseMessage response = await _httpClient.GetAsync("https://mcal--mctraining.sandbox.my.salesforce.com/services/data/v59.0/query/?q=SELECT Id, Name FROM Service_Listing__c WHERE is_Certification__c = true AND Active__c = true");
+        //        //HttpResponseMessage response = await _httpClient.GetAsync("https://mcal--mctraining.sandbox.my.salesforce.com/services/data/v59.0/query/?q=SELECT Id, Name FROM Service_Listing__c WHERE is_Certification__c = true AND Active__c = true");
 
-                if (response.IsSuccessStatusCode)
-                {
-                    string responseBody = await response.Content.ReadAsStringAsync();
+        //        HttpResponseMessage response = await _httpClient.GetAsync("https://mcal.my.salesforce.com/services/data/v59.0/query/?q=SELECT Id, Name FROM Service_Listing__c WHERE is_Certification__c = true AND Active__c = true");
 
-                    if (!string.IsNullOrEmpty(responseBody))
-                    {
-                        ViewBag.Message = "JSON body sent successfully!";
-                        string formattedJson = JsonUtility.Format(responseBody);
-                        TempData["FormattedError"] = formattedJson;
-                        return View();
-                    }
-                    else
-                    {
-                        TempData["error"] = "Empty response received from Salesforce API.";
-                        return Content("Empty response received from Salesforce API.");
-                    }
-                }
-                else
-                {
-                    TempData["error"] = "Failed to fetch data from Salesforce API";
-                    return Content("Failed to fetch data from Salesforce API: " + response.ReasonPhrase);
-                }
-            }
-            catch (Exception ex)
-            {
-                TempData["error"] = ex.Message;
-                return Content("Error: " + ex.Message);
-            }
-        }
+        //        if (response.IsSuccessStatusCode)
+        //        {
+        //            string responseBody = await response.Content.ReadAsStringAsync();
+
+        //            if (!string.IsNullOrEmpty(responseBody))
+        //            {
+        //                ViewBag.Message = "JSON body sent successfully!";
+        //                string formattedJson = JsonUtility.Format(responseBody);
+        //                TempData["FormattedError"] = formattedJson;
+        //                return View();
+        //            }
+        //            else
+        //            {
+        //                TempData["error"] = "Empty response received from Salesforce API.";
+        //                return Content("Empty response received from Salesforce API.");
+        //            }
+        //        }
+        //        else
+        //        {
+        //            TempData["error"] = "Failed to fetch data from Salesforce API";
+        //            return Content("Failed to fetch data from Salesforce API: " + response.ReasonPhrase);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        TempData["error"] = ex.Message;
+        //        return Content("Error: " + ex.Message);
+        //    }
+        //}
     }
 }

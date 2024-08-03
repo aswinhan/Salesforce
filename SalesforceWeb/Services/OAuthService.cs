@@ -26,7 +26,7 @@ namespace SalesforceWeb.Services
                 var clientSecret = _configuration["Salesforce:ClientSecret"];
                 var username = _configuration["Salesforce:Username"];
                 var password = _configuration["Salesforce:Password"];
-                var tokenUrl = _configuration["Salesforce:BaseUrl"];
+                var tokenUrl = _configuration["Salesforce:TokenUrl"];
 
                 var requestBody = new StringContent(
                     $"grant_type=password&client_id={clientId}&client_secret={clientSecret}&username={username}&password={password}",

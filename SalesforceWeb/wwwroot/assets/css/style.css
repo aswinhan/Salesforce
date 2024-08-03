@@ -25512,4 +25512,37 @@ div.tox .tox-dialog__body {
     border: 1px solid #ced4da;
     border-radius: 0.25rem;
 }
+
+
+.toggle-checkbox.form-check-input {
+    width: 20px; /* Smaller width */
+    height: 20px; /* Smaller height */
+    border-radius: 5px;
+    appearance: none;
+    background-color: green;
+    border: 2px solid green;
+    cursor: pointer;
+    position: relative;
+    transition: background-color 250ms, box-shadow 250ms;
+}
+
+.toggle-checkbox.form-check-input:checked {
+        background-color: red;
+        border: 2px solid red;
+        background-image: none;
+    }
+
+.toggle-checkbox.form-check-input::before {
+        content: "✔";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 14px;
+    }
+
+.toggle-checkbox.form-check-input:checked::before {
+        content: "✖";
+    }
 /*# sourceMappingURL=../maps/demo3/style.css.map */

@@ -9,6 +9,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using SalesforceWeb.Utilities;
 using Microsoft.AspNetCore.Authorization;
+using SalesforceWeb.Services;
 
 namespace SalesforceWeb.Controllers
 {
@@ -20,13 +21,17 @@ namespace SalesforceWeb.Controllers
         private readonly IOAuthService _oAuthService;
         private readonly ISalesforceService _salesforceService;
         private readonly ILogger<OrganizationController> _logger;
-        public OrganizationController(IOrganizationService organizationService, IMapper mapper, IOAuthService oAuthService, ISalesforceService salesforceService, ILogger<OrganizationController> logger)
+        private readonly IServiceListingService _serviceListingService;
+        private readonly IRelatedAccountService _relatedAccountService;
+        public OrganizationController(IOrganizationService organizationService, IMapper mapper, IOAuthService oAuthService, ISalesforceService salesforceService, ILogger<OrganizationController> logger, IServiceListingService serviceListingService, IRelatedAccountService relatedAccountService)
         {
             _organizationService = organizationService;
             _mapper = mapper;
             _httpClient = new HttpClient();
             _oAuthService = oAuthService;
             _salesforceService = salesforceService;
+            _serviceListingService = serviceListingService;
+            _relatedAccountService = relatedAccountService;
             _logger = logger;
         }
 
@@ -42,8 +47,42 @@ namespace SalesforceWeb.Controllers
             try
             {
                 string token = await _oAuthService.GetBearerTokenAsync();
-                await GetServiceListing(token);
-                await GetRelatedAccount(token, credentialProfileId);
+                string serviceListing = await _serviceListingService.GetServiceListing(token);
+                if (!string.IsNullOrEmpty(serviceListing))
+                {
+                    var result = JsonConvert.DeserializeObject<ServiceListingQueryResult>(serviceListing);
+
+                    ViewBag.ServiceList = result.records.Select(r => new SelectListItem
+                    {
+                        Value = r.Id,
+                        Text = r.Name
+                    }).ToList();
+                }
+                else
+                {
+                    TempData["error"] = "Empty response received from Salesforce API.";
+                    return Content("Empty response received from Salesforce API.");
+                }
+
+                var relatedAccount = await _relatedAccountService.GetRelatedAccount(token, credentialProfileId);
+                if (!string.IsNullOrEmpty(relatedAccount))
+                {
+                    var accounts = JsonConvert.DeserializeObject<List<RelatedAccount>>(relatedAccount);
+
+                    ViewBag.AccountList = accounts.Select(a => new SelectListItem
+                    {
+                        Value = a.Id,
+                        Text = a.Name
+                    }).ToList();
+                }
+                else
+                {
+                    return Content("Empty response received from Salesforce API.");
+                }
+
+
+                //await GetServiceListing(token);
+                //await GetRelatedAccount(token, credentialProfileId);
 
                 ActionResult<OrganizationFullDto> actionResult = await GetOrganization(credentialProfileId);
                 OrganizationFullDto model = actionResult.Value;
@@ -80,89 +119,93 @@ namespace SalesforceWeb.Controllers
             }
         }
 
-        public async Task<IActionResult> GetServiceListing(string token)
-        {
-            try
-            {
-                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        //public async Task<IActionResult> GetServiceListing(string token)
+        //{
+        //    try
+        //    {
+        //        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-                HttpResponseMessage response = await _httpClient.GetAsync("https://mcal--mctraining.sandbox.my.salesforce.com/services/data/v59.0/query/?q=SELECT Id, Name FROM Service_Listing__c WHERE is_Certification__c = true AND Active__c = true");
+        //        //HttpResponseMessage response = await _httpClient.GetAsync("https://mcal--mctraining.sandbox.my.salesforce.com/services/data/v59.0/query/?q=SELECT Id, Name FROM Service_Listing__c WHERE is_Certification__c = true AND Active__c = true");
 
-                if (response.IsSuccessStatusCode)
-                {
-                    string responseBody = await response.Content.ReadAsStringAsync();
+        //        HttpResponseMessage response = await _httpClient.GetAsync("https://mcal.my.salesforce.com/services/data/v59.0/query/?q=SELECT Id, Name FROM Service_Listing__c WHERE is_Certification__c = true AND Active__c = true");
 
-                    if (!string.IsNullOrEmpty(responseBody))
-                    {
-                        var result = JsonConvert.DeserializeObject<ServiceListingQueryResult>(responseBody);
+        //        if (response.IsSuccessStatusCode)
+        //        {
+        //            string responseBody = await response.Content.ReadAsStringAsync();
 
-                        ViewBag.ServiceList = result.records.Select(r => new SelectListItem
-                        {
-                            Value = r.Id,
-                            Text = r.Name
-                        }).ToList();
+        //            if (!string.IsNullOrEmpty(responseBody))
+        //            {
+        //                var result = JsonConvert.DeserializeObject<ServiceListingQueryResult>(responseBody);
 
-                        return View();
-                    }
-                    else
-                    {
-                        TempData["error"] = "Empty response received from Salesforce API.";
-                        return Content("Empty response received from Salesforce API.");
-                    }
-                }
-                else
-                {
-                    TempData["error"] = "Failed to fetch data from Salesforce API";
-                    return Content("Failed to fetch data from Salesforce API: " + response.ReasonPhrase);
-                }
-            }
-            catch (Exception ex)
-            {
-                TempData["error"] = ex.Message;
-                return Content("Error: " + ex.Message);
-            }
-        }
+        //                ViewBag.ServiceList = result.records.Select(r => new SelectListItem
+        //                {
+        //                    Value = r.Id,
+        //                    Text = r.Name
+        //                }).ToList();
 
-        public async Task<IActionResult> GetRelatedAccount(string token, string Id)
-        {
-            try
-            {
-                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        //                return View();
+        //            }
+        //            else
+        //            {
+        //                TempData["error"] = "Empty response received from Salesforce API.";
+        //                return Content("Empty response received from Salesforce API.");
+        //            }
+        //        }
+        //        else
+        //        {
+        //            TempData["error"] = "Failed to fetch data from Salesforce API";
+        //            return Content("Failed to fetch data from Salesforce API: " + response.ReasonPhrase);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        TempData["error"] = ex.Message;
+        //        return Content("Error: " + ex.Message);
+        //    }
+        //}
 
-                HttpResponseMessage response = await _httpClient.GetAsync("https://mcal--mctraining.sandbox.my.salesforce.com/services/apexrest/api/Account/" + Id);
+        //public async Task<IActionResult> GetRelatedAccount(string token, string Id)
+        //{
+        //    try
+        //    {
+        //        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+        //        //HttpResponseMessage response = await _httpClient.GetAsync("https://mcal--mctraining.sandbox.my.salesforce.com/services/apexrest/api/Account/" + Id);
+
+        //        HttpResponseMessage response = await _httpClient.GetAsync("https://mcal.my.salesforce.com/services/apexrest/api/Account/" + Id);
 
 
-                if (response.IsSuccessStatusCode)
-                {
-                    string responseBody = await response.Content.ReadAsStringAsync();
+        //        if (response.IsSuccessStatusCode)
+        //        {
+        //            string responseBody = await response.Content.ReadAsStringAsync();
 
-                    if (!string.IsNullOrEmpty(responseBody))
-                    {
-                        var accounts = JsonConvert.DeserializeObject<List<RelatedAccount>>(responseBody);
+        //            if (!string.IsNullOrEmpty(responseBody))
+        //            {
+        //                var accounts = JsonConvert.DeserializeObject<List<RelatedAccount>>(responseBody);
 
-                        ViewBag.AccountList = accounts.Select(a => new SelectListItem
-                        {
-                            Value = a.Id,
-                            Text = a.Name
-                        }).ToList();
+        //                ViewBag.AccountList = accounts.Select(a => new SelectListItem
+        //                {
+        //                    Value = a.Id,
+        //                    Text = a.Name
+        //                }).ToList();
 
-                        return View();
-                    }
-                    else
-                    {
-                        return Content("Empty response received from Salesforce API.");
-                    }
-                }
-                else
-                {
-                    return Content("Failed to fetch data from Salesforce API: " + response.ReasonPhrase);
-                }
-            }
-            catch (Exception ex)
-            {
-                return Content("Error: " + ex.Message);
-            }
-        }
+        //                return View();
+        //            }
+        //            else
+        //            {
+        //                return Content("Empty response received from Salesforce API.");
+        //            }
+        //        }
+        //        else
+        //        {
+        //            return Content("Failed to fetch data from Salesforce API: " + response.ReasonPhrase);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return Content("Error: " + ex.Message);
+        //    }
+        //}
 
         [HttpPost]
         public async Task<IActionResult> PostCompositeOrganization(string jsonBody)
