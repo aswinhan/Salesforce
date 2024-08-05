@@ -34,6 +34,8 @@
     <!-- Layout styles -->
     <link rel="stylesheet" href="~/assets/css/style.css" asp-append-version="true">
     <!-- End layout styles -->
+
+    <link rel="stylesheet" href="~/lib/toastr.js/toastr.min.css" />
 </head>
 <body>
 
@@ -72,7 +74,7 @@
     <script src="~/assets/js/jsonEditor.js"></script>
     <script src="~/assets/js/contentVersion.js"></script>
     <script src="~/assets/js/postjsonbody.js"></script>
-    
+
     <!-- End custom js for this page -->
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -81,6 +83,10 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery.json-viewer@1.5.0/json-viewer/jquery.json-viewer.min.js"></script>
 
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await Component.InvokeAsync("NToastNotify")
+
+    <script src="~/lib/toastr.js/toastr.min.js"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

@@ -5,6 +5,7 @@ using SalesforceWeb.Profiles;
 using SalesforceWeb.Services;
 using SalesforceWeb.Services.IServices;
 using MagicVilla_Web.Services;
+using NToastNotify;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -53,6 +54,31 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
+builder.Services.AddMvcCore().AddNToastNotifyToastr(new ToastrOptions()
+{
+    ProgressBar = true,
+    PositionClass = ToastPositions.TopRight,
+    CloseButton = true,
+    PreventDuplicates = true,
+    NewestOnTop = true,
+    TapToDismiss = true,
+    HideDuration = 5000,
+},
+new NToastNotifyOption()
+{
+    DefaultSuccessTitle = "Success",
+    DefaultSuccessMessage = "Operation successful",
+    DefaultErrorTitle = "Error",
+    DefaultErrorMessage = "Operation failed",
+    DefaultInfoTitle = "Info",
+    DefaultInfoMessage = "Information",
+    DefaultWarningTitle = "Warning",
+    DefaultWarningMessage = "Warning",
+    ScriptSrc = "lib/toastr.js/toastr.min.js",
+    StyleHref = "lib/toastr.js/toastr.min.css"
+});
+
+
 var app = builder.Build();
 
 
@@ -69,6 +95,8 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseSession();
+
+app.UseNToastNotify();
 
 app.MapControllerRoute(
     name: "default",

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using NToastNotify;
 using SalesforceWeb.Dtos;
 using SalesforceWeb.Models;
 using SalesforceWeb.Services.IServices;
@@ -15,14 +16,22 @@ namespace SalesforceWeb.Controllers
         private readonly IMapper _mapper;
         private readonly ISalesforceService _salesforceService;
         private readonly ILogger<EditPractitionerController> _logger;
+        private readonly IToastNotification _toastNotification;
 
-        public EditPractitionerController(IPractitionerService practitionerService, IMapper mapper, ISalesforceService salesforceService, ILogger<EditPractitionerController> logger)
+
+        public EditPractitionerController(IPractitionerService practitionerService,
+             IMapper mapper, ISalesforceService salesforceService,
+             ILogger<EditPractitionerController> logger,
+             IToastNotification toastNotification
+             )
         {
             _practitionerService = practitionerService;
             _mapper = mapper;
             _salesforceService = salesforceService;
             _logger = logger;
+            _toastNotification = toastNotification;
         }
+
 
         [Authorize(Roles = "admin")]
         public IActionResult Index()
@@ -34,9 +43,19 @@ namespace SalesforceWeb.Controllers
         public async Task<IActionResult> Index(string credentialProfileId)
         {
             ActionResult<PractitionerFullDto> actionResult = await GetEditPractitioner(credentialProfileId);
+
+
+            //Alert example 
+
+            //if (actionResult.Result == null)
+            //{
+            //    _toastNotification.AddErrorToastMessage("Practitioner not found.");
+            //    return View();
+            //}
+
             PractitionerFullDto model = actionResult.Value;
             ViewBag.credentialProfileId = credentialProfileId;
-                return View(model);
+            return View(model);
         }
 
         public async Task<ActionResult<PractitionerFullDto>> GetEditPractitioner(string credentialProfileId)
@@ -52,6 +71,7 @@ namespace SalesforceWeb.Controllers
                 }
                 else
                 {
+                    _toastNotification.AddErrorToastMessage(response.ErrorMessages.FirstOrDefault());
                     return NotFound();
                 }
             }
@@ -154,7 +174,7 @@ namespace SalesforceWeb.Controllers
             else
             {
                 _logger.LogError("JSON file not found.");
-                return Json(new { success = false, message = "JSON file not found." });                
+                return Json(new { success = false, message = "JSON file not found." });
             }
         }
 
