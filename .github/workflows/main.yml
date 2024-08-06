@@ -8,4 +8,8 @@ on:
       build:
         runs-on: window-latest
         steps:
-          name: Checkout code
+        - name: Checkout code
+          run: dotnet build --configuration Release
+          
+       -  name: dotnet publish
+          run: dotnet publish -c Release -0 ${{env.DOTNET_ROOT}}/Salesforce
