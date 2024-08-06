@@ -1,4 +1,4 @@
-name : CI/CD PipeLine
+name: CI/CD PipeLine
 
 on:
  push:
@@ -6,6 +6,6 @@ on:
 
    jobs:
       build:
-        runs-on : window-latest
+        runs-on: window-latest
         steps:
           name: Checkout code
