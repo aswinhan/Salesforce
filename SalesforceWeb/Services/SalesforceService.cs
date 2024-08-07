@@ -27,11 +27,6 @@ namespace SalesforceWeb.Services
 
                 var baseUrl = _configuration["Salesforce:BaseUrl"];
                 var requestUri = $"{baseUrl}/services/data/v59.0/composite/";
-                //var response = await _httpClient.GetAsync(requestUri);
-
-                //string apiUrl = "https://mcal--mctraining.sandbox.my.salesforce.com/services/data/v59.0/composite/";
-
-                //string apiUrl = "https://mcal.my.salesforce.com/services/data/v59.0/composite/";
 
                 var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
 

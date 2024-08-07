@@ -12,15 +12,11 @@ namespace SalesforceWeb.Controllers
     public class AuditController : Controller
     {
         private readonly IAuditService _auditService;
-        private readonly IMapper _mapper;
-        private readonly ISalesforceService _salesforceService;
-        private readonly ILogger<EditPractitionerController> _logger;
+        private readonly ILogger<PractitionerController> _logger;
 
-        public AuditController(IAuditService auditService, IMapper mapper, ISalesforceService salesforceService, ILogger<EditPractitionerController> logger)
+        public AuditController(IAuditService auditService, ILogger<PractitionerController> logger)
         {
             _auditService = auditService;
-            _mapper = mapper;
-            _salesforceService = salesforceService;
             _logger = logger;
         }
 

@@ -1,8 +1,6 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SalesforceAPI.Controllers.Services;
 using SalesforceAPI.Data;
 using SalesforceAPI.Dtos;
 using SalesforceAPI.Models;
@@ -18,13 +16,9 @@ namespace SalesforceAPI.Controllers
 
         protected APIResponse _response;
         private readonly ApplicationDbContext _context;
-        private readonly ProviderService _providerService;
-        private readonly IMapper _mapper;
-        public AuditController(ApplicationDbContext context, IMapper mapper, ProviderService providerService)
+        public AuditController(ApplicationDbContext context)
         {
             _context = context;
-            _providerService = providerService;
-            _mapper = mapper;
             _response = new();
         }
 

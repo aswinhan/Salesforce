@@ -8,7 +8,7 @@
     <div class="col-md-12 stretch-card">
         <div class="card">
             <div class="card-body">
-                <h6 class="card-title">Practitioner CVO & PSV Form</h6>
+                <h6 class="card-title">Full / Edit Practitioner CVO & PSV Form</h6>
                 <form asp-controller="Practitioner" asp-action="Index" method="post">
                     <div class="row text-center">
                         <div class="col-sm-4"></div><!-- Col -->
@@ -21,7 +21,7 @@
                         <div class="col-sm-4"></div><!-- Col -->
                     </div><!-- Row -->
                     <div class="text-center">
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary" id="GetPractitioner">Submit</button>
                     </div>
                 </form>
             </div>
@@ -47,7 +47,6 @@
             </div>
         </div>
     </div>
-
 }
 
 @if (Model == null)
@@ -57,10 +56,15 @@
 else
 {
     <form>
-
         <div class="row pb-4">
             <div class="col-md-12 stretch-card">
                 <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <div class="form-check form-switch">
+                            <input type="checkbox" class="form-check-input" id="toggleAll">
+                            <label class="form-check-label" for="checkDefault" id="lbl_toggleAll">FULL CREDENTIALING</label>
+                        </div>
+                    </div>
                     <div class="card-body">
                         <h6 class="card-title">Credentialing Profile Details</h6>
 
@@ -69,6 +73,7 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">
                                         First Name
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#First_Name__c" />
                                     </label>
                                     <input type="text" class="form-control" value="@Model.PractitionerCPDtos.First_Name__c" id="First_Name__c">
                                 </div>
@@ -77,6 +82,7 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">
                                         Last Name
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Last_Name__c" />
                                     </label>
                                     <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Last_Name__c" id="Last_Name__c" />
                                 </div>
@@ -88,6 +94,7 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">
                                         Date of Birth
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Date_of_Birth__c" />
                                     </label>
                                     <input type="date" class="form-control" value="@Model.PractitionerCPDtos.Date_of_Birth__c?.ToString("yyyy-MM-dd")" id="Date_of_Birth__c" />
                                 </div>
@@ -96,16 +103,9 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">
                                         Tax ID
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Tax_ID__c" />
                                     </label>
-                                    @if (Model.PractitionerCPDtos.Tax_ID__c == null)
-                                    {
-                                        <input type="text" class="form-control" value="112342342" id="Tax_ID__c">
-                                    }
-                                    else
-                                    {
-                                        <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Tax_ID__c" id="Tax_ID__c">
-                                    }
-                                    
+                                    <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Tax_ID__c" id="Tax_ID__c">
                                 </div>
                             </div><!-- Col -->
                         </div><!-- Row -->
@@ -117,6 +117,7 @@ else
                                     @(Model.PractitionerCPDtos.Medicare_Provider__c == true ? "checked" : "")>
                                     <label class="form-label" for="checkDefault">
                                         Medicare Provider
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Medicare_Provider__c" />
                                     </label>
                                 </div>
                             </div><!-- Col -->
@@ -124,7 +125,7 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">
                                         Medicare Number
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Medicare_Number__c" />
                                     </label>
                                     <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Medicare_Number__c" id="Medicare_Number__c" />
                                 </div>
@@ -133,7 +134,7 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">
                                         Practitioner NPI
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Practitioner_NPI__c" />
                                     </label>
                                     <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Practitioner_NPI__c" id="Practitioner_NPI__c">
                                 </div>
@@ -145,15 +146,16 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">
                                         Office Address Street
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Office_Address_Street_1__c" />
                                     </label>
                                     <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Office_Address_Street_1__c" id="Office_Address_Street_1__c">
                                 </div>
                             </div><!-- Col -->
-                            <div class="col-sm-3">
-                                <div class="mb-6">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
                                     <label class="form-label">
                                         Office Address City
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Office_Address_City__c" />
                                     </label>
                                     <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Office_Address_City__c" id="Office_Address_City__c">
                                 </div>
@@ -164,7 +166,7 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">
                                         Office Address State
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Office_Address_State__c" />
                                     </label>
                                     <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Office_Address_State__c" id="Office_Address_State__c">
                                 </div>
@@ -173,7 +175,7 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">
                                         Office Address Zipcode
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Office_Address_Zipcode__c" />
                                     </label>
                                     <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Office_Address_Zipcode__c" id="Office_Address_Zipcode__c">
                                 </div>
@@ -182,47 +184,9 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">
                                         Office Address Country
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Office_Address_County__c" />
                                     </label>
                                     <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Office_Address_County__c" id="Office_Address_County__c">
-                                </div>
-                            </div><!-- Col -->
-                        </div><!-- Row -->
-
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <div class="mb-3">
-                                    <label class="form-label">
-                                        Home Address Street
-
-                                    </label>
-                                    <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Home_Address_Street_1__c" id="Home_Address_Street_1__c">
-                                </div>
-                            </div><!-- Col -->
-                            <div class="col-sm-3">
-                                <div class="mb-3">
-                                    <label class="form-label">
-                                        Home Address City
-
-                                    </label>
-                                    <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Home_Address_City__c" id="Home_Address_City__c">
-                                </div>
-                            </div><!-- Col -->
-                            <div class="col-sm-3">
-                                <div class="mb-3">
-                                    <label class="form-label">
-                                        Home Address State
-
-                                    </label>
-                                    <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Home_Address_State__c" id="Home_Address_State__c">
-                                </div>
-                            </div><!-- Col -->
-                            <div class="col-sm-3">
-                                <div class="mb-3">
-                                    <label class="form-label">
-                                        Home Address Zipcode
-
-                                    </label>
-                                    <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Home_Address_Zipcode__c" id="Home_Address_Zipcode__c">
                                 </div>
                             </div><!-- Col -->
                         </div><!-- Row -->
@@ -231,8 +195,58 @@ else
                             <div class="col-sm-6">
                                 <div class="mb-3">
                                     <label class="form-label">
-                                        Specialties
+                                        Home Address Street
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Home_Address_Street_1__c" />
+                                    </label>
+                                    <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Home_Address_Street_1__c" id="Home_Address_Street_1__c">
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">
+                                        Home Address City
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Home_Address_City__c" />
+                                    </label>
+                                    <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Home_Address_City__c" id="Home_Address_City__c">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="mb-3">
+                                    <label class="form-label">
+                                        Home Address State
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Home_Address_State__c" />
+                                    </label>
+                                    <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Home_Address_State__c" id="Home_Address_State__c">
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-4">
+                                <div class="mb-3">
+                                    <label class="form-label">
+                                        Home Address Zipcode
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Home_Address_Zipcode__c" />
+                                    </label>
+                                    <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Home_Address_Zipcode__c" id="Home_Address_Zipcode__c">
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">
+                                            Home Address Country
+                                            <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Home_Address_County__c" />
+                                        </label>
+                                        <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Home_Address_County__c" id="Home_Address_County__c">
+                                    </div>
+                                </div><!-- Col -->
+                        </div><!-- Row -->
 
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">
+                                        Specialties
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Specialties__c" />
 
                                     </label>
                                     @* <select class="js-example-basic-single form-select" data-width="100%">
@@ -248,7 +262,7 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">
                                         Other Specialty
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Other_Specialty__c" />
                                     </label>
                                     <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Other_Specialty__c" id="Other_Specialty__c">
                                 </div>
@@ -262,7 +276,7 @@ else
                                     @(Model.PractitionerCPDtos.Certificate_of_Liability__c == true ? "checked" : "")>
                                     <label class="form-label">
                                         Certificate of Liability
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Certificate_of_Liability__c" />
                                     </label>
                                 </div>
                             </div><!-- Col -->
@@ -270,7 +284,7 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">
                                         Certificate of Liability Expiration Date
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Certificate_of_Liability_Expiration_Date__c" />
                                     </label>
                                     <input type="date" class="form-control" value="@Model.PractitionerCPDtos.Certificate_of_Liability_Expiration_Date__c?.ToString("yyyy-MM-dd")" id="Certificate_of_Liability_Expiration_Date__c">
                                 </div>
@@ -282,7 +296,7 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">
                                         Current Malpractice Insurance Coverage
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Current_Malpractice_Insurance_Coverage__c" />
                                     </label>
                                     @* <select class="js-example-basic-single form-select" data-width="100%">
                                 <option Value="0" selected>Zero</option>
@@ -297,7 +311,7 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">
                                         Malpractice Insurance Coverage Status
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Malpractice_Insurance_Coverage_Status__c" />
                                     </label>
                                     <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Malpractice_Insurance_Coverage_Status__c" id="Malpractice_Insurance_Coverage_Status__c">
                                 </div>
@@ -309,7 +323,7 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">
                                         Explanation Current Malpractice
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Explanation_Current_Malpractice__c" />
                                     </label>
                                     <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Explanation_Current_Malpractice__c" id="Explanation_Current_Malpractice__c">
                                 </div>
@@ -318,7 +332,7 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">
                                         Malpractice Insurance Coverage Expiration
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Malpractice_Insurance_Coverage_Expiration__c" />
                                     </label>
                                     <input type="date" class="form-control" value="@Model.PractitionerCPDtos.MalpracticeInsurance_Coverage_Expiration__c?.ToString("yyyy-MM-dd")" id="Malpractice_Insurance_Coverage_Expiration__c">
                                 </div>
@@ -330,7 +344,7 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">
                                         Languages Spoken
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Languages_Spoken__c" />
                                     </label>
                                     <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Languages_Spoken__c" id="Languages_Spoken__c">
                                 </div>
@@ -339,7 +353,7 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">
                                         Cultural Competences
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Cultural_Competences__c" />
                                     </label>
                                     <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Cultural_Competences__c" id="Cultural_Competences__c">
                                 </div>
@@ -351,7 +365,7 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">
                                         X6-Month Gap in Employment Since Profession
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#X6_month_gap_in_employment_since_profess__c" />
                                     </label>
                                     @* <select class="js-example-basic-single form-select" data-width="100%">
                                 <option Value="0" selected>Zero</option>
@@ -366,7 +380,7 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">
                                         X6-Month Gap Start Date
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#X6_Month_Gap_Start_Date__c" />
                                     </label>
                                     <input type="date" class="form-control" value="@Model.PractitionerCPDtos.X6_Month_Gap_Start_Date__c?.ToString("yyyy-MM-dd")" id="X6_Month_Gap_Start_Date__c">
                                 </div>
@@ -375,7 +389,7 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">
                                         X6-Month Gap End Date
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#X6_Month_Gap_End_Date__c" />
                                     </label>
                                     <input type="date" class="form-control" value="@Model.PractitionerCPDtos.X6_Month_Gap_End_Date__c?.ToString("yyyy-MM-dd")" id="X6_Month_Gap_End_Date__c">
                                 </div>
@@ -387,7 +401,7 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">
                                         X6-Month Gap Activity
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#X6_Month_Gap_Activity__c" />
                                     </label>
                                     <input type="text" class="form-control" value="@Model.PractitionerCPDtos.X6_Month_Gap_Activity__c" id="X6_Month_Gap_Activity__c">
                                 </div>
@@ -396,7 +410,7 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">
                                         X6-Month Gap Reason
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#X6_Month_Gap_Reason__c" />
                                     </label>
                                     <input type="text" class="form-control" value="@Model.PractitionerCPDtos.X6_Month_Gap_Reason__c" id="X6_Month_Gap_Reason__c">
                                 </div>
@@ -410,7 +424,7 @@ else
                                     @(Model.PractitionerCPDtos.Five_year_work_history__c == true ? "checked" : "")>
                                     <label class="form-label">
                                         Five-Year Work History
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Five_year_work_history__c" />
                                     </label>
                                 </div>
                             </div><!-- Col -->
@@ -420,7 +434,7 @@ else
                                     @(Model.PractitionerCPDtos.Please_acknowledge_If_denied_credential__c == true ? "checked" : "")>
                                     <label class="form-label">
                                         Please Acknowledge if Denied Credential
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Please_acknowledge_If_denied_credential__c" />
                                     </label>
                                 </div>
                             </div><!-- Col -->
@@ -431,7 +445,7 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">
                                         Can You Perform the Essential Duties
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Can_you_perform_the_essential_duties_of__c" />
                                     </label>
                                     @* <select class="js-example-basic-single form-select" data-width="100%">
                                 <option Value="0" selected>Zero</option>
@@ -446,7 +460,7 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">
                                         Reason for Inability to Perform Essential Duties
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Reason_for_inability_to_perform_essentia__c" />
                                     </label>
                                     <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Reason_for_inability_to_perform_essentia__c" id="Reason_for_inability_to_perform_essentia__c">
                                 </div>
@@ -458,7 +472,7 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">
                                         Lack of Present Illegal Drug Use
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Lack_of_present_illegal_drug_use__c" />
                                     </label>
                                     @* <select class="js-example-basic-single form-select" data-width="100%">
                                 <option Value="0" selected>Zero</option>
@@ -473,7 +487,7 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">
                                         Explanation Lack of Present Illegal Drug Use
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Explanation_Lackofpresentillegaldrug__c" />
                                     </label>
                                     <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Explanation_Lackofpresentillegaldrug__c" id="Explanation_Lackofpresentillegaldrug__c">
                                 </div>
@@ -485,7 +499,7 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">
                                         History of Loss of License
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#History_of_loss_of_license__c" />
                                     </label>
                                     @* <select class="js-example-basic-single form-select" data-width="100%">
                                 <option Value="0" selected>Zero</option>
@@ -500,7 +514,7 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">
                                         Explanation History of Loss of License
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#ExplanationHistoryoflossoflicense__c" />
                                     </label>
                                     <input type="text" class="form-control" value="@Model.PractitionerCPDtos.ExplanationHistoryoflossoflicense__c" id="ExplanationHistoryoflossoflicense__c">
                                 </div>
@@ -512,7 +526,7 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">
                                         History of Felony Convictions
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#History_of_felony_convictions__c" />
                                     </label>
                                     <input type="text" class="form-control" value="@Model.PractitionerCPDtos.History_of_felony_convictions__c" id="History_of_felony_convictions__c">
                                 </div>
@@ -521,7 +535,7 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">
                                         Explanation History of Felony Convictions
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#ExplanationHistory_of_felony_convictions__c" />
                                     </label>
                                     <input type="text" class="form-control" value="@Model.PractitionerCPDtos.ExplanationHistory_of_felony_convictions__c" id="ExplanationHistory_of_felony_convictions__c">
                                 </div>
@@ -533,7 +547,7 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">
                                         History of Loss or Limitations of Privileges
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#History_of_loss_or_limitations_of_privil__c" />
                                     </label>
                                     <input type="text" class="form-control" value="@Model.PractitionerCPDtos.History_of_loss_or_limitations_of_privil__c" id="History_of_loss_or_limitations_of_privil__c">
                                 </div>
@@ -542,7 +556,7 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">
                                         Explanation History of Loss or Limitations of Privileges
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#ExplanationHistory_of_loss_or_limitations_of_privil__c" />
                                     </label>
                                     <input type="text" class="form-control" value="@Model.PractitionerCPDtos.ExplanationHistory_of_loss__c" id="ExplanationHistory_of_loss_or_limitations_of_privil__c">
                                 </div>
@@ -554,7 +568,7 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">
                                         Attestation by the Applicant
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Attestation_by_the_applicant_of_the_corr__c" />
                                     </label>
                                     <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Attestation_by_the_applicant_of_the_corr__c" id="Attestation_by_the_applicant_of_the_corr__c">
                                 </div>
@@ -563,7 +577,7 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">
                                         Cultural Competencies Picklist
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Cultural_Competencies_Picklist__c" />
                                     </label>
                                     @* <select class="js-example-basic-single form-select" data-width="100%">
                                 <option Value="0" selected>Zero</option>
@@ -575,6 +589,19 @@ else
                                 </div>
                             </div><!-- Col -->
                         </div><!-- Row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">
+                                        Summary of Changes
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Summary_of_Changes__c" />
+                                    </label>
+                                    <input type="text" class="form-control" value="@Model.PractitionerCPDtos.Summary_of_Changes__c" id="Summary_of_Changes__c">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
+
                     </div>
                 </div>
             </div>
@@ -591,7 +618,7 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">
                                         College/University Program Name
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#College_University_Program_Name__c" />
                                     </label>
                                     <input type="text" class="form-control" value="@Model.EducationDtos.College_University_Program_Name__c" id="College_University_Program_Name__c">
                                 </div>
@@ -600,7 +627,7 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">
                                         College/University Program Address
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#College_University_Program_Address__c" />
 
                                     </label>
                                     <input type="text" class="form-control" value="@Model.EducationDtos.College_University_Program_Address__c" id="College_University_Program_Address__c">
@@ -613,7 +640,7 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">
                                         Degree
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Degree__c" />
                                     </label>
                                     <input type="text" class="form-control" value="@Model.EducationDtos.Degree__c" id="Degree__c">
                                 </div>
@@ -622,7 +649,7 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">
                                         Graduation Date
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Graduation_Date__c" />
                                     </label>
                                     <input type="date" class="form-control" value="@Model.EducationDtos.Graduation_Date__c?.ToString("yyyy-MM-dd")" id="Graduation_Date__c">
                                 </div>
@@ -644,7 +671,7 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">
                                         Medical Training Hospital Name
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Medical_Training_Hospital_Name__c" />
 
                                     </label>
                                     <input type="text" class="form-control" value="@Model.PGMedicalTrainingDtos.Medical_Training_Hospital_Name__c" id="Medical_Training_Hospital_Name__c">
@@ -654,7 +681,7 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">
                                         Medical Training Hospital Address
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Medical_Training_Hospital_Address__c" />
                                     </label>
                                     <input type="text" class="form-control" value="@Model.PGMedicalTrainingDtos.Medical_Training_Hospital_Address__c" id="Medical_Training_Hospital_Address__c">
                                 </div>
@@ -666,7 +693,7 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">
                                         Medical Training Type
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Medical_Training_Type__c" />
                                     </label>
                                     @* <select class="js-example-basic-single form-select" data-width="100%">
                                 <option Value="0" selected>Zero</option>
@@ -681,7 +708,7 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">
                                         Specialty
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Specialty__c" />
                                     </label>
                                     <input type="text" class="form-control" value="@Model.PGMedicalTrainingDtos.Specialty__c" id="Specialty__c">
                                 </div>
@@ -693,7 +720,7 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">
                                         Training Start Date
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Training_Start_Date__c" />
                                     </label>
                                     <input type="date" class="form-control" value="@Model.PGMedicalTrainingDtos.Training_Start_Date__c?.ToString("yyyy-MM-dd")" id="Training_Start_Date__c">
                                 </div>
@@ -702,7 +729,7 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">
                                         Training End Date
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Training_End_Date__c" />
                                     </label>
                                     <input type="date" class="form-control" value="@Model.PGMedicalTrainingDtos.Training_End_Date__c?.ToString("yyyy-MM-dd")" id="Training_End_Date__c">
                                 </div>
@@ -719,32 +746,34 @@ else
                 <div class="card">
                     <div class="card-body">
                         <h6 class="card-title">Practitioner Licenses Certification Details</h6>
-
                         <div class="row">
-                            <div class="mb-3">
-                                <label class="form-label">
-                                    Record Type
-
-                                </label>
-                                <input type="text" class="form-control" value="@Model.PractitionerLCDtos.RecordTypeId" id="RecordTypeId">
-                            </div>
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                        <label class="form-label">
+                                            Record Type
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#RecordTypeId" />
+                                        </label>
+                                        <input type="text" class="form-control" value="@Model.PractitionerLCDtos.RecordTypeId" id="RecordTypeId">
+                                </div>
+                            </div><!-- Col -->
                             <div class="col-sm-6">
                                 <div class="mb-3">
                                     <input type="checkbox" class="form-check-input" id="File_Uploaded__c"
                                     @(Model.PractitionerLCDtos.File_Uploaded__c == true ? "checked" : "")>
                                     <label class="form-label">
                                         File Uploaded
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#File_Uploaded__c" />
+
                                     </label>
                                 </div>
                             </div><!-- Col -->
                         </div><!-- Row -->
-
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="mb-3">
                                     <label class="form-label">
                                         License Certification Status
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#LicenseCertification_Status__c" />
 
                                     </label>
                                     @* <select class="js-example-basic-single form-select" data-width="100%">
@@ -760,19 +789,18 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">
                                         License Certification Type
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#LicenseCertification_Type__c" />
                                     </label>
                                     <input type="text" class="form-control" value="@Model.PractitionerLCDtos.LicenseCertification_Type__c" id="LicenseCertification_Type__c">
                                 </div>
                             </div><!-- Col -->
                         </div><!-- Row -->
-
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="mb-3">
                                     <label class="form-label">
                                         License Types LARA
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#License_Types_LARA__c" />
                                     </label>
                                     @* <select class="js-example-basic-single form-select" data-width="100%">
                                 <option Value="0" selected>Zero</option>
@@ -787,19 +815,18 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">
                                         Expiration Date
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Expiration_Date__c" />
                                     </label>
                                     <input type="date" class="form-control" value="@Model.PractitionerLCDtos.Expiration_Date__c?.ToString("yyyy-MM-dd")" id="Expiration_Date__c">
                                 </div>
                             </div><!-- Col -->
                         </div><!-- Row -->
-
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="mb-3">
                                     <label class="form-label">
                                         Board Of Certification
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Board_Certifications__c" />
                                     </label>
                                     @* <select class="js-example-basic-single form-select" data-width="100%">
                                 <option Value="0" selected>Zero</option>
@@ -807,97 +834,86 @@ else
                                 <option value="2">Two</option>
                                 <option value="3">Three</option>
                                 </select> *@
-                                    <input type="text" class="form-control" value="@Model.PractitionerLCDtos.License_Types_LARA__c" id="License_Types_LARA__c">
+                                    <input type="text" class="form-control" value="@Model.PractitionerLCDtos.License_Types_LARA__c" id="Board_Certifications__c">
                                 </div>
                             </div><!-- Col -->
                         </div><!-- Row -->
+                        
 
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="row pb-4">
-            <div class="col-md-12 stretch-card">
-                <div class="card">
-                    <div class="card-body">
-                        <h6 class="card-title">Hospital Affiliation Details</h6>
+            <div class="row pb-4">
+                <div class="col-md-12 stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <h6 class="card-title">Hospital Affiliation Details</h6>
 
-                        <div class="row">
-                            <div class="mb-3">
-                                <label class="form-label">
-                                    Hospital Affiliation Name
-                                </label>
-                                <input type="text" class="form-control" value="@Model.HospitalAffiliationDtos.Hospital_Affiliation_Name__c" id="Hospital_Affiliation_Name__c">
-                            </div>
+                            <div class="row">
                             <div class="col-sm-6">
                                 <div class="mb-3">
                                     <label class="form-label">
-                                        Hospital Affiliation Address
+                                        Hospital Affiliation Name
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Hospital_Affiliation_Name__c" />
                                     </label>
-                                    <input type="text" class="form-control" value="@Model.HospitalAffiliationDtos.Hospital_Affiliation_Address__c" id="Hospital_Affiliation_Address__c">
+                                    <input type="text" class="form-control" value="@Model.HospitalAffiliationDtos.Hospital_Affiliation_Name__c" id="Hospital_Affiliation_Name__c">
                                 </div>
                             </div><!-- Col -->
-                        </div><!-- Row -->
+                                <div class="col-sm-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">
+                                            Hospital Affiliation Address
+                                            <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Hospital_Affiliation_Address__c" />
+                                        </label>
+                                        <input type="text" class="form-control" value="@Model.HospitalAffiliationDtos.Hospital_Affiliation_Address__c" id="Hospital_Affiliation_Address__c">
+                                    </div>
+                                </div><!-- Col -->
+                            </div><!-- Row -->
 
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="mb-3">
-                                    <label class="form-label">
-                                        Start Date of Affiliation
-                                    </label>
-                                    <input type="date" class="form-control" value="@Model.HospitalAffiliationDtos.Start_Date_of_Affiliation__c?.ToString("yyyy-MM-dd")" id="Start_Date_of_Affiliation__c">
-                                </div>
-                            </div><!-- Col -->
-                            <div class="col-sm-6">
-                                <div class="mb-3">
-                                    <label class="form-label">
-                                        Expiration Date of Affiliation
-                                    </label>
-                                    <input type="date" class="form-control" value="@Model.HospitalAffiliationDtos.End_Date_of_Affiliation__c?.ToString("yyyy-MM-dd")" id="End_Date_of_Affiliation__c">
-                                </div>
-                            </div><!-- Col -->
-                        </div><!-- Row -->
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">
+                                            Start Date of Affiliation
+                                            <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Start_Date_of_Affiliation__c" />
+                                        </label>
+                                        <input type="date" class="form-control" value="@Model.HospitalAffiliationDtos.Start_Date_of_Affiliation__c?.ToString("yyyy-MM-dd")" id="Start_Date_of_Affiliation__c">
+                                    </div>
+                                </div><!-- Col -->
+                                <div class="col-sm-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">
+                                            Expiration Date of Affiliation
+                                            <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#End_Date_of_Affiliation__c" />
+                                        </label>
+                                        <input type="date" class="form-control" value="@Model.HospitalAffiliationDtos.End_Date_of_Affiliation__c?.ToString("yyyy-MM-dd")" id="End_Date_of_Affiliation__c">
+                                    </div>
+                                </div><!-- Col -->
+                            </div><!-- Row -->
 
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="mb-3">
-                                    <label class="form-label">
-                                        Catagory of Membership
-                                    </label>
-                                    @* <select class="js-example-basic-single form-select" data-width="100%">
-                                <option Value="0" selected>Zero</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                                </select> *@
-                                    <input type="text" class="form-control" value="@Model.HospitalAffiliationDtos.Category_of_Membership__c" id="Category_of_Membership__c">
-                                </div>
-                            </div><!-- Col -->
-                        </div><!-- Row -->
-
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="mb-3">
-                                    <label class="form-label">
-                                        Board Of Certification
-
-                                    </label>
-                                    @* <select class="js-example-basic-single form-select" data-width="100%">
-                                <option Value="0" selected>Zero</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                                </select> *@
-                                    <input type="text" class="form-control" value="@Model.PractitionerLCDtos.License_Types_LARA__c" id="License_Types_LARA__c">
-                                </div>
-                            </div><!-- Col -->
-                        </div><!-- Row -->
-
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">
+                                            Catagory of Membership
+                                            <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Category_of_Membership__c" />
+                                        </label>
+                                        @* <select class="js-example-basic-single form-select" data-width="100%">
+                                    <option Value="0" selected>Zero</option>
+                                    <option value="1">One</option>
+                                    <option value="2">Two</option>
+                                    <option value="3">Three</option>
+                                    </select> *@
+                                        <input type="text" class="form-control" value="@Model.HospitalAffiliationDtos.Category_of_Membership__c" id="Category_of_Membership__c">
+                                    </div>
+                                </div><!-- Col -->
+                            </div><!-- Row -->
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
         <div id="primarySourceVerificationDetails" class="row pb-4">
             <div class="col-md-12 stretch-card">
@@ -910,7 +926,7 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">
                                         Verifier's Credentialing Organization
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Verifier_s_Credentialing_Organization__c" />
                                     </label>
                                     @* <select class="js-example-basic-single form-select" data-width="100%">
                                 <option Value="0" selected>Zero</option>
@@ -925,7 +941,7 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">
                                         Other Accred
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Other_Accred__c" />
                                     </label>
                                     <input type="text" class="form-control" value="@Model.practitionerPSVDtos.Other_Accred__c" id="Other_Accred__c">
                                 </div>
@@ -937,7 +953,7 @@ else
                                 <div class="mb-3">
                                     <label class="form-label">
                                         LARA License
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#LARA_License__c" />
                                     </label>
                                     @* <select class="js-example-basic-single form-select" data-width="100%">
                                 <option Value="0" selected>Zero</option>
@@ -954,7 +970,7 @@ else
                                     @(Model.practitionerPSVDtos.LARA_Uploaded__c == true ? "checked" : "")>
                                     <label class="form-label">
                                         LARA Uploaded
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#LARA_Uploaded__c" />
                                     </label>
                                 </div>
                             </div><!-- Col -->
@@ -967,7 +983,7 @@ else
                                     @(Model.practitionerPSVDtos.CVO__c == true ? "checked" : "")>
                                     <label class="form-label">
                                         CVO
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#CVO__c" />
                                     </label>
                                 </div>
                             </div><!-- Col -->
@@ -977,7 +993,7 @@ else
                                     @(Model.practitionerPSVDtos.Ichat_Background_Check__c == true ? "checked" : "")>
                                     <label class="form-label">
                                         ICHAT Background Check
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Ichat_Background_Check__c" />
                                     </label>
                                 </div>
                             </div><!-- Col -->
@@ -990,7 +1006,7 @@ else
                                     @(Model.practitionerPSVDtos.Workforce_Background_Check__c == true ? "checked" : "")>
                                     <label class="form-label">
                                         Workforce Background Check
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Workforce_Background_Check__c" />
                                     </label>
                                 </div>
                             </div><!-- Col -->
@@ -1000,7 +1016,7 @@ else
                                     @(Model.practitionerPSVDtos.Medicare_Base_Enrollment__c == true ? "checked" : "")>
                                     <label class="form-label">
                                         Medicare Base Enrollment
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Medicare_Base_Enrollment__c" />
                                     </label>
                                 </div>
                             </div><!-- Col -->
@@ -1013,7 +1029,7 @@ else
                                     @(Model.practitionerPSVDtos.Medicare_Opt_Out__c == true ? "checked" : "")>
                                     <label class="form-label">
                                         Medicare Opt Out
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Medicare_Opt_Out__c" />
                                     </label>
                                 </div>
                             </div><!-- Col -->
@@ -1023,7 +1039,7 @@ else
                                     @(Model.practitionerPSVDtos.Official_Transcript_from_Accredited_Scho__c == true ? "checked" : "")>
                                     <label class="form-label">
                                         Official Transcript from Accredited School
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Official_Transcript_from_Accredited_Scho__c" />
                                     </label>
                                 </div>
                             </div><!-- Col -->
@@ -1036,7 +1052,7 @@ else
                                     @(Model.practitionerPSVDtos.Degree_Verification__c == true ? "checked" : "")>
                                     <label class="form-label">
                                         Degree Verification
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Degree_Verification__c" />
                                     </label>
                                 </div>
                             </div><!-- Col -->
@@ -1046,7 +1062,7 @@ else
                                     @(Model.practitionerPSVDtos.AMA_Verification__c == true ? "checked" : "")>
                                     <label class="form-label">
                                         AMA Verification
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#AMA_Verification__c" />
                                     </label>
                                 </div>
                             </div><!-- Col -->
@@ -1059,7 +1075,7 @@ else
                                     @(Model.practitionerPSVDtos.AOA_Verification__c == true ? "checked" : "")>
                                     <label class="form-label">
                                         AOA Verification
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#AOA_Verification__c" />
                                     </label>
                                 </div>
                             </div><!-- Col -->
@@ -1069,7 +1085,7 @@ else
                                     @(Model.practitionerPSVDtos.MDHHS_Sanctioned_Provider_Check__c == true ? "checked" : "")>
                                     <label class="form-label">
                                         MDHHS Sanctioned Provider Check
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#MDHHS_Sanctioned_Provider_Check__c" />
                                     </label>
                                 </div>
                             </div><!-- Col -->
@@ -1082,7 +1098,7 @@ else
                                     @(Model.practitionerPSVDtos.MCBAP_Verification__c == true ? "checked" : "")>
                                     <label class="form-label">
                                         MCBAP Verification
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#MCBAP_Verification__c" />
                                     </label>
                                 </div>
                             </div><!-- Col -->
@@ -1092,7 +1108,7 @@ else
                                     @(Model.practitionerPSVDtos.Office_of_Inspector_General_Check__c == true ? "checked" : "")>
                                     <label class="form-label">
                                         Office of Inspector General Check
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#Office_of_Inspector_General_Check__c" />
                                     </label>
                                 </div>
                             </div><!-- Col -->
@@ -1105,7 +1121,7 @@ else
                                     @(Model.practitionerPSVDtos.SAM_gov_Check__c == true ? "checked" : "")>
                                     <label class="form-label">
                                         SAM.gov Check
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#SAM_gov_Check__c" />
                                     </label>
                                 </div>
                             </div><!-- Col -->
@@ -1115,7 +1131,7 @@ else
                                     @(Model.practitionerPSVDtos.National_Sex_Offender_Registry_Check__c == true ? "checked" : "")>
                                     <label class="form-label">
                                         National Sex Offender Registry Check
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#National_Sex_Offender_Registry_Check__c" />
                                     </label>
                                 </div>
                             </div><!-- Col -->
@@ -1128,7 +1144,7 @@ else
                                     @(Model.practitionerPSVDtos.MI_Public_Sex_Offender_Registry_Check__c == true ? "checked" : "")>
                                     <label class="form-label">
                                         MI Public Sex Offender Registry Check
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#MI_Public_Sex_Offender_Registry_Check__c" />
                                     </label>
                                 </div>
                             </div><!-- Col -->
@@ -1138,7 +1154,7 @@ else
                                     @(Model.practitionerPSVDtos.ECFMG__c == true ? "checked" : "")>
                                     <label class="form-label">
                                         ECFMG
-
+                                        <input type="checkbox" class="ms-2 toggle-checkbox form-check-input rounded-circle" data-target="#ECFMG__c" />
                                     </label>
                                 </div>
                             </div><!-- Col -->
@@ -1166,50 +1182,6 @@ else
         </div>
     </div>
 
-
-    @* <form asp-controller="EditPractitioner" asp-action="GetJsonData" method="get" id="generateJsonForm">
-
-        <div class="row pb-4">
-            <div class="col-md-12 stretch-card">
-                <div class="card">
-                    <div class="card-body">
-                        <h6 class="card-title">Edit Credentialing Profile Details</h6>
-
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="mb-3">
-                                    <label class="form-label">Certificate of Liability Expiration Date</label>
-                                    <input type="date" class="form-control" value="@Model.Certificate_of_Liability_Expiration_Date__c?.ToString("yyyy-MM-dd")">
-                                </div>
-                            </div><!-- Col -->
-                            <div class="col-sm-6">
-                                <div class="mb-3">
-                                    <label class="form-label">Malpractice Insurance Coverage Expiration</label>
-                                    <input type="date" class="form-control" value="@Model.MalpracticeInsurance_Coverage_Expiration__c?.ToString("yyyy-MM-dd")">
-                                </div>
-                            </div><!-- Col -->
-                        </div><!-- Row -->
-
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="mb-3">
-                                    <label class="form-label">Summary of Changes</label>
-                                    <input type="text" class="form-control" value="@Model.Summary_of_Changes__c">
-                                </div>
-                            </div><!-- Col -->
-                        </div><!-- Row -->
-
-                        <div class="text-center pt-4">
-                            <button type="button" class="btn btn-primary" id="GenerateJson">Generate Json</button>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </form> *@
-
     <div class="row pb-4">
         <div class="col-md-12 stretch-card">
             <div class="card">
@@ -1236,15 +1208,54 @@ else
 
 @section Scripts {
     <script>
-
         $(document).ready(function () {
 
-            // Function to generate JSON from active fields
+            // toastr.success('Toast Notification Example');
+
+            // Set the toggleAll checkbox to checked on page load
+            $('#toggleAll').prop('checked', false);
+            jQuery('.rounded-circle').hide();
+     
+
+            // Call toggleAll to set the initial state for other checkboxes and textboxes
+            toggleAll();
+
+            // toggleAll click event
+            $('#toggleAll').on('click', function () {
+                jQuery('.rounded-circle').show();
+                toggleAll();
+
+            });
+
+            function toggleAll() {
+                const isChecked = $('#toggleAll').prop('checked');
+                const isDisabled = isChecked;
+
+                $('.toggle-checkbox').each(function () {
+                    const targetSelector = $(this).data('target');
+
+                    // Set the state of the checkbox itself
+                    $(this).prop('checked', isChecked);
+
+                    // Set the state of the target element
+                    $(targetSelector).prop('disabled', isDisabled);
+                });
+            }
+
+            function toggleField(checkbox) {
+                const targetSelector = $(checkbox).data('target');
+                $(targetSelector).prop('disabled', $(checkbox).is(':checked'));
+            }
+
+            $('.toggle-checkbox').on('click', function () {
+                toggleField(this);
+            });
+
             $('#GenerateJson').click(function () {
-
-
                 function getFieldValue(id) {
-                    return $(`#${id}`).val() || ""
+                    if ($(`#${id}`).prop('disabled') === false) {
+                        return $(`#${id}`).val() || undefined;
+                    }
                 }
 
                 const payload = {
@@ -1271,10 +1282,12 @@ else
                                 "Office_Address_City__c": getFieldValue('Office_Address_City__c'),
                                 "Office_Address_State__c": getFieldValue('Office_Address_State__c'),
                                 "Office_Address_Zipcode__c": getFieldValue('Office_Address_Zipcode__c'),
+                                "Office_Address_County__c": getFieldValue('Office_Address_County__c'),
                                 "Home_Address_Street_1__c": getFieldValue('Home_Address_Street_1__c'),
                                 "Home_Address_City__c": getFieldValue('Home_Address_City__c'),
                                 "Home_Address_State__c": getFieldValue('Home_Address_State__c'),
                                 "Home_Address_Zipcode__c": getFieldValue('Home_Address_Zipcode__c'),
+                                "Home_Address_County__c": getFieldValue('Home_Address_County__c'),
                                 "Specialties__c": getFieldValue('Specialties__c'),
                                 "Other_Specialty__c": getFieldValue('Other_Specialty__c'),
                                 "Certificate_of_Liability__c": getFieldValue('Certificate_of_Liability__c'),
@@ -1304,6 +1317,7 @@ else
                                 "ExplanationHistory_of_loss_or_limitations_of_privil__c": getFieldValue('ExplanationHistory_of_loss_or_limitations_of_privil__c'),
                                 "Attestation_by_the_applicant_of_the_corr__c": getFieldValue('Attestation_by_the_applicant_of_the_corr__c'),
                                 "Cultural_Competencies_Picklist__c": getFieldValue('Cultural_Competencies_Picklist__c'),
+                                "Summary_of_Changes__c": getFieldValue('Summary_of_Changes__c'),
                             }
                         },
                         {
@@ -1331,7 +1345,7 @@ else
                                 "Training_End_Date__c": getFieldValue('Training_End_Date__c'),
                                 "Training_Start_Date__c": getFieldValue('Training_Start_Date__c')
                             }
-                        },
+                        },                        
                         {
                             "method": "POST",
                             "referenceId": "HA1",
@@ -1350,7 +1364,7 @@ else
                             "referenceId": "PLC1",
                             "url": "/services/data/v52.0/sobjects/Practitioner_Licenses_Certifications__c",
                             "body": {
-                                "RecordTypeId": getFieldValue('RecordTypeId'),
+                                "RecordTypeId": "0128z0000004TU4AAM",
                                 "Credentialing_Profile_Id__c": "" + getFieldValue('credentialProfileId') + "",
                                 "Expiration_Date__c": getFieldValue('Expiration_Date__c'),
                                 "File_Uploaded__c": true,
@@ -1420,6 +1434,7 @@ else
                         "body": body
                     });
                 });
+
 
                 // Output JSON to textarea
                 $('#jsoneditor').val(JSON.stringify(payload, null, 2));

@@ -6,9 +6,11 @@ using SalesforceAPI.Models;
 using SalesforceAPI.Controllers.Services;
 using SalesforceAPI.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SalesforceAPI.Controllers
 {
+    [Authorize]
     [Route("Practitioner")]
     [ApiController]
     public class PractitionerController : ControllerBase

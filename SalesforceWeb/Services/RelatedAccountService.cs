@@ -1,7 +1,5 @@
 ﻿using SalesforceWeb.Services.IServices;
-using SalesforceWeb.Utilities;
 using System.Net.Http.Headers;
-using System.Net.Http;
 
 namespace SalesforceWeb.Services
 {

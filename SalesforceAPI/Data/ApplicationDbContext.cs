@@ -13,7 +13,6 @@ namespace SalesforceAPI.Data
         }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<LocalUser> LocalUsers { get; set; }
-
         public DbSet<Audit> AuditLogs { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
