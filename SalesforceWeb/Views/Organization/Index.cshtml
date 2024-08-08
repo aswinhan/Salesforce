@@ -1475,7 +1475,7 @@ else
                         },
                         {
                             "method": "PATCH",
-                            "url": "/services/data/v59.0/sobjects/Credentialing_Profile__c/" + getFieldValue('credentialProfileId') + "",
+                            "url": "/services/data/v59.0/sobjects/Credentialing_Profile__c/@@{thisCredentialingProfile.Id}",
                             "referenceId": "updateCredentialingProfile",
                             "body": {
                                 "Accreditation_End__c": getFieldValue('Accreditation_End__c'),
@@ -1566,7 +1566,7 @@ else
                                 "Contact_Person_Role__c": getFieldValue('Contact_Person_Role__c'),
                                 "Contact_Phone__c": getFieldValue('Contact_Phone__c'),
                                 "Primary_Contact__c": getFieldValue('Primary_Contact__c'),
-                                "Credentialing_Profile_Id__c": getFieldValue('Credentialing_Profile_Id__c')
+                                "Credentialing_Profile_Id__c": "@@{thisCredentialingProfile.Id}"
                             }
                         },
                         {
@@ -1576,7 +1576,7 @@ else
                             "body": {
                                 "Account_Site__c": getFieldValue('Account_Site__c'),
                                 "Account__c": getFieldValue('Account__c'),
-                                "Credentialing_Profile__c": getFieldValue('Credentialing_Profile__c'),
+                                "Credentialing_Profile__c": "@@{thisCredentialingProfile.Id}",
                                 "Facility_License_Expiration_if_applicab__c": getFieldValue('Facility_License_Expiration_if_applicab__c'),
                                 "Facility_License_if_applicable__c": getFieldValue('Facility_License_if_applicable__c'),
                                 "Facility_License_Number_if_applicable__c": getFieldValue('Facility_License_Number_if_applicable__c'),
@@ -1609,7 +1609,7 @@ else
                             "body": {
                                 "Service_Locations__c": getFieldValue('Service_Locations__c'),
                                 "Service_Name__c": getFieldValue('Service_Name__c'),
-                                "Credentialing_Profile__c": getFieldValue('Credentialing_Profile__c'),
+                                "Credentialing_Profile__c": "@@{thisCredentialingProfile.Id}",
                                 "Service_License_Expiration_if_applicabl__c": getFieldValue('Service_License_Expiration_if_applicabl__c'),
                                 "Service_License_Number_if_applicable__c": getFieldValue('Service_License_Number_if_applicable__c'),
                                 "Service_License_Status_if_applicable__c": getFieldValue('Service_License_Status_if_applicable__c')
@@ -1620,7 +1620,7 @@ else
                             "url": "/services/data/v59.0/sobjects/Primary_Source_Verification__c",
                             "referenceId": "newPSVRecord",
                             "body": {
-                                "Credentialing_Profile__c": getFieldValue('Credentialing_Profile__c'),
+                                "Credentialing_Profile__c": "@@{thisCredentialingProfile.Id}",
                                 "CVO__c": getFieldValue('CVO__c')
                             }
                         },
@@ -1629,7 +1629,7 @@ else
                             "url": "/services/data/v59.0/sobjects/Primary_Source_Verification__c/" + getFieldValue('credentialProfileId') + "",
                             "referenceId": "updatePSVRecord",
                             "body": {
-                                "Credentialing_Profile__c": getFieldValue('Credentialing_Profile__c'),
+                                "Credentialing_Profile__c": "@@{thisCredentialingProfile.Id}",
                                 "Primary_Source_Verifier__c": getFieldValue('Primary_Source_Verifier__c'),
                                 "CVO__c": getFieldValue('CVO__c'),
                                 "Other_Accred__c": getFieldValue('Other_Accred__c'),
