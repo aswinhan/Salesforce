@@ -4,7 +4,6 @@ using Serilog.Events;
 using SalesforceWeb.Profiles;
 using SalesforceWeb.Services;
 using SalesforceWeb.Services.IServices;
-using MagicVilla_Web.Services;
 using NToastNotify;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,6 +29,7 @@ builder.Services.AddScoped<IOrganizationService, OrganizationService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddTransient<ISalesforceService, SalesforceService>();
 builder.Services.AddScoped<IAuditService, AuditService>();
+builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddHttpClient<IRelatedAccountService, RelatedAccountService>();
 builder.Services.AddHttpClient<IServiceListingService, ServiceListingService>();
 

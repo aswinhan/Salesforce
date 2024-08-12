@@ -18,23 +18,26 @@
                     </a>
                     <div class="submenu">
                         <ul class="submenu-item">
-                            <li class="nav-item">
+                            <li class="nav-item" asp-screen="Credentialing" asp-permission="View">
                                 <a class="nav-link" asp-area="" asp-controller="Credentialing" asp-action="Index">Get Credentialing Profile</a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item" asp-screen="RelatedAccount" asp-permission="View">
                                 <a class="nav-link" asp-area="" asp-controller="RelatedAccount" asp-action="Index">Get Related Accounts</a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item" asp-screen="ServiceListing" asp-permission="View">
                                 <a class="nav-link" asp-area="" asp-controller="ServiceListing" asp-action="Index">Service Listings</a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item" asp-screen="Practitioner" asp-permission="View">
                                 <a class="nav-link" asp-area="" asp-controller="Practitioner" asp-action="Index">Full / Edit Practitioner</a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item" asp-screen="Organization" asp-permission="View">
                                 <a class="nav-link" asp-area="" asp-controller="Organization" asp-action="Index">Full / Edit Organization</a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item" asp-screen="Audit" asp-permission="View">
                                 <a class="nav-link" asp-area="" asp-controller="Audit" asp-action="Index">Audit Trail</a>
+                            </li>
+                            <li class="nav-item" asp-screen="ManageRolePermissions" asp-permission="View">
+                                <a class="nav-link" asp-area="" asp-controller="Role" asp-action="Index">Manage Role Permissions</a>
                             </li>
                         </ul>
                     </div>
@@ -63,7 +66,7 @@
                                     <a class="nav-link" asp-controller="Auth" asp-action="Register">Register</a>
                                 </li>
                             }
-                            
+
                         </ul>
                     </div>
                 </li>

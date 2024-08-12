@@ -74,10 +74,33 @@ namespace SalesforceAPI.Repository
 
             var claims = new List<Claim>
             {
-                 new Claim(ClaimTypes.Name, user.UserName),
-                 new Claim(ClaimTypes.NameIdentifier, user.Id),
-                 new Claim(ClaimTypes.Role, roles.FirstOrDefault() ?? "User")
+                new Claim(ClaimTypes.Name, user.UserName),
+                new Claim(ClaimTypes.NameIdentifier, user.Id),
             };
+
+            foreach (var role in roles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, role));
+
+                // Fetch permissions for the user's role grouped by screen
+                var rolePermissions = await _db.RolePermissions
+                    .Include(rp => rp.Screen)
+                    .Include(rp => rp.Permission)
+                    .Where(rp => rp.Role.Name == role)
+                    .GroupBy(rp => rp.Screen.Name)
+                    .ToListAsync();
+
+                // Add permissions to claims as a comma-separated string per screen
+                foreach (var screenPermissions in rolePermissions)
+                {
+                    var screenName = screenPermissions.Key;
+                    var permissions = screenPermissions.Select(rp => rp.Permission.Name).ToArray();
+
+                    // Join the permissions into a single string separated by commas
+                    var permissionsString = string.Join(",", permissions);
+                    claims.Add(new Claim($"Permission_{screenName}", permissionsString));
+                }
+            }
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
@@ -93,7 +116,7 @@ namespace SalesforceAPI.Repository
                 User = _mapper.Map<UserDto>(user),
             };
 
-            //Audit Entry
+            // Audit Entry
             await _db.AuditLogs.AddAsync(new Audit
             {
                 UserId = user.Id,
@@ -106,6 +129,7 @@ namespace SalesforceAPI.Repository
 
             return loginResponseDTO;
         }
+
 
         public async Task<bool> LogOutAuditEntry(string userName)
         {

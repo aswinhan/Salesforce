@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SalesforceAPI.Data;
 
@@ -11,9 +12,11 @@ using SalesforceAPI.Data;
 namespace SalesforceAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240726111107_audit")]
+    partial class audit
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -748,22 +751,6 @@ namespace SalesforceAPI.Migrations
                     b.ToTable("PostGraduateMedicalTrainings");
                 });
 
-            modelBuilder.Entity("SalesforceAPI.Models.Permission", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Permissions");
-                });
-
             modelBuilder.Entity("SalesforceAPI.Models.PractitionerCP", b =>
                 {
                     b.Property<int>("Id")
@@ -1062,50 +1049,6 @@ namespace SalesforceAPI.Migrations
                     b.ToTable("ProviderKeys");
                 });
 
-            modelBuilder.Entity("SalesforceAPI.Models.RolePermission", b =>
-                {
-                    b.Property<int>("RolePermissionId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RolePermissionId"));
-
-                    b.Property<int>("PermissionId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("RoleId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("ScreenId")
-                        .HasColumnType("int");
-
-                    b.HasKey("RolePermissionId");
-
-                    b.HasIndex("PermissionId");
-
-                    b.HasIndex("RoleId");
-
-                    b.HasIndex("ScreenId");
-
-                    b.ToTable("RolePermissions");
-                });
-
-            modelBuilder.Entity("SalesforceAPI.Models.Screen", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Screens");
-                });
-
             modelBuilder.Entity("SalesforceAPI.Models.ServiceLocation", b =>
                 {
                     b.Property<int>("Id")
@@ -1238,42 +1181,6 @@ namespace SalesforceAPI.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("SalesforceAPI.Models.RolePermission", b =>
-                {
-                    b.HasOne("SalesforceAPI.Models.Permission", "Permission")
-                        .WithMany("RolePermissions")
-                        .HasForeignKey("PermissionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", "Role")
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("SalesforceAPI.Models.Screen", "Screen")
-                        .WithMany("RolePermissions")
-                        .HasForeignKey("ScreenId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Permission");
-
-                    b.Navigation("Role");
-
-                    b.Navigation("Screen");
-                });
-
-            modelBuilder.Entity("SalesforceAPI.Models.Permission", b =>
-                {
-                    b.Navigation("RolePermissions");
-                });
-
-            modelBuilder.Entity("SalesforceAPI.Models.Screen", b =>
-                {
-                    b.Navigation("RolePermissions");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,10 +1,9 @@
 ﻿using SalesforceWeb.Models;
 using SalesforceWeb.Dtos;
 using SalesforceWeb.Services.IServices;
-using SalesforceWeb.Services;
 using SalesforceWeb.Utilities;
 
-namespace MagicVilla_Web.Services
+namespace SalesforceWeb.Services
 {
     public class AuthService : BaseService, IAuthService
     {

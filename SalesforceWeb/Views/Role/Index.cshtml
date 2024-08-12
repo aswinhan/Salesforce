@@ -1,0 +1,103 @@
+﻿@model SalesforceWeb.Models.RoleManagement
+
+@{
+    ViewData["Title"] = "Manage Role Permissions";
+}
+
+<h2 class="mb-4">@ViewData["Title"]</h2>
+
+<div class="row">
+    <div class="col-md-4">
+        <h4 class="mb-3">Roles</h4>
+        <table class="table table-bordered">
+            <thead class="table-light">
+                <tr>
+                    <th>Role Name</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Roles != null && Model.Roles.Any())
+                {
+                    @foreach (var role in Model.Roles)
+                    {
+                        <tr>
+                            <td>@role.Name</td>
+                            <td>
+                                <a asp-action="Index" asp-route-roleId="@role.Id" class="btn btn-primary btn-sm">
+                                    Edit Permissions
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="2" class="text-center">No roles found.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-md-8">
+        @if (Model.SelectedRolePermissions != null)
+        {
+            <h4 class="mb-3">Permissions for @Model.SelectedRoleName</h4>
+
+            <form asp-action="Edit" method="post">
+                <input type="hidden" asp-for="SelectedRoleId" />
+
+                <table class="table table-bordered">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Screen Name</th>
+                            <th>Permissions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.SelectedRolePermissions.Count; i++)
+                        {
+                            <tr>
+                                <td>
+                                    @Model.SelectedRolePermissions[i].ScreenName
+                                    <button type="button" class="btn btn-link p-0 ms-3" onclick="toggleSelectAll(@i)">Select All</button>
+                                </td>
+                                <td>
+                                    @for (int j = 0; j < Model.SelectedRolePermissions[i].Permissions.Count; j++)
+                                    {
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" id="perm-@i-@j" name="SelectedRolePermissions[@i].Permissions[@j].IsSelected" value="true" @(Model.SelectedRolePermissions[i].Permissions[j].IsSelected ? "checked" : "") />
+                                            <label class="form-check-label" for="perm-@i-@j">@Model.SelectedRolePermissions[i].Permissions[j].Name</label>
+                                            <input type="hidden" name="SelectedRolePermissions[@i].Permissions[@j].Id" value="@Model.SelectedRolePermissions[i].Permissions[j].Id" />
+                                            <input type="hidden" name="SelectedRolePermissions[@i].ScreenId" value="@Model.SelectedRolePermissions[i].ScreenId" />
+                                        </div>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+                <div class="text-end mt-4">
+                    <button type="submit" class="btn btn-success">Save Changes</button>
+                </div>
+            </form>
+        }
+        else
+        {
+            <div class="alert alert-info">Select a role to edit its permissions.</div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function toggleSelectAll(index) {
+            var checkboxes = document.querySelectorAll(`input[id^='perm-${index}-']`);
+            var selectAllChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
+            checkboxes.forEach(checkbox => checkbox.checked = !selectAllChecked);
+        }
+    </script>
+}
