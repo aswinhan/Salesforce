@@ -42,12 +42,14 @@ namespace SalesforceWeb.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(string credentialProfileId)
         {
-            ActionResult<PractitionerFullDto> actionResult = await GetPractitioner(credentialProfileId);
+            var actionResult = await GetPractitioner(credentialProfileId);
 
-
-            //Alert example 
-
-            if (actionResult.Result == null)
+            if (string.IsNullOrEmpty(credentialProfileId))
+            {
+                _toastNotification.AddErrorToastMessage("Credential profile ID is required.");
+                return View();
+            }
+            if (actionResult.Value.PractitionerCPDtos == null)
             {
                 _toastNotification.AddErrorToastMessage("Practitioner not found.");
                 return View();
@@ -58,29 +60,63 @@ namespace SalesforceWeb.Controllers
             return View(model);
         }
 
+
         public async Task<ActionResult<PractitionerFullDto>> GetPractitioner(string credentialProfileId)
         {
             try
             {
-                var response = await _practitionerService.EditAsync<APIResponse>(credentialProfileId, HttpContext.Session.GetString(StaticData.SessionToken));
+                var response = await _practitionerService.GetAsync<APIResponse>(credentialProfileId, HttpContext.Session.GetString(StaticData.SessionToken));
 
-                if (response.Result != null && response.IsSuccess)
+                if (response.IsSuccess)
                 {
-                    PractitionerFullDto model = JsonConvert.DeserializeObject<PractitionerFullDto>(Convert.ToString(response.Result));
-                    return _mapper.Map<PractitionerFullDto>(model);
+                    if (response.Result != null)
+                    {
+                        var model = JsonConvert.DeserializeObject<PractitionerFullDto>(Convert.ToString(response.Result));
+                        return _mapper.Map<PractitionerFullDto>(model);
+                    }
+                    else
+                    {
+                        _toastNotification.AddErrorToastMessage("No result found in the response.");
+                        return new NotFoundResult(); // Use new NotFoundResult() instead of NotFound() to return IActionResult
+                    }
                 }
                 else
                 {
-                    _toastNotification.AddErrorToastMessage(response.ErrorMessages.FirstOrDefault());
-                    return NotFound();
+                    _toastNotification.AddErrorToastMessage(response.ErrorMessages.FirstOrDefault() ?? "Unknown error occurred.");
+                    return new NotFoundResult(); // Return NotFoundResult for consistency
                 }
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error fetching practitioner with credentialProfileId {CredentialProfileId}: {ErrorMessage}", credentialProfileId, ex.Message);
+                _toastNotification.AddErrorToastMessage("An internal server error occurred.");
                 return StatusCode(500, "Internal server error occurred: " + ex.Message);
             }
         }
+
+        //public async Task<ActionResult<PractitionerFullDto>> GetPractitioner(string credentialProfileId)
+        //{
+        //    try
+        //    {
+        //        var response = await _practitionerService.GetAsync<APIResponse>(credentialProfileId, HttpContext.Session.GetString(StaticData.SessionToken));
+
+        //        if (response.Result != null && response.IsSuccess)
+        //        {
+        //            PractitionerFullDto model = JsonConvert.DeserializeObject<PractitionerFullDto>(Convert.ToString(response.Result));
+        //            return _mapper.Map<PractitionerFullDto>(model);
+        //        }
+        //        else
+        //        {
+        //            _toastNotification.AddErrorToastMessage(response.ErrorMessages.FirstOrDefault());
+        //            return NotFound();
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex, "Error fetching practitioner with credentialProfileId {CredentialProfileId}: {ErrorMessage}", credentialProfileId, ex.Message);
+        //        return StatusCode(500, "Internal server error occurred: " + ex.Message);
+        //    }
+        //}
 
         [HttpPost]
         public async Task<IActionResult> PostCompositePractitioner(string jsonBody)

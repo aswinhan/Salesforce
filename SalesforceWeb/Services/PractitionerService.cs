@@ -29,7 +29,7 @@ namespace SalesforceWeb.Services
             return SendAsync<T>(new APIRequest()
             {
                 ApiType = StaticData.ApiType.GET,
-                Url = salesforceUrl + "/EditPractitioner/" + id,
+                Url = salesforceUrl + "/GetPractitioner/" + id,
                 Token = token
             });
         }
@@ -38,7 +38,7 @@ namespace SalesforceWeb.Services
             return SendAsync<T>(new APIRequest()
             {
                 ApiType = StaticData.ApiType.POST,
-                Url = salesforceUrl + "/EditPractitioner/" + id,
+                Url = salesforceUrl + "/UpdatePractitioner/" + id,
                 Data = practitioner,
                 Token = token
             });

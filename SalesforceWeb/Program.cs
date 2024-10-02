@@ -5,8 +5,25 @@ using SalesforceWeb.Profiles;
 using SalesforceWeb.Services;
 using SalesforceWeb.Services.IServices;
 using NToastNotify;
+using Microsoft.AspNetCore.Server.HttpSys;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Configure logging
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole(); // Add other providers as needed
+
+// Configure Kestrel server options
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+    // Set the maximum request header size (in bytes)
+    serverOptions.Limits.MaxRequestHeadersTotalSize = 16 * 1024; // 16 KB
+    // Set the maximum request body size (in bytes)
+    serverOptions.Limits.MaxRequestBodySize = 104857600; // 100 MB (adjust as needed)
+});
+
+
 
 // Configure Serilog
 Log.Logger = new LoggerConfiguration()

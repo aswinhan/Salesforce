@@ -28,8 +28,7 @@
         </div>
     </div>
 </div>
-
-@if (TempData["FormattedError"] != null)
+@if (ViewBag.FormattedResponse != null)
 {
     <div class="row pb-4">
         <div class="col-md-12 stretch-card">
@@ -39,7 +38,9 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="mb-3">
-                                <textarea id="FormattedError" class="form-control jsonEditor" name="JsonError" rows="10">@Html.Raw(TempData["FormattedError"])</textarea>
+                                <textarea id="FormattedError" class="form-control jsonEditor" name="JsonError" rows="10">@Html.Raw(ViewBag.FormattedResponse)</textarea>
+
+                                @* <textarea id="FormattedError" class="form-control jsonEditor" name="JsonError" rows="10">@Html.Raw(TempData["FormattedError"])</textarea> *@
                             </div>
                         </div><!-- Col -->
                     </div><!-- Row -->

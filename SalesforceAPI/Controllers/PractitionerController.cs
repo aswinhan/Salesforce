@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace SalesforceAPI.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("Practitioner")]
     [ApiController]
     public class PractitionerController : ControllerBase
